@@ -1,8 +1,14 @@
 <link rel="import" href="../../../bower_components/polymer-redux/polymer-redux.html">
+<link rel="import" href="reducers/reducers.html">
 
 <script>
     const initialState = {
-        //store = Redux.createStore(reducer);
-        // const ReduxMixin = PolymerRedux(store);
-    }
+        currentDate: {
+            year: '2018',
+            month: '03',
+            day: '21',
+        }
+    };
+    const store = Redux.createStore(reducer);
+    const ReduxMixin = PolymerRedux(store);
 </script>

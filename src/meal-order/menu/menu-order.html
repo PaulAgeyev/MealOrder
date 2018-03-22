@@ -1,0 +1,111 @@
+<script src="../../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+<link rel="import" href="../../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../../bower_components/paper-tabs/paper-tabs.html">
+<link rel="import" href="../../../bower_components/app-route/app-location.html">
+<link rel="import" href="../../../bower_components/app-route/app-route.html">
+<link rel="import" href="../../../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../shell/redux-store.html">
+<link rel="import" href="../../../bower_components/polymer/lib/elements/dom-repeat.html">
+
+<dom-module id="menu-order">
+    <template>
+        <style>
+            body {
+                margin: 0;
+                display: flex;
+                align-items: flex-end;
+                height: 80px;
+                background: #009688;
+                color: white;
+            }
+            paper-tabs {
+                font-family: 'Roboto', 'Noto', sans-serif;
+                -webkit-font-smoothing: antialiased;
+                width: 100%;
+                text-transform: uppercase;
+                margin-bottom: 1px;
+            }
+            .link {
+                @apply --layout-horizontal;
+                @apply --layout-center-center;
+                text-decoration: none;
+            }
+        </style>
+
+        <app-location route="{{route}}"
+                      use-hash-as-path></app-location>
+
+        <app-route
+                route="{{route}}"
+                pattern="/:menu"
+                data="{{routeData}}">
+        </app-route>
+
+        <paper-tabs selected="0" scrollable>
+
+            <template is="dom-repeat" items="{{calendar}}" as="date">
+                <paper-tab link>
+                    <a class="link" name=""
+                       href="#/[[date.year]]/[[date.month]]/[[date.day]]" on-click="_handleClick">{{date.day}}</a>
+                </paper-tab>
+            </template>
+
+        </paper-tabs>
+
+        <iron-pages
+                selected="[[routeData.menu]]"
+                attr-for-selected="name"
+                fallback-selection="view404"
+                role="main">
+        </iron-pages>
+
+    </template>
+    <script>
+        class MenuOrder extends ReduxMixin(Polymer.Element) {
+            static get is() {
+                return 'menu-order';
+            }
+
+            static get properties() {
+                return {
+                    currentDate: {
+                        type: Object,
+                        statePath: 'currentDate'
+                    },
+                    calendar: {
+                        type: Array,
+                        computed: `_daysForMenu(currentDate)`,
+                    }
+                };
+            }
+
+            static get observers() {
+                return [
+                    '_pageChanged(routeData.menu)'
+                ];
+            }
+
+            _pageChanged() {
+                if (!this.route.path) {
+                    this.set('route.path', '/');
+                }
+            }
+
+            _handleClick () {
+                console.log(":)");
+            }
+
+            _daysForMenu(currentDate) {
+                let date = new Date(currentDate.year,currentDate.month,currentDate.day);
+                let arr = [];
+                for (let i = 0; i < 8; i++) {
+                    date = new Date(date.setDate(date.getDate() + 1));
+                    arr[i] = {day: date.getDate(), month: date.getMonth(), year: date.getFullYear()};
+                }
+                return arr;
+            }
+
+        }
+        window.customElements.define(MenuOrder.is, MenuOrder);
+    </script>
+</dom-module>

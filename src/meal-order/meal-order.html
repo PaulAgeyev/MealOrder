@@ -14,48 +14,48 @@
 <link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
 
-<link rel="import" href="menu/date-range-menu.html">
+<link rel="import" href="menu/menu-order.html">
 
 
 <dom-module id="meal-order">
     <template>
         <style>
-                :host {
-                    --app-primary-color: #4285f4;
-                    --app-secondary-color: black;
+            :host {
+                --app-primary-color: #4285f4;
+                --app-secondary-color: black;
 
-                    display: block;
-                }
+                display: block;
+            }
 
-                app-drawer-layout:not([narrow]) [drawer-toggle] {
-                    display: none;
-                }
+            app-drawer-layout:not([narrow]) [drawer-toggle] {
+                display: none;
+            }
 
-                app-header {
-                    color: #fff;
-                    background-color: gray;
-                }
+            app-header {
+                color: #fff;
+                background-color: gray;
+            }
 
-                app-header paper-icon-button {
-                    --paper-icon-button-ink-color: white;
-                }
+            app-header paper-icon-button {
+                --paper-icon-button-ink-color: white;
+            }
 
-                .drawer-list {
-                    margin: 0 20px;
-                }
+            .drawer-list {
+                margin: 0 20px;
+            }
 
-                .drawer-list a {
-                    display: block;
-                    padding: 0 16px;
-                    text-decoration: none;
-                    color: var(--app-secondary-color);
-                    line-height: 40px;
-                }
+            .drawer-list a {
+                display: block;
+                padding: 0 16px;
+                text-decoration: none;
+                color: var(--app-secondary-color);
+                line-height: 40px;
+            }
 
-                .drawer-list a.iron-selected {
-                    color: black;
-                    font-weight: bold;
-                }
+            .drawer-list a.iron-selected {
+                color: black;
+                font-weight: bold;
+            }
         </style>
 
         <app-location route="{{route}}"
@@ -75,9 +75,8 @@
                     </app-toolbar>
                 </app-header>
 
-                <iron-pages>
-                   <date-range-menu></date-range-menu>
-                </iron-pages>
+               <menu-order></menu-order>
+
             </app-header-layout>
         </app-drawer-layout>
 
