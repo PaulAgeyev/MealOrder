@@ -1,9 +1,4 @@
 <script src="../../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
-<link rel="import" href="../../../bower_components/vaadin-grid/vaadin-grid-tree-toggle.html">
-<link rel="import" href="../../../bower_components/vaadin-grid/vaadin-grid-column.html">
-<link rel="import" href="../../../bower_components/vaadin-text-field/vaadin-text-field.html">
-<link rel="import" href="../../../bower_components/vaadin-grid/vaadin-grid.html">
-<link rel="import" href="../../../bower_components/vaadin-grid/vaadin-grid-filter.html">
 
 <dom-module id="vendor-menus">
     <template>
@@ -19,8 +14,8 @@
 
         </style>
         <h2>List blablabla </h2>
-
-
+        [[menu.type]]
+        [[menu.dish]]
     </template>
     <script>
         class VendorMenus extends Polymer.Element {
@@ -29,9 +24,13 @@
             }
 
             static get properties() {
-                return {};
+                return {
+                    menu: {
+                        type: Object,
+                        statePath: 'menu'
+                    }
+                };
             }
-
 
         }
 

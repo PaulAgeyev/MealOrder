@@ -1,7 +1,18 @@
 <script>
     const reducer = (state, action) => {
-        if (!state) {
-            return initialState;
+            if (!state) {
+                return initialState;
+            }
+            switch (action.type) {
+                case ArrayAction.MENU_FOR_DAY: {
+                    console.log(action.date);
+                    return Object.assign({}, state, {
+                            dateForMenu: initialState.dateForMenu,
+                            menu: initialState.menu
+                        }
+                    );
+                }
+            }
         }
-    };
+    ;
 </script>

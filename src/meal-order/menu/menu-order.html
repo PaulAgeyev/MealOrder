@@ -6,6 +6,7 @@
 <link rel="import" href="../../../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../shell/redux-store.html">
 <link rel="import" href="../../../bower_components/polymer/lib/elements/dom-repeat.html">
+<link rel="import" href="vendor-menus.html">
 
 <dom-module id="menu-order">
     <template>
@@ -18,6 +19,7 @@
                 background: #009688;
                 color: white;
             }
+
             paper-tabs {
                 font-family: 'Roboto', 'Noto', sans-serif;
                 -webkit-font-smoothing: antialiased;
@@ -25,6 +27,7 @@
                 text-transform: uppercase;
                 margin-bottom: 1px;
             }
+
             .link {
                 @apply --layout-horizontal;
                 @apply --layout-center-center;
@@ -38,18 +41,17 @@
         <app-route
                 route="{{route}}"
                 pattern="/:menu"
-                data="{{routeData}}">
+                data="{{routeData}}"
+                tail="{{subroute}}">
         </app-route>
 
-        <paper-tabs selected="0" scrollable>
-
-            <template is="dom-repeat" items="{{calendar}}" as="date">
+        <paper-tabs>
+            <template is="dom-repeat" items="{{dateForMenu}}" as="calendar">
                 <paper-tab link>
-                    <a class="link" name=""
-                       href="#/[[date.year]]/[[date.month]]/[[date.day]]" on-click="_handleClick">{{date.day}}</a>
+                    <a class="link" name="[[calendar.date.year]]-[[calendar.date.month]]-[[calendar.date.day]]"
+                       href="/menu/#/[[calendar.date.year]]-[[calendar.date.month]]-[[calendar.date.day]]" on-click="_handleClick">{{calendar.date.day}}</a>
                 </paper-tab>
             </template>
-
         </paper-tabs>
 
         <iron-pages
@@ -57,6 +59,7 @@
                 attr-for-selected="name"
                 fallback-selection="view404"
                 role="main">
+            <vendor-menus name="[[currentDay.date.year]]-[[currentDay.date.month]]-[[currentDay.date.day]]" menu="[[menu]]" route="[[subroute]]"></vendor-menus>
         </iron-pages>
 
     </template>
@@ -66,15 +69,30 @@
                 return 'menu-order';
             }
 
+            static get actions() {
+                return {
+                    menuForDay(date) {
+                        return {
+                            type: ArrayAction.MENU_FOR_DAY,
+                            date: date
+                        }
+                    },
+                }
+            }
+
             static get properties() {
                 return {
-                    currentDate: {
-                        type: Object,
-                        statePath: 'currentDate'
-                    },
-                    calendar: {
+                    dateForMenu: {
                         type: Array,
-                        computed: `_daysForMenu(currentDate)`,
+                        statePath: 'dateForMenu'
+                    },
+                    menu: {
+                        type: Object,
+                        statePath: 'menu'
+                    }
+                    ,
+                    currentDay: {
+                        type: Object
                     }
                 };
             }
@@ -91,21 +109,13 @@
                 }
             }
 
-            _handleClick () {
-                console.log(":)");
-            }
-
-            _daysForMenu(currentDate) {
-                let date = new Date(currentDate.year,currentDate.month,currentDate.day);
-                let arr = [];
-                for (let i = 0; i < 8; i++) {
-                    date = new Date(date.setDate(date.getDate() + 1));
-                    arr[i] = {day: date.getDate(), month: date.getMonth(), year: date.getFullYear()};
-                }
-                return arr;
+            _handleClick(e) {
+                this.currentDay = this.dateForMenu[e.model.index];
+                this.dispatch('menuForDay', this.dateForMenu[e.model.index]);
             }
 
         }
+
         window.customElements.define(MenuOrder.is, MenuOrder);
     </script>
 </dom-module>
