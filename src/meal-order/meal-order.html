@@ -14,6 +14,7 @@
 <link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
 <link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../bower_components/iron-icons/maps-icons.html">
 
 
 <link rel="import" href="menu/menu-order.html">
@@ -36,7 +37,8 @@
             }
 
             app-header .main-title {
-                font-size: 28px;
+                margin-left: 2%;
+                font-size: 1.375em;
             }
 
             app-drawer-layout {
@@ -47,7 +49,14 @@
                 display: none;
             }
 
+            .date-range-icon {
+                margin-left: 1%;
+            }
 
+            .calendar {
+                font-size: 0.75em;
+                margin-left: 1%;
+            }
 
         </style>
 
@@ -72,7 +81,9 @@
                 <app-header slot="header" reveals effects="waterfall">
                     <app-toolbar>
                         <paper-icon-button icon="menu" drawer-toggle></paper-icon-button>
-                        <div main-title class="main-title">Заказ обедов</div>
+                        <div class="main-title">Заказ обедов</div>
+                        <iron-icon class="date-range-icon" icon="maps:icons:date-range"></iron-icon>
+                        <div class="calendar">Март 2018</div>
                     </app-toolbar>
                 </app-header>
 
