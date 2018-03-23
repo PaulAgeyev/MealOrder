@@ -24,22 +24,29 @@
         <style>
 
             :host {
+                font-family: 'Roboto', 'Noto', sans-serif;
                 --app-primary-color: #4285f4;
                 --app-secondary-color: black;
                 display: block;
-
             }
 
             app-header {
-                background-color: #00897B;
+                background-color: #616161;
                 color: #fff;
             }
-            paper-icon-button {
-                --paper-icon-button-ink-color: white;
+
+            app-header .main-title {
+                font-size: 28px;
             }
+
+            app-drawer-layout {
+                background-color: #F2F2F2;
+            }
+
             app-drawer-layout:not([narrow]) [drawer-toggle] {
                 display: none;
             }
+
 
 
         </style>
@@ -52,10 +59,10 @@
                 pattern="/:page"
                 data="{{routeData}}"></app-route>
 
-        <app-drawer-layout>
+        <app-drawer-layout fullbleed>
 
             <app-drawer slot="drawer" align="right">
-                <app-toolbar>Order</app-toolbar>
+                <app-toolbar>Заказ</app-toolbar>
             </app-drawer>
 
             <app-header-layout>
@@ -63,7 +70,7 @@
                 <app-header slot="header" reveals effects="waterfall">
                     <app-toolbar>
                         <paper-icon-button icon="menu" drawer-toggle></paper-icon-button>
-                        <div main-title>Заказ обедов</div>
+                        <div main-title class="main-title">Заказ обедов</div>
                     </app-toolbar>
                 </app-header>
 
