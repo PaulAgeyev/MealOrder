@@ -1,12 +1,77 @@
 <link rel="import" href="../../../bower_components/polymer-redux/polymer-redux.html">
 <link rel="import" href="reducers/reducers.html">
-
+<link rel="import" href="actions/array-actions.html">
 <script>
-    const initialState = {
-        currentDate: {
+    const arrayOfDates = [{
+        date: {
             year: '2018',
             month: '03',
             day: '21',
+        },
+        hasMenu: true
+    },
+        {
+            date: {
+                year: '2018',
+                month: '03',
+                day: '22',
+            },
+            hasMenu: true
+        },
+        {
+            date: {
+                year: '2018',
+                month: '03',
+                day: '23',
+            },
+            hasMenu: true
+        },
+        {
+            date: {
+                year: '2018',
+                month: '03',
+                day: '24',
+            },
+            hasMenu: false
+        },
+        {
+            date: {
+                year: '2018',
+                month: '03',
+                day: '25',
+            },
+            hasMenu: false
+        }
+        , {
+            date: {
+                year: '2018',
+                month: '03',
+                day: '26',
+            },
+            hasMenu: true
+        }
+        , {
+            date: {
+                year: '2018',
+                month: '03',
+                day: '27',
+            },
+            hasMenu: true
+        }
+        , {
+            date: {
+                year: '2018',
+                month: '03',
+                day: '28',
+            },
+            hasMenu: true
+        }];
+
+    const initialState = {
+        dateForMenu: arrayOfDates,
+        menu: {
+            type: 'first',
+            dish: 'borsh',
         }
     };
     const store = Redux.createStore(reducer);
