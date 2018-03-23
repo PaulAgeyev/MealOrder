@@ -3,6 +3,7 @@
 <link rel="import" href="../../../bower_components/iron-list/iron-list.html">
 <link rel="import" href="../../../bower_components/paper-item/paper-item.html">
 <link rel="import" href="../../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../../../bower_components/iron-icons/iron-icons.html">
 <dom-module id="vendor-menus">
     <template>
@@ -33,9 +34,7 @@
                 padding-top: 64px;
                 --iron-list-items-container: {
                     max-width: 800px;
-                    margin: auto;
-                    margin-top: 60px;
-                    margin-bottom: 60px;
+                    margin: 60px auto;
                     border-bottom: 1px solid #ddd;
                 };
             }
@@ -46,7 +45,7 @@
 
             .item {
                 @apply --layout-horizontal;
-                padding: 20px;
+                /*padding: 20px;*/
                 background-color: white;
                 border: 1px solid #ddd;
                 cursor: pointer;
@@ -62,14 +61,9 @@
             }
 
             .pad {
-                padding: 0 16px;
+                padding: 0;
                 @apply --layout-flex;
-                @apply --layout-vertical);
-            }
-
-            .primary {
-                font-size: 16px;
-                font-weight: bold;
+                @apply --layout-vertical;
             }
 
             .shortText, .longText {
@@ -79,23 +73,13 @@
             .longText {
                 color: gray;
                 display: none;
+                padding-left: 16px;
+
             }
 
-            .item:hover .shortText::after {
-                content: ' [+]';
-                color: gray;
-            }
-
-            .item.expanded:hover .shortText::after {
-                content: '';
-            }
-
-            .item.expanded .longText {
+            .item.expand .longText {
                 display: block;
-            }
 
-            .item.expanded:hover .longText::after {
-                content: ' [–]';
             }
 
             .spacer {
@@ -107,36 +91,44 @@
                     font-size: 14px;
                 }
             }
+
+            #expand-button {
+                position: absolute;
+                right: 0;
+                bottom: 5px;
+            }
+
+            .primary {
+                font-size: 16px;
+                font-weight: bold;
+            }
+
         </style>
         <h2>List blablabla </h2>
         <iron-list id="list" items="[[items]]" as="item" selection-enabled multi-selection>
             <template>
                 <div>
-                    <div class$="[[getClassForItem(item, selected)]]" tabindex$="[[tabIndex]]">
+                    <div class$="[[getClassForItem(selected)]]" tabindex$="[[tabIndex]]">
                         <div class="pad">
-                            <paper-item>
-                                <div class="primary">[[item.name]]</div>
-                            </paper-item>
-                            <!--<div class="longText">[[item.longText]]-->
-                            <!--<paper-icon-button icon="add"></paper-icon-button>-->
-                            <!--</div>-->
+                            <div class="primary">
+                                <paper-item>[[item.name]]
+                                    <paper-icon-button id="expand-button" icon="expand-more"
+                                                       on-click="_reSelect"></paper-icon-button>
+                                </paper-item>
+
+                            </div>
                             <div class="longText">
-                                <!--<iron-list items="[[item.dishes]]" as="item" selection-enabled multi-selection>-->
-                                <!--<template>-->
-                                <!--<div>-->
-                                <!--[[item]]-->
-                                <!--<paper-icon-button icon="add"></paper-icon-button>-->
-                                <!--</div>-->
-                                <!--</template>-->
-                                <!--</iron-list>-->
+
                                 <dom-repeat items="[[item.dishes]]" as="dish">
                                     <template>
                                         <div class="longText">
-                                            [[dish]]
+                                            [[dish.title]]
+                                            [[dish.price]]₴
                                             <paper-icon-button icon="add"></paper-icon-button>
                                         </div>
                                     </template>
                                 </dom-repeat>
+
                             </div>
                         </div>
                     </div>
@@ -158,18 +150,18 @@
                         value: [
                             {
                                 name: 'smashPotato',
-                                longText: 'eby4ayakartoha',
-                                dishes: ['eby4ayakartoha', 'pizdec kakaya purexa']
+                                dishes: [{title: 'eby4ayakartoha', price: 35}, {
+                                    title: 'pizdec kakaya purexa',
+                                    price: 35
+                                }]
                             },
                             {
                                 name: 'Positive',
-                                longText: 'ssaniy borsch',
-                                dishes: ['ssaniy borsch', 'kon4enoe pirozenoe']
+                                dishes: [{title: 'ssaniy borsch', price: 35}, {title: 'kon4enoe pirozenoe', price: 35}]
                             },
                             {
                                 name: 'Negative',
-                                longText: 'krilishki svinki',
-                                dishes: ['krilishki svinki', 'krilishki pashi']
+                                dishes: [{title: 'krilishki svinki', price: 35}, {title: 'krilishki pashi', price: 35}]
                             }]
                     }
                 }
@@ -180,13 +172,22 @@
                 this.$.list.scrollTarget = this.ownerDocument.documentElement;
             };
 
-            iconForItem(item) {
-                return item ? (item.integer < 50 ? 'star-border' : 'star') : '';
+            getClassForItem(selected) {
+                return selected ? 'item expand' : 'item';
             };
 
-            getClassForItem(item, selected) {
-                return selected ? 'item expanded' : 'item';
-            };
+            _reSelect(e) {
+                const div = this.shadowRoot.querySelector("#list");
+                const iconButton = this.shadowRoot.querySelectorAll("paper-icon-button#expand-button")[e.model.index];
+                if (!e.model.selected) {
+                    div.selectIndex(e.model.index);
+                    iconButton.icon = 'expand-less';
+                }
+                else {
+                    div.deselectIndex(e.model.index);
+                    iconButton.icon = 'expand-more';
+                }
+            }
         }
 
 
