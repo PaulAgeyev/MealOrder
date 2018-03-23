@@ -12,6 +12,7 @@
     <template>
         <style>
             body {
+                font-family: 'Roboto', 'Noto', sans-serif;
                 margin: 0;
                 display: flex;
                 align-items: flex-end;
@@ -21,18 +22,32 @@
             }
 
             paper-tabs {
-                font-family: 'Roboto', 'Noto', sans-serif;
                 -webkit-font-smoothing: antialiased;
                 width: 100%;
                 text-transform: uppercase;
                 margin-bottom: 1px;
+                --paper-tabs-selection-bar-color: #179EFF;
+            }
+
+
+            .tabs {
+                margin: 1% auto;
+                width: 60%;
             }
 
             .link {
                 @apply --layout-horizontal;
                 @apply --layout-center-center;
                 text-decoration: none;
+                color: #616161;
+                font-size: 21px;
             }
+
+            .day-of-the-week {
+                font-size: 12px;
+                font-weight: lighter;
+            }
+
         </style>
 
         <app-location route="{{route}}"
@@ -45,11 +60,13 @@
                 tail="{{subroute}}">
         </app-route>
 
-        <paper-tabs>
+        <paper-tabs class="tabs">
             <template is="dom-repeat" items="{{dateForMenu}}" as="calendar">
                 <paper-tab link>
                     <a class="link" name="[[calendar.date.year]]-[[calendar.date.month]]-[[calendar.date.day]]"
-                       href="/menu/#/[[calendar.date.year]]-[[calendar.date.month]]-[[calendar.date.day]]" on-click="_handleClick">{{calendar.date.day}}</a>
+                       href="/menu/#/[[calendar.date.year]]-[[calendar.date.month]]-[[calendar.date.day]]" on-click="_handleClick">
+                        <div> <div class="day-of-the-week">Пн</div> <div>{{calendar.date.day}}</div></div>
+                    </a>
                 </paper-tab>
             </template>
         </paper-tabs>
