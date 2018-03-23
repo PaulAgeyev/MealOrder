@@ -1,25 +1,148 @@
 <script src="../../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
-<link rel="import" href="../../../bower_components/vaadin-grid/vaadin-grid-tree-toggle.html">
-<link rel="import" href="../../../bower_components/vaadin-grid/vaadin-grid-column.html">
-<link rel="import" href="../../../bower_components/vaadin-text-field/vaadin-text-field.html">
-<link rel="import" href="../../../bower_components/vaadin-grid/vaadin-grid.html">
-<link rel="import" href="../../../bower_components/vaadin-grid/vaadin-grid-filter.html">
-
+<link rel="import" href="../../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../../bower_components/iron-list/iron-list.html">
+<link rel="import" href="../../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../../bower_components/iron-icons/iron-icons.html">
 <dom-module id="vendor-menus">
     <template>
         <style>
-            body {
-                margin: 0;
-                display: flex;
-                align-items: flex-end;
-                height: 80px;
-                background: #009688;
-                color: white;
+            :host {
+                display: block;
+                @apply --paper-font-common-base;
             }
 
+            app-toolbar {
+                background-color: var(--google-green-700);
+                box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.3);
+                font-weight: bold;
+                color: white;
+                font-size: 18px;
+                z-index: 1;
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+            }
+
+            app-toolbar paper-icon-button {
+                --paper-icon-button-ink-color: white;
+            }
+
+            iron-list {
+                padding-top: 64px;
+                --iron-list-items-container: {
+                    max-width: 800px;
+                    margin: auto;
+                    margin-top: 60px;
+                    margin-bottom: 60px;
+                    border-bottom: 1px solid #ddd;
+                };
+            }
+
+            div[role="listbox"] {
+                border: 1px solid #e5e5e5;
+            }
+
+            .item {
+                @apply --layout-horizontal;
+                padding: 20px;
+                background-color: white;
+                border: 1px solid #ddd;
+                cursor: pointer;
+                margin-bottom: 10px;
+            }
+
+            .avatar {
+                height: 40px;
+                width: 40px;
+                border-radius: 20px;
+                box-sizing: border-box;
+                background-color: #DDD;
+            }
+
+            .pad {
+                padding: 0 16px;
+                @apply --layout-flex;
+                @apply --layout-vertical);
+            }
+
+            .primary {
+                font-size: 16px;
+                font-weight: bold;
+            }
+
+            .shortText, .longText {
+                font-size: 14px;
+            }
+
+            .longText {
+                color: gray;
+                display: none;
+            }
+
+            .item:hover .shortText::after {
+                content: ' [+]';
+                color: gray;
+            }
+
+            .item.expanded:hover .shortText::after {
+                content: '';
+            }
+
+            .item.expanded .longText {
+                display: block;
+            }
+
+            .item.expanded:hover .longText::after {
+                content: ' [–]';
+            }
+
+            .spacer {
+                @apply --layout-flex;
+            }
+
+            @media (max-width: 460px) {
+                paper-toolbar .bottom.title {
+                    font-size: 14px;
+                }
+            }
         </style>
         <h2>List blablabla </h2>
-
+        <iron-list id="list" items="[[items]]" as="item" selection-enabled multi-selection>
+            <template>
+                <div>
+                    <div class$="[[getClassForItem(item, selected)]]" tabindex$="[[tabIndex]]">
+                        <div class="pad">
+                            <paper-item>
+                                <div class="primary">[[item.name]]</div>
+                            </paper-item>
+                            <!--<div class="longText">[[item.longText]]-->
+                            <!--<paper-icon-button icon="add"></paper-icon-button>-->
+                            <!--</div>-->
+                            <div class="longText">
+                                <!--<iron-list items="[[item.dishes]]" as="item" selection-enabled multi-selection>-->
+                                <!--<template>-->
+                                <!--<div>-->
+                                <!--[[item]]-->
+                                <!--<paper-icon-button icon="add"></paper-icon-button>-->
+                                <!--</div>-->
+                                <!--</template>-->
+                                <!--</iron-list>-->
+                                <dom-repeat items="[[item.dishes]]" as="dish">
+                                    <template>
+                                        <div class="longText">
+                                            [[dish]]
+                                            <paper-icon-button icon="add"></paper-icon-button>
+                                        </div>
+                                    </template>
+                                </dom-repeat>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </template>
+        </iron-list>
 
     </template>
     <script>
@@ -29,11 +152,43 @@
             }
 
             static get properties() {
-                return {};
-            }
+                return {
+                    items: {
+                        type: Array,
+                        value: [
+                            {
+                                name: 'smashPotato',
+                                longText: 'eby4ayakartoha',
+                                dishes: ['eby4ayakartoha', 'pizdec kakaya purexa']
+                            },
+                            {
+                                name: 'Positive',
+                                longText: 'ssaniy borsch',
+                                dishes: ['ssaniy borsch', 'kon4enoe pirozenoe']
+                            },
+                            {
+                                name: 'Negative',
+                                longText: 'krilishki svinki',
+                                dishes: ['krilishki svinki', 'krilishki pashi']
+                            }]
+                    }
+                }
+            };
 
+            attached() {
+                // Use the document element
+                this.$.list.scrollTarget = this.ownerDocument.documentElement;
+            };
 
+            iconForItem(item) {
+                return item ? (item.integer < 50 ? 'star-border' : 'star') : '';
+            };
+
+            getClassForItem(item, selected) {
+                return selected ? 'item expanded' : 'item';
+            };
         }
+
 
         window.customElements.define(VendorMenus.is, VendorMenus);
     </script>
