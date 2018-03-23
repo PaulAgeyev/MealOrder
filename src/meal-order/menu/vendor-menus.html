@@ -1,0 +1,40 @@
+<script src="../../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+<link rel="import" href="../../../bower_components/vaadin-grid/vaadin-grid-tree-toggle.html">
+<link rel="import" href="../../../bower_components/vaadin-grid/vaadin-grid-column.html">
+<link rel="import" href="../../../bower_components/vaadin-text-field/vaadin-text-field.html">
+<link rel="import" href="../../../bower_components/vaadin-grid/vaadin-grid.html">
+<link rel="import" href="../../../bower_components/vaadin-grid/vaadin-grid-filter.html">
+
+<dom-module id="vendor-menus">
+    <template>
+        <style>
+            body {
+                margin: 0;
+                display: flex;
+                align-items: flex-end;
+                height: 80px;
+                background: #009688;
+                color: white;
+            }
+
+        </style>
+        <h2>List blablabla </h2>
+
+
+    </template>
+    <script>
+        class VendorMenus extends Polymer.Element {
+            static get is() {
+                return 'vendor-menus';
+            }
+
+            static get properties() {
+                return {};
+            }
+
+
+        }
+
+        window.customElements.define(VendorMenus.is, VendorMenus);
+    </script>
+</dom-module>
