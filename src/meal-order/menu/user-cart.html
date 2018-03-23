@@ -1,0 +1,94 @@
+<script src="../../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+<link rel="import" href="../../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../../bower_components/iron-list/iron-list.html">
+<link rel="import" href="../../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../../bower_components/iron-icons/iron-icons.html">
+
+<dom-module id="user-cart">
+    <template>
+        <style>
+            :host {
+                display: block;
+                @apply --paper-font-common-base;
+            }
+
+            app-toolbar {
+                background-color: var(--google-green-700);
+                box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.3);
+                font-weight: bold;
+                color: white;
+                font-size: 18px;
+                z-index: 1;
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+            }
+
+            app-toolbar paper-icon-button {
+                --paper-icon-button-ink-color: white;
+            }
+
+            iron-list {
+                padding-top: 64px;
+                --iron-list-items-container: {
+                    max-width: 800px;
+                    margin: auto;
+                    padding: auto;
+                    border-bottom: 1px solid #ddd;
+                };
+            }
+
+
+        </style>
+        <h2>ORDER</h2>
+        <div>29 mon</div>
+        <div>[[cart]]</div>
+        <iron-list id="cart" items="[[cart]]" as="item" selection-enabled multi-selection>
+            <template>
+                <div>
+                    <h4>[[item.vendor]]</h4>
+                    <div>
+                        <dom-repeat items="[[item.dishes]]" as="dish">
+                            <template>
+                                <div class="longText">
+                                    [[dish.title]]
+                                    [[dish.price]]₴
+                                    [[dish.quantity]]
+                                    <paper-icon-button icon="remove"></paper-icon-button>
+                                </div>
+                            </template>
+                        </dom-repeat>
+
+                    </div>
+                </div>
+            </template>
+        </iron-list>
+
+    </template>
+    <script>
+        class UserCart extends Polymer.Element {
+            static get is() {
+                return 'user-cart';
+            }
+
+            static get properties() {
+                return {
+                    cart: {
+                        type: Array,
+                        value: [{
+                            vendor: "pyureshka",
+                            dishes: [
+                                {title: 'borsch', price: 70, quantity: 1},
+                                {title: 'stake', price: 130, quantity: 2}]
+                        }]
+                    }
+                }
+            };
+        }
+
+        window.customElements.define(UserCart.is, UserCart);
+    </script>
+</dom-module>

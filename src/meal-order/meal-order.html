@@ -18,7 +18,7 @@
 
 <link rel="import" href="menu/menu-order.html">
 <link rel="import" href="menu/vendor-menus.html">
-
+<link rel="import" href="menu/user-cart.html">
 <dom-module id="meal-order">
     <template>
         <style>
@@ -62,7 +62,9 @@
         <app-drawer-layout fullbleed>
 
             <app-drawer slot="drawer" align="right">
-                <app-toolbar>Заказ</app-toolbar>
+                <app-toolbar>
+                    <user-cart></user-cart>
+                </app-toolbar>
             </app-drawer>
 
             <app-header-layout>
