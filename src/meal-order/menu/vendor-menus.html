@@ -9,8 +9,13 @@
     <template>
         <style>
             :host {
-                display: block;
-                @apply --paper-font-common-base;
+                height: 100vh;
+                display: flex;
+                flex-direction: column;
+            }
+
+            iron-list {
+                flex: 1 1 auto;
             }
 
             app-toolbar {
@@ -36,6 +41,7 @@
                     margin: 4% auto;
                     border-bottom: 1px solid #ddd;
                 };
+                background-color: #F2F2F2;
             }
 
             div[role="listbox"] {
@@ -72,8 +78,7 @@
             .longText {
                 color: gray;
                 display: none;
-                padding-left: 16px;
-
+                margin-left: 3%;
             }
 
             .item.expand .longText {
@@ -102,6 +107,11 @@
                 font-weight: bold;
             }
 
+            .menu-dashboard {
+                display: flex;
+                justify-content: space-between;
+            }
+
         </style>
         <iron-list id="list" items="[[items]]" as="item" selection-enabled multi-selection>
             <template>
@@ -116,21 +126,34 @@
 
                             </div>
                             <div class="longText">
-
+                                <div style="display: flex; justify-content: space-between;">
+                                    <div style="width: 50%; align-self: center;">
+                                        Первые блюда
+                                    </div>
+                                    <div style="align-self: center; width: 50%;">
+                                        Цена
+                                    </div>
+                                    <div style="width: 40px;">
+                                    </div>
+                                </div>
                                 <dom-repeat items="[[item.dishes]]" as="dish">
                                     <template>
-                                        <div class="longText">
-                                            [[dish.title]]
-                                            [[dish.price]]₴
-                                            <paper-icon-button icon="add"></paper-icon-button>
+                                        <div class="menu-dashboard">
+                                            <div style="width: 50%; align-self: center;">
+                                                [[dish.title]]
+                                            </div>
+                                            <div style="align-self: center; width: 50%; padding-left: 25px;">
+                                                [[dish.price]]₴
+                                            </div>
+                                            <div>
+                                                <paper-icon-button icon="add"></paper-icon-button>
+                                            </div>
                                         </div>
                                     </template>
                                 </dom-repeat>
-
                             </div>
                         </div>
                     </div>
-                </div>
             </template>
         </iron-list>
 
@@ -147,11 +170,11 @@
                         type: Array,
                         value: [
                             {
-                                name: 'smashPotato',
-                                dishes: [{title: 'eby4ayakartoha', price: 35}, {
-                                    title: 'pizdec kakaya purexa',
-                                    price: 35
-                                }]
+                                name: 'Пюре',
+                                dishes: [
+                                    {title: 'Борщ украинский', price: 35}, {
+                                        title: 'Солянка', price: 40
+                                    }]
                             },
                             {
                                 name: 'Positive',
