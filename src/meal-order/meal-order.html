@@ -16,10 +16,10 @@
 <link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../../bower_components/iron-icons/maps-icons.html">
 
-
 <link rel="import" href="menu/menu-order.html">
 <link rel="import" href="menu/vendor-menus.html">
 <link rel="import" href="menu/user-cart.html">
+
 <dom-module id="meal-order">
     <template>
         <style>
@@ -37,7 +37,6 @@
             }
 
             app-header .main-title {
-                margin-left: 2%;
                 font-size: 1.375em;
             }
 
@@ -49,15 +48,66 @@
                 display: none;
             }
 
-            .date-range-icon {
-                margin-left: 1%;
+            app-header app-toolbar .container {
+                display: flex;
+                width: 100%;
+                align-items: center;
+                justify-content: space-between;
             }
 
-            .calendar {
+            app-header app-toolbar .container .order-container {
+                display: flex;
+            }
+
+            app-header app-toolbar .container .date-container {
+                display: flex;
+                margin-left: 10px;
+                align-items: center;
+            }
+
+            app-header .history-of-orders a {
+                font-size: 0.9em;
+                text-decoration: none;
+                color: white;
+            }
+
+            app-header .history-of-orders a:hover {
+               color: #179EFF;
+            }
+
+            app-header .history-icon {
+                display: none;
+                color: white;
+            }
+
+            app-header .calendar {
+                font-weight: lighter;
                 font-size: 0.75em;
-                margin-left: 1%;
             }
 
+            app-header .order {
+                font-size: 0.75em;
+            }
+
+            @media only screen and (max-width: 600px) {
+
+                .history-of-orders {
+                    display: none;
+                }
+
+                app-header .history-icon {
+                    display: block;
+                }
+
+                app-header .date-container .date-range-icon {
+                    display: none;
+                }
+
+                app-header .date-container .calendar {
+                    display: none;
+                }
+
+            }
         </style>
 
         <app-location route="{{route}}"
@@ -80,10 +130,22 @@
 
                 <app-header slot="header" reveals effects="waterfall">
                     <app-toolbar>
-                        <paper-icon-button icon="menu" drawer-toggle></paper-icon-button>
-                        <div class="main-title">Заказ обедов</div>
-                        <iron-icon class="date-range-icon" icon="maps:icons:date-range"></iron-icon>
-                        <div class="calendar">Март 2018</div>
+                        <div class="container">
+                            <div class="order-container">
+                                <div class="main-title">Заказ обедов</div>
+                                <div class="date-container">
+                                    <iron-icon class="date-range-icon" icon="maps:icons:date-range"></iron-icon>
+                                    <div class="calendar">Март&nbsp;2018</div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="history-of-orders"><a href="">История заказов</a></div>
+                                <a href="">
+                                    <iron-icon class="history-icon" icon="maps:icons:history"></iron-icon>
+                                </a>
+                            </div>
+                            <iron-icon class="order" icon="icons:shopping-cart" drawer-toggle></iron-icon>
+                        </div>
                     </app-toolbar>
                 </app-header>
 
@@ -110,6 +172,7 @@
                 return {}
             };
         }
+
         window.customElements.define(MealOrder.is, MealOrder);
     </script>
 </dom-module>

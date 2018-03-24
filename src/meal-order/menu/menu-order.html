@@ -29,9 +29,17 @@
                 --paper-tab-ink: #179EFF;
             }
 
-            .tabs {
+            paper-tabs {
                 margin: 1% auto;
-                width: 60%;
+                width: 70%;
+            }
+
+            paper-tab.iron-selected .day-of-the-week{
+                color: #179EFF;
+            }
+
+            paper-tab.iron-selected .day{
+                color: #179EFF;
             }
 
             .link {
@@ -45,6 +53,15 @@
             .day-of-the-week {
                 font-size: 0.7em;
                 font-weight: lighter;
+            }
+
+            @media only screen and (max-width: 600px) {
+
+                paper-tabs {
+                    margin-top: 3%;
+                    width: 100%;
+                }
+
             }
 
         </style>
@@ -63,8 +80,12 @@
             <template is="dom-repeat" items="{{dateForMenu}}" as="calendar">
                 <paper-tab link>
                     <a class="link" name="[[calendar.date.year]]-[[calendar.date.month]]-[[calendar.date.day]]"
-                       href="/menu/#/[[calendar.date.year]]-[[calendar.date.month]]-[[calendar.date.day]]" on-click="_handleClick">
-                        <div> <div class="day-of-the-week">Пн</div> <div>{{calendar.date.day}}</div></div>
+                       href="/menu/#/[[calendar.date.year]]-[[calendar.date.month]]-[[calendar.date.day]]"
+                       on-click="_handleClick">
+                        <div>
+                            <div class="day-of-the-week">Пн</div>
+                            <div class="day">{{calendar.date.day}}</div>
+                        </div>
                     </a>
                 </paper-tab>
             </template>
@@ -75,7 +96,8 @@
                 attr-for-selected="name"
                 fallback-selection="view404"
                 role="main">
-            <vendor-menus name="[[currentDay.date.year]]-[[currentDay.date.month]]-[[currentDay.date.day]]" menu="[[menu]]" route="[[subroute]]"></vendor-menus>
+            <vendor-menus name="[[currentDay.date.year]]-[[currentDay.date.month]]-[[currentDay.date.day]]"
+                          menu="[[menu]]" route="[[subroute]]"></vendor-menus>
         </iron-pages>
 
         [[currentDay.date.year]]-[[currentDay.date.month]]-[[currentDay.date.day]]
