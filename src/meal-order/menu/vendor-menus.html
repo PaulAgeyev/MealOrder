@@ -8,14 +8,12 @@
 <dom-module id="vendor-menus">
     <template>
         <style>
-            :host {
+
+            body {
                 height: 100vh;
+                margin: 0;
                 display: flex;
                 flex-direction: column;
-            }
-
-            iron-list {
-                flex: 1 1 auto;
             }
 
             app-toolbar {
@@ -41,7 +39,6 @@
                     margin: 4% auto;
                     border-bottom: 1px solid #ddd;
                 };
-                background-color: #F2F2F2;
             }
 
             div[role="listbox"] {
@@ -113,7 +110,7 @@
             }
 
         </style>
-        <iron-list id="list" items="[[items]]" as="item" selection-enabled multi-selection>
+        <iron-list scroll-target="document" id="list" items="[[items]]" as="item" selection-enabled multi-selection>
             <template>
                 <div>
                     <div class$="[[getClassForItem(selected)]]" tabindex$="[[tabIndex]]">
@@ -173,6 +170,15 @@
                                 name: 'Пюре',
                                 dishes: [
                                     {title: 'Борщ украинский', price: 35}, {
+                                        title: 'Солянка', price: 40
+                                    },
+                                    {
+                                        title: 'Солянка', price: 40
+                                    },
+                                    {title: 'Борщ украинский', price: 35}, {
+                                        title: 'Солянка', price: 40
+                                    }
+                                    ,{
                                         title: 'Солянка', price: 40
                                     }]
                             },
