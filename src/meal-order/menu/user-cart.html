@@ -10,63 +10,82 @@
     <template>
         <style>
             :host {
-                display: block;
-                @apply --paper-font-common-base;
+
             }
 
-            app-toolbar {
-                background-color: var(--google-green-700);
-                box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.3);
-                font-weight: bold;
-                color: white;
-                font-size: 18px;
-                z-index: 1;
-                position: fixed;
-                top: 0;
-                left: 0;
-                right: 0;
+            .order {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
             }
 
-            app-toolbar paper-icon-button {
-                --paper-icon-button-ink-color: white;
+            .order-details {
+                display: flex;
+                font-size: 15px;
+                align-items: center;
             }
 
-            iron-list {
-                padding-top: 64px;
-                --iron-list-items-container: {
-                    max-width: 800px;
-                    margin: auto;
-                    padding: auto;
-                    border-bottom: 1px solid #ddd;
-                };
+            .vendor {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
             }
 
+            .price-by-vendor {
+                font-size: 15px;
+                text-align: left;
+            }
+
+            .total-price {
+                text-align: left;
+            }
+
+            .order-title {
+                width: 15%
+            }
+
+            .order-price {
+                width: 50%;
+            }
+
+            .order-quantity {
+                width: 20%;
+            }
 
         </style>
-        <h2>ORDER</h2>
-        <div>29 mon</div>
-        <div>[[cart]]</div>
-        <iron-list id="cart" items="[[cart]]" as="item" selection-enabled multi-selection>
-            <template>
-                <div>
-                    <h4>[[item.vendor]]</h4>
-                    <div>
-                        <dom-repeat items="[[item.dishes]]" as="dish">
-                            <template>
-                                <div class="longText">
-                                    [[dish.title]]
-                                    [[dish.price]]₴
-                                    [[dish.quantity]]
-                                    <paper-icon-button icon="remove"></paper-icon-button>
-                                </div>
-                            </template>
-                        </dom-repeat>
 
+
+        <div>
+
+            <dom-repeat items="[[cart]]" as="dish">
+                <template>
+                    <div class="vendor">
+                        <div>[[dish.vendor]]</div>
+                        <paper-icon-button icon="delete"></paper-icon-button>
                     </div>
-                </div>
-            </template>
-        </iron-list>
+                </template>
+            </dom-repeat>
 
+            <dom-repeat items="[[cart]]" as="dish">
+                <template>
+                    <dom-repeat items="[[dish.dishes]]" as="d">
+                        <template>
+                            <div class="order-details">
+                                <div class="order-title">[[d.title]]</div>
+                                <div class="order-price">[[d.price]] ₴</div>
+                                <div class="order-quantity">[[d.quantity]]</div>
+                                <paper-icon-button icon="remove"></paper-icon-button>
+                            </div>
+                        </template>
+                    </dom-repeat>
+                </template>
+            </dom-repeat>
+
+
+            <div class="price-by-vendor">Сумма: 400 ₴</div>
+            <div class="total-price">Общая сумма: 400 ₴</div>
+
+        </div>
     </template>
     <script>
         class UserCart extends Polymer.Element {
@@ -79,11 +98,11 @@
                     cart: {
                         type: Array,
                         value: [{
-                            vendor: "pyureshka",
+                            vendor: "Пюре",
                             dishes: [
-                                {title: 'borsch', price: 70, quantity: 1},
-                                {title: 'stake', price: 130, quantity: 2}]
-                        }]
+                                {title: 'Борщ украинский', price: 35, quantity: 1},
+                                {title: 'Солянка', price: 40, quantity: 1}]
+                        }],
                     }
                 }
             };
