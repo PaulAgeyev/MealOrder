@@ -54,33 +54,21 @@
                 margin-bottom: 10px;
             }
 
-            .avatar {
-                height: 40px;
-                width: 40px;
-                border-radius: 20px;
-                box-sizing: border-box;
-                background-color: #DDD;
-            }
-
             .pad {
                 padding: 0;
                 @apply --layout-flex;
                 @apply --layout-vertical;
             }
 
-            .shortText, .longText {
-                font-size: 14px;
-            }
-
-            .longText {
+            .vendor-category {
                 color: gray;
                 display: none;
                 margin-left: 3%;
+                font-size: 14px;
             }
 
-            .item.expand .longText {
+            .item.expand .vendor-category {
                 display: block;
-
             }
 
             .spacer {
@@ -130,8 +118,25 @@
                 width: 50%;
                 padding-left: 25px;
             }
+
             .add-dish-icon {
                 margin-bottom: 2px;
+            }
+
+            .dish-category {
+                width: 60%;
+            }
+
+            .dish-title {
+                width: 60%;
+            }
+
+            .menu-price {
+                width: 40%;
+            }
+
+            .dish-price {
+                width: 40%;
             }
 
             @media only screen and (max-width: 600px) {
@@ -142,20 +147,6 @@
                         width: 100%;
                     }
                 }
-
-                .dish-category {
-                    width: 60%;
-                }
-                .dish-title {
-                    width: 60%;
-                }
-                .menu-price {
-                    width: 40%;
-                }
-                .dish-price {
-                    width: 40%;
-                }
-
             }
         </style>
         <iron-list scroll-target="document" id="list" items="[[items]]" as="item" selection-enabled multi-selection>
@@ -170,7 +161,7 @@
                                 </paper-item>
 
                             </div>
-                            <div class="longText">
+                            <div class="vendor-category">
                                 <div style="display: flex; justify-content: space-between;">
                                     <div class="dish-category">
                                         Первые блюда
@@ -217,27 +208,17 @@
                             {
                                 name: 'Пюре',
                                 dishes: [
-                                    {title: 'Борщ украинский', price: 35}, {
-                                        title: 'Солянка', price: 40
-                                    },
-                                    {
-                                        title: 'Суп гороховый', price: 40
-                                    },
-                                    {title: 'Уха', price: 35}, {
-                                        title: 'Суп-пюре с грибами', price: 40
-                                    }
-                                    ,{
-                                        title: 'Суп куриный', price: 40
-                                    }]
+                                    {title: 'Борщ украинский', price: 35},
+                                    {title: 'Солянка', price: 40},
+                                    {title: 'Суп гороховый', price: 40},
+                                    {title: 'Уха', price: 35},
+                                    {title: 'Суп-пюре грибной', price: 40},
+                                    {title: 'Суп куриный', price: 40}]
                             },
                             {
                                 name: 'Позитив',
                                 dishes: [{title: 'Суп куриный', price: 35}, {title: 'Стейк из лосося', price: 35}]
-                            },
-                            /*{
-                                name: 'Пирожок',
-                                dishes: [{title: 'Пирожок с картошкой', price: 5}, {title: 'Пирожок с маком', price: 10}]
-                            }*/]
+                            },]
                     }
                 }
             };
@@ -264,7 +245,6 @@
                 }
             }
         }
-
 
         window.customElements.define(VendorMenus.is, VendorMenus);
     </script>

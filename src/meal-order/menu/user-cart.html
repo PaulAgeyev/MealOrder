@@ -13,12 +13,6 @@
 
             }
 
-            .order {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-            }
-
             .order-details {
                 display: flex;
                 font-size: 15px;
@@ -54,9 +48,7 @@
 
         </style>
 
-
         <div>
-
             <dom-repeat items="[[cart]]" as="dish">
                 <template>
                     <div class="vendor">
@@ -80,11 +72,8 @@
                     </dom-repeat>
                 </template>
             </dom-repeat>
-
-
             <div class="price-by-vendor">Сумма: 400 ₴</div>
             <div class="total-price">Общая сумма: 400 ₴</div>
-
         </div>
     </template>
     <script>
