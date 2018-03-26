@@ -6,7 +6,7 @@
 <link rel="import" href="../../../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../../../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../../../bower_components/paper-input/paper-input.html">
-
+<link rel="import" href="../../../bower_components/paper-search/paper-search-bar.html">
 <dom-module id="vendor-menus">
     <template>
         <style>
@@ -51,17 +51,13 @@
                 border: 1px solid #e5e5e5;
             }
 
-            paper-input {
+            paper-search-bar {
                 width: 70%;
                 margin: 2% auto;
                 border-radius: 5px;
                 background-color: #ffffff;
-                padding: 0;
-                --paper-input-container: {
-                    padding: 0;
-                    --paper-input-container-focus-color: gray;
-                }
             }
+
             paper-item {
                 width: 100%;
             }
@@ -183,10 +179,7 @@
 
             }
         </style>
-        <paper-input value="{{filter}}" label="search" --paper-input-container-underline-disabled="true">
-            <iron-icon icon="search" slot="prefix"></iron-icon>
-        </paper-input>
-
+        <paper-search-bar query="{{filter}}" hide-filter-button="true"></paper-search-bar>
         <iron-list scroll-target="document" id="list" items="[[filtered]]" as="item" selection-enabled
                    multi-selection on-selected-items-changed="selectionChanged">
             <template>
