@@ -5,12 +5,18 @@
 <link rel="import" href="../../../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../../../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../../bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
+<link rel="import" href="../../../bower_components/app-layout/app-drawer/app-drawer.html">
+<link rel="import" href="../../../bower_components/app-layout/app-header/app-header.html">
+<link rel="import" href="../../../bower_components/app-layout/app-header-layout/app-header-layout.html">
+<link rel="import" href="../../../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
+<link rel="import" href="../../../bower_components/app-layout/app-toolbar/app-toolbar.html">
+<link rel="import" href="../../../bower_components/iron-flex-layout/iron-flex-layout.html">
 
 <dom-module id="user-cart">
     <template>
         <style>
             :host {
-
             }
 
             .order-details {
@@ -23,6 +29,18 @@
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
+            }
+
+            .cart {
+                overflow-y: auto;
+                max-height: 92.5vh;
+            }
+
+            .cart-container {
+                display: flex;
+                justify-content: space-between;
+                flex-direction: column;
+                height: 92.5vh;
             }
 
             .price-by-vendor {
@@ -48,32 +66,42 @@
 
         </style>
 
-        <div>
-            <dom-repeat items="[[cart]]" as="dish">
-                <template>
-                    <div class="vendor">
-                        <div>[[dish.vendor]]</div>
-                        <paper-icon-button icon="delete"></paper-icon-button>
-                    </div>
-                </template>
-            </dom-repeat>
+        <div class="cart">
 
-            <dom-repeat items="[[cart]]" as="dish">
-                <template>
-                    <dom-repeat items="[[dish.dishes]]" as="d">
+            <div class="cart-container">
+                <div>
+                    <dom-repeat items="[[cart]]" as="dish">
                         <template>
-                            <div class="order-details">
-                                <div class="order-title">[[d.title]]</div>
-                                <div class="order-price">[[d.price]] ₴</div>
-                                <div class="order-quantity">[[d.quantity]]</div>
-                                <paper-icon-button icon="remove"></paper-icon-button>
+                            <div class="vendor">
+                                <div>[[dish.vendor]]</div>
+                                <paper-icon-button icon="delete"></paper-icon-button>
                             </div>
                         </template>
                     </dom-repeat>
-                </template>
-            </dom-repeat>
-            <div class="price-by-vendor">Сумма: 400 ₴</div>
-            <div class="total-price">Общая сумма: 400 ₴</div>
+
+                    <dom-repeat items="[[cart]]" as="dish">
+                        <template>
+                            <dom-repeat items="[[dish.dishes]]" as="d">
+                                <template>
+                                    <div class="order-details">
+                                        <div class="order-title">[[d.title]]</div>
+                                        <div class="order-price">[[d.price]] ₴</div>
+                                        <div class="order-quantity">[[d.quantity]]</div>
+                                        <paper-icon-button icon="remove"></paper-icon-button>
+                                    </div>
+                                </template>
+                            </dom-repeat>
+                        </template>
+                    </dom-repeat>
+
+                    <div class="price-by-vendor">Сумма: 400 ₴</div>
+                </div>
+
+                <div>
+                    <div class="total-price">Общая сумма: 400 ₴</div>
+                    <div>&ensp;</div>
+                </div>
+            </div>
         </div>
     </template>
     <script>
