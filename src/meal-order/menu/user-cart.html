@@ -94,7 +94,7 @@
                                 <div class="order-title">[[d.title]]</div>
                                 <div class="order-price">[[d.price]] ₴</div>
                                 <div class="order-quantity">[[d.quantity]]</div>
-                                <paper-icon-button icon="remove"></paper-icon-button>
+                                <paper-icon-button icon="remove" on-click="removeDish"></paper-icon-button>
                             </div>
                         </template>
                     </dom-repeat>
@@ -146,6 +146,14 @@
                     }
                 }
             };
+
+            removeDish(e) {
+                const dish = {};
+                dish.vendor = e.model.parentModel.__data.dish.vendor;
+                dish.name = e.model.__data.d.title;
+                console.log(dish);
+                this.dispatchEvent(new CustomEvent('dish-added', dish));
+            }
         }
 
         window.customElements.define(UserCart.is, UserCart);

@@ -309,14 +309,14 @@
             }
 
             categoryExists(item) {
-                console.log(item.dishes);
                 return item.dishes.length > 0;
             }
 
             addDish(e) {
                 const dish = {};
-                dish.vendor = this.items[e.model.parentModel.index].name;
-                dish.name = this.items[e.model.parentModel.index].dishes[e.model.index];
+                dish.category = e.model.parentModel.__data.category.categoryName;
+                dish.vendor = e.model.parentModel.parentModel.__data.item.name;
+                dish.name = e.model.__data.dish.title;
                 this.dispatchEvent(new CustomEvent('dish-added', dish));
             }
 
@@ -350,8 +350,6 @@
                     }
                     filtered.push({name: this.items[i].name, categories: newVendorCategories});
                 }
-                console.log(filtered);
-                console.log(this.items);
                 return filtered;
             }
 
