@@ -50,7 +50,6 @@
             paper-input {
                 width: 70%;
                 margin: 2% auto;
-                border-bottom: 1px solid #ddd;
             }
 
             paper-item {
@@ -149,7 +148,6 @@
                 width: 40%;
             }
 
-
             .non-select {
                 -webkit-touch-callout: none; /* iOS Safari */
                 -webkit-user-select: none; /* Safari */
@@ -168,13 +166,16 @@
                         width: 100%;
                     }
                 }
+
                 .dish-price {
                     padding-left: 30px;
                 }
 
             }
         </style>
-        <paper-input value="{{filter}}"></paper-input>
+        <paper-input value="{{filter}}" label="search">
+            <iron-icon icon="search" slot="prefix"></iron-icon>
+        </paper-input>
 
         <iron-list scroll-target="document" id="list" items="[[filtered]]" as="item" selection-enabled
                    multi-selection on-selected-items-changed="selectionChanged">
@@ -288,7 +289,7 @@
                     const vendorDishes = this.items[i].dishes;
                     let newVendorDishes = [];
                     for (let j = 0; j < vendorDishes.length; j++) {
-                        if (vendorDishes[j].title.toLowerCase().startsWith(predicate.toLowerCase())) {
+                        if (vendorDishes[j].title.toLowerCase().includes(predicate.toLowerCase())) {
                             newVendorDishes.push(vendorDishes[j]);
                         }
                     }
