@@ -11,6 +11,7 @@
     <template>
         <style>
             :host {
+                font-family: 'Roboto', 'Noto', sans-serif;
                 display: block;
                 padding: 0;
             }
@@ -52,8 +53,9 @@
             }
 
             paper-search-bar {
+
+                margin: 0 auto;
                 width: 70%;
-                margin: 2% auto;
                 border-radius: 5px;
                 background-color: #ffffff;
             }
@@ -79,7 +81,7 @@
             }
 
             .vendor-category {
-                color: gray;
+                color: #626262;
                 display: none;
                 margin-left: 3%;
                 font-size: 14px;
@@ -157,11 +159,16 @@
                 -moz-user-select: none; /* Firefox */
                 -ms-user-select: none; /* Internet Explorer/Edge */
                 user-select: none;
-                /* Non-prefixed version, currently
-                                                 supported by Chrome and Opera */
+                /* Non-prefixed version, currently supported by Chrome and Opera */
             }
 
             @media only screen and (max-width: 600px) {
+
+                paper-search-bar {
+                    margin: 0 auto;
+                    width: 100%;
+                }
+
                 iron-list {
                     --iron-list-items-container: {
                         margin: 4% auto;
@@ -283,7 +290,6 @@
                 </div>
             </template>
         </iron-list>
-
     </template>
     <script>
         class VendorMenus extends Polymer.Element {
@@ -345,13 +351,13 @@
                 this.dispatchEvent(new CustomEvent('dish-added', dish));
             }
 
-            _handleInput() {
+            /*_handleInput() {
                 const div = this.shadowRoot.querySelector("#list");
                 for (let i = 0; i < this.items.length; i++) {
                     div.selectIndex(i);
                     div.selectIndex(i);
                 }
-            }
+            }*/
 
             filteredItems() {
                 const predicate = this.filter;
