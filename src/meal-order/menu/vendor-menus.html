@@ -191,7 +191,7 @@
                             <div class="vendor-category">
                                 <div style="display: flex; justify-content: space-between;">
                                     <div class="dish-category">
-                                        Блюдо
+                                        Первое блюдо
                                     </div>
                                     <div class="menu-price">
                                         Цена
@@ -199,7 +199,67 @@
                                     <div class="dish-icon">
                                     </div>
                                 </div>
-                                <dom-repeat items="[[item.dishes]]" as="dish">
+                                <dom-repeat items="[[getFirstDish(item)]]" as="dish">
+                                    <template>
+                                        <div class="menu-dashboard">
+                                            <paper-item>
+                                                <div class="dish-title">
+                                                    [[dish.title]]
+                                                </div>
+                                                <div class="dish-price">
+                                                    [[dish.price]]₴
+                                                </div>
+                                                <div class="add-dish-icon">
+                                                    <paper-icon-button icon="add"
+                                                                       on-click="addDish"></paper-icon-button>
+                                                </div>
+                                            </paper-item>
+                                        </div>
+                                    </template>
+                                </dom-repeat>
+                            </div>
+                            <div class="vendor-category">
+                                <div style="display: flex; justify-content: space-between;">
+                                    <div class="dish-category">
+                                        Второе блюдо
+                                    </div>
+                                    <div class="menu-price">
+                                        Цена
+                                    </div>
+                                    <div class="dish-icon">
+                                    </div>
+                                </div>
+                                <dom-repeat items="[[getSecondDish(item)]]" as="dish">
+                                    <template>
+                                        <div class="menu-dashboard">
+                                            <paper-item>
+                                                <div class="dish-title">
+                                                    [[dish.title]]
+                                                </div>
+                                                <div class="dish-price">
+                                                    [[dish.price]]₴
+                                                </div>
+                                                <div class="add-dish-icon">
+                                                    <paper-icon-button icon="add"
+                                                                       on-click="addDish"></paper-icon-button>
+                                                </div>
+                                            </paper-item>
+                                        </div>
+                                    </template>
+                                </dom-repeat>
+                            </div>
+                            <div class="vendor-category">
+                                <div style="display: flex; justify-content: space-between;">
+                                    <div class="dish-category">
+                                        Напитки
+                                    </div>
+                                    <div class="menu-price">
+                                        Цена
+                                    </div>
+                                    <div class="dish-icon">
+                                    </div>
+                                </div>
+                                <dom-repeat items="[[getDrinks(item)]]" as="dish">
                                     <template>
                                         <div class="menu-dashboard">
                                             <paper-item>
@@ -239,16 +299,20 @@
                             {
                                 name: 'Пюре',
                                 dishes: [
-                                    {title: 'Борщ украинский', price: 35},
-                                    {title: 'Солянка', price: 40},
-                                    {title: 'Суп гороховый', price: 40},
-                                    {title: 'Уха', price: 35},
-                                    {title: 'Суп-пюре грибной', price: 40},
-                                    {title: 'Суп куриный', price: 40}]
+                                    {title: 'Борщ украинский', price: 35, category: 'первое'},
+                                    {title: 'Солянка', price: 40, category: 'первое'},
+                                    {title: 'Суп гороховый', price: 40, category: 'первое'},
+                                    {title: 'Уха', price: 35, category: 'первое'},
+                                    {title: 'Суп-пюре грибной', price: 40, category: 'первое'},
+                                    {title: 'Куриные крылышки', price: 40, category: 'второе'}]
                             },
                             {
                                 name: 'Позитив',
-                                dishes: [{title: 'Суп куриный', price: 35}, {title: 'Стейк из лосося', price: 35}]
+                                dishes: [{
+                                    title: 'Суп куриный',
+                                    price: 35,
+                                    category: 'первое'
+                                }, {title: 'Стейк из лосося', price: 35, category: 'второе'}]
                             },]
                     },
                     filtered: {
@@ -332,6 +396,39 @@
                 else {
                     div.deselectIndex(e.model.index);
                 }
+            }
+
+            getFirstDish(item) {
+                const firstDishes = [];
+                const allDishes = item;
+                for (let i = 0; i < allDishes.dishes.length; i++) {
+                    if (allDishes.dishes[i].category === 'первое') {
+                        firstDishes.push(allDishes.dishes[i]);
+                    }
+                }
+                return firstDishes;
+            }
+
+            getSecondDish(item) {
+                const secondDishes = [];
+                const allDishes = item;
+                for (let i = 0; i < allDishes.dishes.length; i++) {
+                    if (allDishes.dishes[i].category === 'второе') {
+                        secondDishes.push(allDishes.dishes[i]);
+                    }
+                }
+                return secondDishes;
+            }
+
+            getDrinks(item) {
+                const drinks = [];
+                const allDishes = item;
+                for (let i = 0; i < allDishes.dishes.length; i++) {
+                    if (allDishes.dishes[i].category === 'напитки') {
+                        drinks.push(allDishes.dishes[i]);
+                    }
+                }
+                return drinks;
             }
         }
 
