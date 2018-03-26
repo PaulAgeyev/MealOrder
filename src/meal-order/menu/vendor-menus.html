@@ -10,6 +10,10 @@
 <dom-module id="vendor-menus">
     <template>
         <style>
+            :host {
+                display: block;
+                padding: 0;
+            }
 
             body {
                 height: 100vh;
@@ -50,8 +54,14 @@
             paper-input {
                 width: 70%;
                 margin: 2% auto;
+                border-radius: 5px;
+                background-color: #ffffff;
+                padding: 0;
+                --paper-input-container: {
+                    padding: 0;
+                    --paper-input-container-focus-color: gray;
+                }
             }
-
             paper-item {
                 width: 100%;
             }
@@ -173,7 +183,7 @@
 
             }
         </style>
-        <paper-input value="{{filter}}" label="search">
+        <paper-input value="{{filter}}" label="search" --paper-input-container-underline-disabled="true">
             <iron-icon icon="search" slot="prefix"></iron-icon>
         </paper-input>
 
