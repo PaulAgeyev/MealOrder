@@ -23,7 +23,6 @@
 <dom-module id="meal-order">
     <template>
         <style>
-
             :host {
                 font-family: 'Roboto', 'Noto', sans-serif;
                 --app-primary-color: #4285f4;
@@ -89,6 +88,10 @@
                 font-size: 0.75em;
             }
 
+            .order-date {
+                display: flex; justify-content: space-between; align-items: center; width: 100%
+            }
+
             @media only screen and (max-width: 600px) {
 
                 .history-of-orders {
@@ -122,7 +125,7 @@
 
             <app-drawer slot="drawer" align="right">
                 <app-toolbar>
-                    <div class="order" style="display: flex; justify-content: space-between; align-items: center; width: 100%">
+                    <div class="order-date">
                         <div>Заказ</div>
                         <div>
                             <div>Пн</div>

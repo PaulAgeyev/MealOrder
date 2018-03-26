@@ -127,7 +127,7 @@
             }
 
             .dish-price {
-                width: 50%;
+                width: 40%;
                 padding-left: 25px;
             }
 
@@ -149,9 +149,6 @@
                 width: 40%;
             }
 
-            .dish-price {
-                width: 40%;
-            }
 
             .non-select {
                 -webkit-touch-callout: none; /* iOS Safari */
@@ -165,13 +162,16 @@
             }
 
             @media only screen and (max-width: 600px) {
-
                 iron-list {
                     --iron-list-items-container: {
                         margin: 4% auto;
                         width: 100%;
                     }
                 }
+                .dish-price {
+                    padding-left: 30px;
+                }
+
             }
         </style>
         <paper-input value="{{filter}}"></paper-input>
