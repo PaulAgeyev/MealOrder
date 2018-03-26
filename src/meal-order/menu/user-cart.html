@@ -23,15 +23,20 @@
                 display: flex;
                 font-size: 15px;
                 align-items: center;
+                border-bottom: 2px solid;
+                border-bottom-color: #fcfcfc;
             }
 
             .vendor {
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
+                padding-left: 4%;
+                background-color: #fcfcfc;
             }
 
             .cart {
+                overflow-x: hidden;
                 overflow-y: auto;
                 max-height: 92.5vh;
             }
@@ -44,24 +49,54 @@
             }
 
             .price-by-vendor {
+                display: flex;
+                margin-top: 2%;
                 font-size: 15px;
                 text-align: left;
-            }
-
-            .total-price {
-                text-align: left;
+                padding-left: 4%;
             }
 
             .order-title {
-                width: 15%
+                width: 50%;
+                text-align: left;
+                padding-left: 4%;
             }
 
             .order-price {
-                width: 50%;
+                width: 20%;
+                text-align: right;
             }
 
             .order-quantity {
+                width: 15%;
+            }
+
+            .price-by-vendor .amount {
+                width: 50%;
+            }
+
+            .price-by-vendor .price {
+                text-align: right;
+            }
+
+            .amount-title {
+                width: 50%;
+                text-align: left;
+                padding-left: 4%;
+                font-weight: bolder;
+            }
+
+            .amount-order-price {
                 width: 20%;
+                text-align: right;
+
+            }
+
+            .total {
+                display: flex;
+                justify-content: space-between;
+                margin: 0 4%;
+                font-weight: bolder;
             }
 
         </style>
@@ -74,13 +109,8 @@
                         <template>
                             <div class="vendor">
                                 <div>[[dish.vendor]]</div>
-                                <paper-icon-button icon="delete"></paper-icon-button>
+                                <paper-icon-button icon="delete" class="icon-delete"></paper-icon-button>
                             </div>
-                        </template>
-                    </dom-repeat>
-
-                    <dom-repeat items="[[cart]]" as="dish">
-                        <template>
                             <dom-repeat items="[[dish.dishes]]" as="d">
                                 <template>
                                     <div class="order-details">
@@ -91,16 +121,33 @@
                                     </div>
                                 </template>
                             </dom-repeat>
+
+                            <dom-repeat items="[[dish.dishes]]" as="d">
+                                <template>
+                                    <div class="order-details">
+                                        <div class="order-title">[[d.title]]</div>
+                                        <div class="order-price">322 ₴</div>
+                                        <div class="order-quantity">[[d.quantity]]</div>
+                                        <paper-icon-button icon="remove"></paper-icon-button>
+                                    </div>
+                                </template>
+                            </dom-repeat>
+
+                            <div class="order-details">
+                                <div class="amount-title">Сумма:</div>
+                                <div class="amount-order-price">500 ₴</div>
+                                <div class="order-quantity"></div>
+                                <paper-icon-button></paper-icon-button>
+                            </div>
                         </template>
                     </dom-repeat>
 
-                    <div class="price-by-vendor">Сумма: 400 ₴</div>
                 </div>
-
-                <div>
-                    <div class="total-price">Общая сумма: 400 ₴</div>
-                    <div>&ensp;</div>
+                <div class="total">
+                    <div class="amount">Общая сумма:</div>
+                    <div class="price">400 ₴</div>
                 </div>
+                <div>&ensp;</div>
             </div>
         </div>
     </template>
@@ -118,7 +165,18 @@
                             vendor: "Пюре",
                             dishes: [
                                 {title: 'Борщ украинский', price: 35, quantity: 1},
-                                {title: 'Солянка', price: 40, quantity: 1}]
+                                {title: 'Солянка', price: 40, quantity: 1},
+                                {title: 'Суп гороховый', price: 40, quantity: 1},
+                                {title: 'Уха', price: 35, quantity: 1},
+                                {title: 'Суп-пюре грибной', price: 40, quantity: 1},
+                                {title: 'Суп куриный', price: 40, quantity: 1},]
+                        }, {
+                            vendor: 'Позитив',
+                            dishes: [{title: 'Суп куриный', price: 35, quantity: 1}, {
+                                title: 'Стейк из лосося',
+                                price: 35,
+                                quantity: 1
+                            }]
                         }],
                     }
                 }

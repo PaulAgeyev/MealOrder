@@ -71,7 +71,7 @@
             }
 
             app-header .history-of-orders a:hover {
-               color: #179EFF;
+                color: #179EFF;
             }
 
             app-header .history-icon {
@@ -89,7 +89,24 @@
             }
 
             .order-date {
-                display: flex; justify-content: space-between; align-items: center; width: 100%
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                width: 100%
+            }
+
+            .order-date .order {
+                font-size: 24px;
+            }
+
+            .order-date .day {
+                font-size: 0.7em;
+                font-weight: lighter;
+                text-align: center;
+            }
+
+            .order-date .day-of-the-week {
+                font-size: 22px;
             }
 
             @media only screen and (max-width: 600px) {
@@ -126,10 +143,11 @@
             <app-drawer slot="drawer" align="right">
                 <app-toolbar>
                     <div class="order-date">
-                        <div>Заказ</div>
+                        <div class="order">Заказ</div>
                         <div>
-                            <div>Пн</div>
-                            <div>29</div>
+                            <div class="day">Пн
+                            </div>
+                            <div class="day-of-the-week">21</div>
                         </div>
                     </div>
                 </app-toolbar>
