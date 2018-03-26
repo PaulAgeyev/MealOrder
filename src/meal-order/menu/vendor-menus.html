@@ -89,10 +89,6 @@
                 display: block;
             }
 
-            .spacer {
-                @apply --layout-flex;
-            }
-
             @media (max-width: 460px) {
                 paper-toolbar .bottom.title {
                     font-size: 14px;
@@ -179,7 +175,7 @@
 
             }
         </style>
-        <paper-search-bar query="{{filter}}" hide-filter-button="true"></paper-search-bar>
+        <paper-search-bar query="{{filter}}" hide-filter-button="true" placeholder="Поиск"></paper-search-bar>
         <iron-list scroll-target="document" id="list" items="[[filtered]]" as="item" selection-enabled
                    multi-selection on-selected-items-changed="selectionChanged">
             <template>
@@ -214,7 +210,8 @@
                                                     [[dish.price]]₴
                                                 </div>
                                                 <div class="add-dish-icon">
-                                                    <paper-icon-button icon="add"></paper-icon-button>
+                                                    <paper-icon-button icon="add"
+                                                                       on-click="addDish"></paper-icon-button>
                                                 </div>
                                             </paper-item>
                                         </div>
@@ -277,6 +274,13 @@
                 ];
             }
 
+            addDish(e) {
+                const dish = {};
+                dish.vendor = this.items[e.model.parentModel.index].name;
+                dish.name = this.items[e.model.parentModel.index].dishes[e.model.index];
+                this.dispatchEvent(new CustomEvent('dish-added', dish));
+            }
+
             _handleInput() {
                 const div = this.shadowRoot.querySelector("#list");
                 for (let i = 0; i < this.items.length; i++) {
@@ -298,8 +302,6 @@
                     }
                     filtered.push({name: this.items[i].name, dishes: newVendorDishes});
                 }
-
-
                 return filtered;
             }
 
@@ -307,12 +309,6 @@
                 const div = this.shadowRoot.querySelector("#list");
                 this.set('selectedVendors', div.selectedItems);
             }
-
-
-            attached() {
-                // Use the document element
-                this.$.list.scrollTarget = this.ownerDocument.documentElement;
-            };
 
             getClassForItem(selected) {
                 return selected ? 'item expand' : 'item';
