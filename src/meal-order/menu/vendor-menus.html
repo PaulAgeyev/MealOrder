@@ -5,6 +5,8 @@
 <link rel="import" href="../../../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../../../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../../bower_components/paper-input/paper-input.html">
+
 <dom-module id="vendor-menus">
     <template>
         <style>
@@ -45,6 +47,16 @@
                 border: 1px solid #e5e5e5;
             }
 
+            paper-input {
+                width: 70%;
+                margin: 2% auto;
+                border-bottom: 1px solid #ddd;
+            }
+
+            paper-item {
+                width: 100%;
+            }
+
             .item {
                 @apply --layout-horizontal;
                 /*padding: 20px;*/
@@ -55,9 +67,10 @@
             }
 
             .pad {
-                padding: 0;
+                padding: 15px;
                 @apply --layout-flex;
                 @apply --layout-vertical;
+
             }
 
             .vendor-category {
@@ -84,12 +97,11 @@
             #expand-button {
                 position: absolute;
                 right: 0;
-                bottom: 5px;
+                top: 7px;
             }
 
             .primary {
                 font-size: 16px;
-                font-weight: bold;
             }
 
             .menu-dashboard {
@@ -124,6 +136,8 @@
             }
 
             .dish-category {
+                padding-top: 20px;
+                padding-left: 17px;
                 width: 60%;
             }
 
@@ -139,6 +153,17 @@
                 width: 40%;
             }
 
+            .non-select {
+                -webkit-touch-callout: none; /* iOS Safari */
+                -webkit-user-select: none; /* Safari */
+                -khtml-user-select: none; /* Konqueror HTML */
+                -moz-user-select: none; /* Firefox */
+                -ms-user-select: none; /* Internet Explorer/Edge */
+                user-select: none;
+                /* Non-prefixed version, currently
+                                                 supported by Chrome and Opera */
+            }
+
             @media only screen and (max-width: 600px) {
 
                 iron-list {
@@ -149,22 +174,24 @@
                 }
             }
         </style>
-        <iron-list scroll-target="document" id="list" items="[[items]]" as="item" selection-enabled multi-selection>
+        <paper-input value="{{filter}}"></paper-input>
+
+        <iron-list scroll-target="document" id="list" items="[[filtered]]" as="item" selection-enabled
+                   multi-selection on-selected-items-changed="selectionChanged">
             <template>
-                <div>
+                <div class="non-select">
                     <div class$="[[getClassForItem(selected)]]" tabindex$="[[tabIndex]]">
                         <div class="pad">
                             <div class="primary">
-                                <paper-item>[[item.name]]
-                                    <paper-icon-button id="expand-button" icon="expand-more"
-                                                       on-click="_reSelect"></paper-icon-button>
-                                </paper-item>
+                                [[item.name]]
+                                <paper-icon-button id="expand-button" icon="[[getIcon(selected)]]"
+                                                   on-click="_reSelect"></paper-icon-button>
 
                             </div>
                             <div class="vendor-category">
                                 <div style="display: flex; justify-content: space-between;">
                                     <div class="dish-category">
-                                        Первые блюда
+                                        Блюдо
                                     </div>
                                     <div class="menu-price">
                                         Цена
@@ -175,21 +202,24 @@
                                 <dom-repeat items="[[item.dishes]]" as="dish">
                                     <template>
                                         <div class="menu-dashboard">
-                                            <div class="dish-title">
-                                                [[dish.title]]
-                                            </div>
-                                            <div class="dish-price">
-                                                [[dish.price]]₴
-                                            </div>
-                                            <div class="add-dish-icon">
-                                                <paper-icon-button icon="add"></paper-icon-button>
-                                            </div>
+                                            <paper-item>
+                                                <div class="dish-title">
+                                                    [[dish.title]]
+                                                </div>
+                                                <div class="dish-price">
+                                                    [[dish.price]]₴
+                                                </div>
+                                                <div class="add-dish-icon">
+                                                    <paper-icon-button icon="add"></paper-icon-button>
+                                                </div>
+                                            </paper-item>
                                         </div>
                                     </template>
                                 </dom-repeat>
                             </div>
                         </div>
                     </div>
+                </div>
             </template>
         </iron-list>
 
@@ -219,9 +249,61 @@
                                 name: 'Позитив',
                                 dishes: [{title: 'Суп куриный', price: 35}, {title: 'Стейк из лосося', price: 35}]
                             },]
+                    },
+                    filtered: {
+                        type: Array,
+                        computed: 'filteredItems(filter)',
+                        reflectToAttribute: true
+                    },
+                    filter: {
+                        type: String,
+                        value: '',
+                        notify: true
+                    },
+                    selectedVendors: {
+                        type: Array,
+                        value: []
                     }
                 }
             };
+
+            static get observers() {
+                return [
+                    '_handleInput(filter)'
+                ];
+            }
+
+            _handleInput() {
+                const div = this.shadowRoot.querySelector("#list");
+                for (let i = 0; i < this.items.length; i++) {
+                    div.selectIndex(i);
+                    div.selectIndex(i);
+                }
+            }
+
+            filteredItems() {
+                const predicate = this.filter;
+                const filtered = [];
+                for (let i = 0; i < this.items.length; i++) {
+                    const vendorDishes = this.items[i].dishes;
+                    let newVendorDishes = [];
+                    for (let j = 0; j < vendorDishes.length; j++) {
+                        if (vendorDishes[j].title.toLowerCase().startsWith(predicate.toLowerCase())) {
+                            newVendorDishes.push(vendorDishes[j]);
+                        }
+                    }
+                    filtered.push({name: this.items[i].name, dishes: newVendorDishes});
+                }
+
+
+                return filtered;
+            }
+
+            selectionChanged(e) {
+                const div = this.shadowRoot.querySelector("#list");
+                this.set('selectedVendors', div.selectedItems);
+            }
+
 
             attached() {
                 // Use the document element
@@ -232,16 +314,23 @@
                 return selected ? 'item expand' : 'item';
             };
 
+            getIcon(selected) {
+                if (selected) {
+                    return 'expand-less';
+                }
+                else {
+                    return 'expand-more';
+
+                }
+            }
+
             _reSelect(e) {
                 const div = this.shadowRoot.querySelector("#list");
-                const iconButton = this.shadowRoot.querySelectorAll("paper-icon-button#expand-button")[e.model.index];
                 if (!e.model.selected) {
                     div.selectIndex(e.model.index);
-                    iconButton.icon = 'expand-less';
                 }
                 else {
                     div.deselectIndex(e.model.index);
-                    iconButton.icon = 'expand-more';
                 }
             }
         }
