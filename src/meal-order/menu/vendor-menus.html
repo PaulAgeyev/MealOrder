@@ -199,7 +199,7 @@
                                     <div class="dish-icon">
                                     </div>
                                 </div>
-                                <dom-repeat items="[[getFirstDish(index)]]" as="dish">
+                                <dom-repeat items="[[getFirstDish(item)]]" as="dish">
                                     <template>
                                         <div class="menu-dashboard">
                                             <paper-item>
@@ -229,7 +229,7 @@
                                     <div class="dish-icon">
                                     </div>
                                 </div>
-                                <dom-repeat items="[[getSecondDish(index)]]" as="dish">
+                                <dom-repeat items="[[getSecondDish(item)]]" as="dish">
                                     <template>
                                         <div class="menu-dashboard">
                                             <paper-item>
@@ -259,7 +259,7 @@
                                     <div class="dish-icon">
                                     </div>
                                 </div>
-                                <dom-repeat items="[[getDrinks(index)]]" as="dish">
+                                <dom-repeat items="[[getDrinks(item)]]" as="dish">
                                     <template>
                                         <div class="menu-dashboard">
                                             <paper-item>
@@ -398,34 +398,34 @@
                 }
             }
 
-            getFirstDish(index) {
+            getFirstDish(item) {
                 const firstDishes = [];
-                const allDishes = this.items[index].dishes;
-                for (let i = 0; i < allDishes.length; i++) {
-                    if (allDishes[i].category === 'первое') {
-                        firstDishes.push(allDishes[i]);
+                const allDishes = item;
+                for (let i = 0; i < allDishes.dishes.length; i++) {
+                    if (allDishes.dishes[i].category === 'первое') {
+                        firstDishes.push(allDishes.dishes[i]);
                     }
                 }
                 return firstDishes;
             }
 
-            getSecondDish(index) {
+            getSecondDish(item) {
                 const secondDishes = [];
-                const allDishes = this.items[index].dishes;
-                for (let i = 0; i < allDishes.length; i++) {
-                    if (allDishes[i].category === 'второе') {
-                        secondDishes.push(allDishes[i]);
+                const allDishes = item;
+                for (let i = 0; i < allDishes.dishes.length; i++) {
+                    if (allDishes.dishes[i].category === 'второе') {
+                        secondDishes.push(allDishes.dishes[i]);
                     }
                 }
                 return secondDishes;
             }
 
-            getDrinks(index) {
+            getDrinks(item) {
                 const drinks = [];
-                const allDishes = this.items[index].dishes;
-                for (let i = 0; i < allDishes.length; i++) {
-                    if (allDishes[i].category === 'напитки') {
-                        drinks.push(allDishes[i]);
+                const allDishes = item;
+                for (let i = 0; i < allDishes.dishes.length; i++) {
+                    if (allDishes.dishes[i].category === 'напитки') {
+                        drinks.push(allDishes.dishes[i]);
                     }
                 }
                 return drinks;
