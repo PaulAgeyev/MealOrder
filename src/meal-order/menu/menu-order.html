@@ -8,7 +8,7 @@
 <link rel="import" href="../../../bower_components/polymer/lib/elements/dom-repeat.html">
 
 <link rel="import" href="vendor-menus.html">
-
+<link rel="import" href="user-history.html">
 <dom-module id="menu-order">
     <template>
         <style>
@@ -35,11 +35,11 @@
                 width: 70%;
             }
 
-            paper-tab.iron-selected .day-of-the-week{
+            paper-tab.iron-selected .day-of-the-week {
                 color: #179EFF;
             }
 
-            paper-tab.iron-selected .day{
+            paper-tab.iron-selected .day {
                 color: #179EFF;
             }
 
@@ -101,7 +101,7 @@
 
             <vendor-menus name="[[currentDay.date.year]]-[[currentDay.date.month]]-[[currentDay.date.day]]"
                           menu="[[menu]]" route="[[subroute]]"></vendor-menus>
-            <user-history name="history"></user-history>
+            <user-history name="history" menu="[[getHistoryForThisDate(date)]]"></user-history>
 
         </iron-pages>
     </template>
