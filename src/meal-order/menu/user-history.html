@@ -1,0 +1,101 @@
+<script src="../../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+<link rel="import" href="../../../bower_components/polymer/polymer-element.html">
+
+<link rel="import" href="../../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../../bower_components/vaadin-grid/vaadin-grid.html">
+<dom-module id="user-history">
+    <template>
+        <style>
+            :host {
+                color: #4f4f4f;
+            }
+
+            paper-card {
+                display: block;
+            }
+
+            vaadin-grid {
+                height: max-content;
+                width: 70%;
+                display: block;
+                margin-left: 15%;
+
+            }
+
+            .vendor {
+                margin-left: 15%;
+                font: bold 24px/1.5 Times, 'New Century Schoolbook', serif;
+            }
+        </style>
+        <div class="history">
+            <paper-card heading="History">
+
+                <dom-repeat items="[[cart]]" as="vendor">
+                    <template>
+                        <div class="vendor">[[vendor.vendor]]</div>
+                        <vaadin-grid title="vendor" aria-label="Basic Binding Example" items="[[vendor.dishes]]"
+                                     as="vendor">
+                            <vaadin-grid-column>
+                                <template class="header">Title</template>
+                                <template>[[item.title]]</template>
+                            </vaadin-grid-column>
+
+                            <vaadin-grid-column>
+                                <template class="header">Price</template>
+                                <template>[[item.price]]</template>
+                            </vaadin-grid-column>
+
+                            <vaadin-grid-column width="150px">
+                                <template class="header">Quantity</template>
+                                <template>
+                                    <p style="white-space: normal">[[item.quantity]]</p>
+                                </template>
+                                <template class="footer">Total 15000</template>
+                            </vaadin-grid-column>
+
+                        </vaadin-grid>
+                    </template>
+                </dom-repeat>
+
+            </paper-card>
+
+        </div>
+
+    </template>
+    <script>
+        class UserHistory extends Polymer.Element {
+            static get is() {
+                return 'user-history';
+            }
+
+            static get properties() {
+                return {
+                    cart: {
+                        type: Array,
+                        value: [{
+                            vendor: "Пюре",
+                            dishes: [
+                                {title: 'Борщ украинский', price: 35, quantity: 1},
+                                {title: 'Солянка', price: 40, quantity: 1},
+                                {title: 'Суп гороховый', price: 40, quantity: 1},
+                                {title: 'Уха', price: 35, quantity: 1},
+                                {title: 'Суп-пюре грибной', price: 40, quantity: 1},
+                                {title: 'Суп куриный', price: 40, quantity: 1},]
+                        }, {
+                            vendor: 'Позитив',
+                            dishes: [{title: 'Суп куриный', price: 35, quantity: 1}, {
+                                title: 'Стейк из лосося',
+                                price: 35,
+                                quantity: 1
+                            }]
+                        }],
+                    }
+
+                }
+            };
+
+        }
+
+        window.customElements.define(UserHistory.is, UserHistory);
+    </script>
+</dom-module>
