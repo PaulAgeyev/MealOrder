@@ -324,8 +324,11 @@
             _handleInput() {
                 const div = this.shadowRoot.querySelector("#list");
                 for (let i = 0; i < this.items.length; i++) {
-                    div.selectIndex(i);
-                    div.selectIndex(i);
+                    if (this.filter !== '') {
+                        div.selectIndex(i);
+                        div.selectIndex(i);
+                        console.log(this.filter);
+                    }
                 }
             }
 
