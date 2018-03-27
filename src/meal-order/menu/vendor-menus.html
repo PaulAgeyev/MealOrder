@@ -7,6 +7,7 @@
 <link rel="import" href="../../../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../../../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../../../bower_components/paper-search/paper-search-bar.html">
+
 <dom-module id="vendor-menus">
     <template>
         <style>
@@ -174,7 +175,9 @@
 
             }
         </style>
+
         <paper-search-bar query="{{filter}}" hide-filter-button="true" placeholder="Поиск"></paper-search-bar>
+
         <iron-list scroll-target="document" id="list" items="[[filtered]]" as="item" selection-enabled
                    multi-selection on-selected-items-changed="selectionChanged">
             <template>
@@ -246,48 +249,10 @@
                 return {
                     items: {
                         type: Array,
-                        value: [
-                            {
-                                name: 'Пюре',
-                                categories: [{
-                                    categoryName: 'Первое блюдо', dishes: [
-                                        {title: 'Борщ украинский', price: 35},
-                                        {title: 'Солянка', price: 40},
-                                        {title: 'Суп гороховый', price: 140},
-                                        {title: 'Уха', price: 35},
-                                        {title: 'Суп-пюре грибной', price: 40}]
-                                }
-                                    , {
-                                        categoryName: 'Второе блюдо', dishes: [
-                                            {title: 'Утиные крылышки', price: 40},
-                                            {title: 'Куриные крылышки', price: 45}]
-                                    }
-                                ]
-                            },
-                            {
-                                name: 'Позитив',
-                                categories: [{
-                                    categoryName: 'Первое блюдо', dishes: [
-                                        {title: 'Борщ украинский', price: 35},
-                                        {title: 'Суп с лапшой', price: 40},
-                                        {title: 'Борщ красный', price: 40},
-                                        {title: 'Борщ зеленый', price: 35}]
-                                }
-                                    , {
-                                        categoryName: 'Второе блюдо', dishes: [
-                                            {title: 'Стейк из лосося', price: 40},
-                                            {title: 'Стейк из говядины', price: 45}]
-                                    },
-                                    {
-                                        categoryName: 'Напитки', dishes: [
-                                            {title: 'Лимонад', price: 40}]
-                                    }
-                                ]
-                            },]
                     },
                     filtered: {
                         type: Array,
-                        computed: 'filteredItems(filter)',
+                        computed: 'filteredItems(items,filter)',
                         reflectToAttribute: true
                     },
                     filter: {
