@@ -121,38 +121,26 @@
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-                padding: 16px 0 15px 10px;
+            }
+
+            .bolder {
                 font-weight: bolder;
             }
 
-
-            .dish-category {
-                width: 60%;
-                font-size: 15px;
-            }
-
-            .menu-price {
-                width: 10%;
-                text-align: right;
-            }
-
-            .dish-icon {
-                width: 50%;
-            }
-
             .dish-title {
-                width: 60%;
+                width: 55%;
                 padding-left: 10px;
+                text-align: left;
             }
 
             .dish-price {
-                width: 10%;
+                width: 50px;
                 text-align: right;
             }
 
             .add-dish-icon {
                 margin-bottom: 2px;
-                width: 50%;
+                width: 45%;
                 text-align: right;
             }
 
@@ -204,16 +192,21 @@
                                     <dom-if if="[[categoryExists(category)]]">
                                         <template>
                                             <div class="vendor">
+
                                                 <div class="category">
-                                                    <div class="dish-category">
-                                                        [[category.categoryName]]
-                                                    </div>
-                                                    <div class="menu-price">
-                                                        Цена
-                                                    </div>
-                                                    <div class="dish-icon">
-                                                    </div>
+                                                    <paper-item>
+                                                        <div class="dish-title bolder">
+                                                            [[category.categoryName]]
+                                                        </div>
+                                                        <div class="dish-price bolder">
+                                                            Цена
+                                                        </div>
+                                                        <div class="add-dish-icon">
+                                                            <paper-icon-button icon=""></paper-icon-button>
+                                                        </div>
+                                                    </paper-item>
                                                 </div>
+
                                                 <dom-repeat items="[[category.dishes]]" as="dish">
                                                     <template>
                                                         <div class="menu-dashboard">
