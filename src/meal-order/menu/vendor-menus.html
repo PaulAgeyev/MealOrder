@@ -53,7 +53,6 @@
             }
 
             paper-search-bar {
-
                 margin: 0 auto;
                 width: 70%;
                 border-radius: 5px;
@@ -77,17 +76,20 @@
                 padding: 15px;
                 @apply --layout-flex;
                 @apply --layout-vertical;
-
+                font-size: 15px;
             }
 
-            .vendor-category {
+            paper-item {
+                font-size: 15px;
+                padding: 0;
+            }
+
+            .vendor {
                 color: #4f4f4f;
                 display: none;
-                margin-left: 3%;
-                font-size: 14px;
             }
 
-            .item.expand .vendor-category {
+            .item.expand .vendor {
                 display: block;
             }
 
@@ -111,41 +113,47 @@
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
+                border-top: 1px solid #fcfcfc;
+                border-bottom: 1px solid #fcfcfc;
             }
 
+            .category {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 16px 0 15px 10px;
+                font-weight: bolder;
+            }
+
+
             .dish-category {
-                width: 50%;
+                width: 60%;
+                font-size: 15px;
+            }
+
+            .menu-price {
+                width: 10%;
+                text-align: right;
             }
 
             .dish-icon {
-                width: 40px;
-            }
-
-            .dish-title {
                 width: 50%;
             }
 
+            .dish-title {
+                width: 60%;
+                padding-left: 10px;
+            }
+
             .dish-price {
-                width: 40%;
-                padding-left: 25px;
+                width: 10%;
+                text-align: right;
             }
 
             .add-dish-icon {
                 margin-bottom: 2px;
-            }
-
-            .dish-category {
-                padding-top: 20px;
-                padding-left: 17px;
-                width: 60%;
-            }
-
-            .dish-title {
-                width: 60%;
-            }
-
-            .menu-price {
-                width: 40%;
+                width: 50%;
+                text-align: right;
             }
 
             .non-select {
@@ -189,15 +197,14 @@
                                 [[item.name]]
                                 <paper-icon-button id="expand-button" icon="[[getIcon(selected)]]"
                                                    on-click="_reSelect"></paper-icon-button>
-
                             </div>
 
                             <dom-repeat items="[[item.categories]]" as="category">
                                 <template>
                                     <dom-if if="[[categoryExists(category)]]">
                                         <template>
-                                            <div class="vendor-category">
-                                                <div style="display: flex; justify-content: space-between;">
+                                            <div class="vendor">
+                                                <div class="category">
                                                     <div class="dish-category">
                                                         [[category.categoryName]]
                                                     </div>
@@ -250,15 +257,15 @@
                             {
                                 name: 'Пюре',
                                 categories: [{
-                                    categoryName: 'первое', dishes: [
+                                    categoryName: 'Первое блюдо', dishes: [
                                         {title: 'Борщ украинский', price: 35},
                                         {title: 'Солянка', price: 40},
-                                        {title: 'Суп гороховый', price: 40},
+                                        {title: 'Суп гороховый', price: 140},
                                         {title: 'Уха', price: 35},
                                         {title: 'Суп-пюре грибной', price: 40}]
                                 }
                                     , {
-                                        categoryName: 'второе', dishes: [
+                                        categoryName: 'Второе блюдо', dishes: [
                                             {title: 'Утиные крылышки', price: 40},
                                             {title: 'Куриные крылышки', price: 45}]
                                     }
@@ -267,19 +274,19 @@
                             {
                                 name: 'Позитив',
                                 categories: [{
-                                    categoryName: 'первое', dishes: [
+                                    categoryName: 'Первое блюдо', dishes: [
                                         {title: 'Борщ украинский', price: 35},
                                         {title: 'Суп с лапшой', price: 40},
                                         {title: 'Борщ красный', price: 40},
                                         {title: 'Борщ зеленый', price: 35}]
                                 }
                                     , {
-                                        categoryName: 'второе', dishes: [
+                                        categoryName: 'Второе блюдо', dishes: [
                                             {title: 'Стейк из лосося', price: 40},
                                             {title: 'Стейк из говядины', price: 45}]
                                     },
                                     {
-                                        categoryName: 'напитки', dishes: [
+                                        categoryName: 'Напитки', dishes: [
                                             {title: 'Лимонад', price: 40}]
                                     }
                                 ]
