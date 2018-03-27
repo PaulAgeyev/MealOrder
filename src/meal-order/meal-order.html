@@ -15,6 +15,8 @@
 <link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
 <link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../../bower_components/iron-icons/maps-icons.html">
+<link rel="import" href="../../bower_components/datetime-picker/datetime-picker.html">
+<link rel="import" href="../../bower_components/datetime-picker/date-picker.html">
 
 <link rel="import" href="menu/user-cart.html">
 <link rel="import" href="menu/menu-order.html">
@@ -125,7 +127,24 @@
                     display: none;
                 }
 
+                vaadin-date-picker {
+                    position: absolute;
+                    left: 300px;
+                }
             }
+
+            date-picker.end {
+                --input-color: #fff;
+                --input-background: #594894;
+                --input-picker-color: #fff;
+                --input-picker-background: #594894;
+                --input-focus-color: #fff;
+                --input-focus-background: #7551ee;
+                --input-style: {
+
+                }
+            }
+
         </style>
 
         <app-location route="{{route}}"
@@ -153,14 +172,16 @@
             </app-drawer>
 
             <app-header-layout>
+                <vaadin-date-picker value="{{currentDate}}"></vaadin-date-picker>
 
                 <app-header slot="header" reveals effects="waterfall">
+
                     <app-toolbar>
                         <div class="container">
                             <div class="order-container">
                                 <div class="main-title">Заказ обедов</div>
                                 <div class="date-container">
-                                    <iron-icon class="date-range-icon" icon="maps:icons:date-range"></iron-icon>
+                                    <!--<iron-icon class="date-range-icon" icon="maps:icons:date-range"></iron-icon>-->
                                     <div class="calendar">Март&nbsp;2018</div>
                                 </div>
                             </div>
@@ -174,8 +195,12 @@
                         </div>
                     </app-toolbar>
                 </app-header>
-
                 <menu-order></menu-order>
+
+                <date-picker class="end" month="6" day="21" auto-confirm date="{{max}}" min="{{min}}"
+                             vertical-align="top"></date-picker>
+
+
             </app-header-layout>
 
         </app-drawer-layout>
@@ -195,8 +220,20 @@
             }
 
             static get properties() {
-                return {}
+                return {
+                    currentDate: {}
+                }
             };
+
+            static get observers() {
+                return [
+                    '_dateChanged(currentDate)'
+                ];
+            }
+
+            _dateChanged() {
+                console.log(this.currentDate);
+            }
         }
 
         window.customElements.define(MealOrder.is, MealOrder);
