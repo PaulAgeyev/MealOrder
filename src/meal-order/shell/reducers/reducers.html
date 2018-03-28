@@ -22,6 +22,20 @@
                         }
                     );
                 }
+                case ArrayAction.CHANGE_HISTORY_DAY: {
+                    // let newHistory=[];
+                    // for(let i=0;i<initialState.history.length;i++) {
+                    //     if(action.date===initialState.history[i].date) {
+                    //         newHistory=initialState.history[i].dishes;
+                    //     }
+                    // }
+                    //
+                    // return Object.assign({}, state, {
+                    //     currentHistory: newHistory
+                    //     }
+                    // );
+                    return state;
+                }
                 case ArrayAction.ADD_DISH: {
                     return state;
                 }

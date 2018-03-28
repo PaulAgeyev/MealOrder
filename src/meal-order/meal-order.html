@@ -261,6 +261,12 @@
                             dish: dish
                         }
                     },
+                    changeHistoryDate(date) {
+                        return {
+                            type: ArrayAction.CHANGE_HISTORY_DAY,
+                            date: date
+                        }
+                    }
                 }
             }
 
@@ -273,21 +279,25 @@
                     },
                     history: {
                         type: Array,
-                        statePath: 'history'
+                        statePath: 'currentHistory'
                     }
                 }
             };
 
             static get observers() {
                 return [
-                    '_dateChanged(currentDate)'
+                    '_updateDate(currentDate)'
                 ];
             }
 
-            _dateChanged() {
-                console.log(this.currentDate);
+            _updateDate() {
+                const arr = this.currentDate.split('/');
+                const date = {};
+                date.year = arr[0];
+                date.month = arr[1];
+                date.day = arr[2];
+                this.dispatch('changeHistoryDate', date);
             }
-
             addDishToOrder(e) {
                 this.dispatch('addDish', e.detail);
             }
@@ -300,15 +310,6 @@
                 return page;
             }
 
-            updateDate() {
-                console.log("sdad");
-            }
-
-            updatePicker() {
-                console.log(this.$.datePicker);
-                console.log(this.currentDate);
-                this.$.datePicker.enforceDateChange();
-            }
         }
 
         window.customElements.define(MealOrder.is, MealOrder);
