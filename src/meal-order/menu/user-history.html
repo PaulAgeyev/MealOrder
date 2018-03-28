@@ -27,8 +27,18 @@
                 font: bold 24px/1.5 Times, 'New Century Schoolbook', serif;
             }
 
-            .numbers {
+            .quantity {
                 text-align: right;
+                padding-right: 10%;
+            }
+
+            .price {
+                text-align: right;
+                padding-right: 10%;
+            }
+
+            .dish {
+                padding-left: 5%;
             }
             @media only screen and (max-width: 600px) {
                 .vendor {
@@ -45,38 +55,37 @@
             }
         </style>
         <div class="history">
-            <paper-card heading="History">
-
                 <dom-repeat items="[[cart]]" as="vendor">
                     <template>
                         <div class="vendor">[[vendor.vendor]]</div>
                         <vaadin-grid title="vendor" aria-label="Basic Binding Example" items="[[vendor.dishes]]"
                                      as="vendor">
                             <vaadin-grid-column>
-                                <template class="header">Наименование</template>
-                                <template>[[item.title]]</template>
+                                <template class="header">
+                                    <p class="dish">Наименование</p>
+                                </template>
+                                <template>
+                                    <p class="dish">[[item.title]]</p>
+                                </template>
                             </vaadin-grid-column>
 
-                            <vaadin-grid-column width="20px">
-                                <template class="header"><p class="numbers">Цена</p></template>
+                            <vaadin-grid-column width="15px">
+                                <template class="header"><p class="price">Цена</p></template>
                                 <template>
-                                    <p class="numbers">[[item.price]]</p>
+                                    <p class="price">[[item.price]]</p>
                                 </template>
                             </vaadin-grid-column>
 
                             <vaadin-grid-column width="50px">
-                                <template class="header"><p class="numbers">Кл-во</p></template>
+                                <template class="header"><p class="quantity">Количество</p></template>
                                 <template>
-                                    <p class="numbers">[[item.quantity]]</p>
+                                    <p class="quantity">[[item.quantity]]</p>
                                 </template>
                                 <template class="footer">Итого: [[getTotal(vendor)]]</template>
                             </vaadin-grid-column>
                         </vaadin-grid>
                     </template>
                 </dom-repeat>
-
-            </paper-card>
-
         </div>
 
     </template>

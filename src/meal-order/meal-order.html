@@ -15,11 +15,9 @@
 <link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
 <link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../../bower_components/iron-icons/maps-icons.html">
+<link rel="import" href="../../bower_components/app-datepicker/app-datepicker.html">
+
 <link rel="import" href="shell/redux-store.html">
-<link rel="import" href="../../bower_components/datetime-picker/datetime-picker.html">
-<link rel="import" href="../../bower_components/datetime-picker/date-picker.html">
-
-
 <link rel="import" href="menu/user-cart.html">
 <link rel="import" href="menu/menu-order.html">
 <dom-module id="meal-order">
@@ -159,7 +157,7 @@
 
         <app-drawer-layout fullbleed>
 
-            <app-drawer slot="drawer" align="right">
+            <app-drawer slot="drawer" align="right" class$="[[getClassForDrawer(routeData.page)]]">
                 <app-toolbar>
                     <div class="order-date">
                         <div class="order">Заказ</div>
@@ -170,7 +168,19 @@
                         </div>
                     </div>
                 </app-toolbar>
-                <user-cart order="[[order]]" on-dish-removed="removeDishFromOrder"></user-cart>
+
+                <iron-pages
+                        selected="[[routeData.page]]"
+                        attr-for-selected="name"
+                        fallback-selection="view404"
+                        role="main">
+
+                    <user-cart name="menu" order="[[order]]" on-dish-removed="removeDishFromOrder"></user-cart>
+                    <app-datepicker name="history" view="vertical"></app-datepicker>
+
+                </iron-pages>
+
+
             </app-drawer>
 
             <app-header-layout>
@@ -207,7 +217,6 @@
                     <menu-order name="menu" on-dish-added="addDishToOrder"></menu-order>
                     <user-history name="history"></user-history>
                 </iron-pages>
-
             </app-header-layout>
 
         </app-drawer-layout>
@@ -269,6 +278,10 @@
 
             removeDishFromOrder(e) {
                 this.dispatch('removeDish', e.detail);
+            }
+
+            getClassForDrawer(page) {
+                return page;
             }
         }
 
