@@ -27,6 +27,9 @@
                 font: bold 24px/1.5 Times, 'New Century Schoolbook', serif;
             }
 
+            .numbers {
+                text-align: right;
+            }
             @media only screen and (max-width: 600px) {
                 .vendor {
                     margin-left: 5%;
@@ -54,15 +57,17 @@
                                 <template>[[item.title]]</template>
                             </vaadin-grid-column>
 
-                            <vaadin-grid-column width="20px" class="price">
-                                <template class="header">Цена</template>
-                                <template>[[item.price]]</template>
+                            <vaadin-grid-column width="20px">
+                                <template class="header"><p class="numbers">Цена</p></template>
+                                <template>
+                                    <p class="numbers">[[item.price]]</p>
+                                </template>
                             </vaadin-grid-column>
 
                             <vaadin-grid-column width="50px">
-                                <template class="header">Кл-во</template>
+                                <template class="header"><p class="numbers">Кл-во</p></template>
                                 <template>
-                                    <p>[[item.quantity]]</p>
+                                    <p class="numbers">[[item.quantity]]</p>
                                 </template>
                                 <template class="footer">Итого: [[getTotal(vendor)]]</template>
                             </vaadin-grid-column>
@@ -116,6 +121,7 @@
                 return sum;
             }
         }
+
         window.customElements.define(UserHistory.is, UserHistory);
     </script>
 </dom-module>
