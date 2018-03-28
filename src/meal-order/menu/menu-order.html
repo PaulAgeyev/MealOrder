@@ -99,7 +99,7 @@
                 role="main">
 
             <vendor-menus name="[[routeData.menu]]"
-                          items="[[menu]]" route="[[subroute]]"></vendor-menus>
+                          items="[[menu]]" route="[[subroute]]" on-dish-added="addDishToOrder"></vendor-menus>
 
         </iron-pages>
 
@@ -156,6 +156,10 @@
 
             _handleClick(e) {
                 this.dispatch('menuForDay', this.menuForDates[e.model.index]);
+            }
+
+            addDishToOrder(e) {
+                this.dispatchEvent(new CustomEvent('dish-added', {detail: e.detail}));
             }
         }
 

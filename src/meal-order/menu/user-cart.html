@@ -80,8 +80,7 @@
 
         <div class="cart">
 
-
-            <dom-repeat items="[[cart]]" as="dish">
+            <dom-repeat items="[[order]]" as="dish">
                 <template>
                     <div class="vendor">
                         <div>[[dish.vendor]]</div>
@@ -123,25 +122,8 @@
 
             static get properties() {
                 return {
-                    cart: {
-                        type: Array,
-                        value: [{
-                            vendor: "Пюре",
-                            dishes: [
-                                {title: 'Борщ украинский', price: 35, quantity: 1},
-                                {title: 'Солянка', price: 40, quantity: 1},
-                                {title: 'Суп гороховый', price: 40, quantity: 1},
-                                {title: 'Уха', price: 35, quantity: 1},
-                                {title: 'Суп-пюре грибной', price: 40, quantity: 1},
-                                {title: 'Суп куриный', price: 40, quantity: 1},]
-                        }, {
-                            vendor: 'Позитив',
-                            dishes: [{title: 'Суп куриный', price: 35, quantity: 1}, {
-                                title: 'Стейк из лосося',
-                                price: 35,
-                                quantity: 1
-                            }]
-                        }],
+                    order: {
+                      type: Array,
                     }
                 }
             };
@@ -151,7 +133,7 @@
                 dish.vendor = e.model.parentModel.__data.dish.vendor;
                 dish.name = e.model.__data.d.title;
                 console.log(dish);
-                this.dispatchEvent(new CustomEvent('dish-added', dish));
+                this.dispatchEvent(new CustomEvent('dish-removed', dish));
             }
         }
 

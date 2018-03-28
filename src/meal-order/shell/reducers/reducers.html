@@ -16,13 +16,15 @@
 
                     }
 
-                    console.log(arr);
                     return Object.assign({}, state, {
                             dateForMenu: initialState.dateForMenu,
                             menuForDay: arr
                         }
                     );
+                }
+                case ArrayAction.ADD_DISH: {
 
+                    return state;
                 }
             }
         }
