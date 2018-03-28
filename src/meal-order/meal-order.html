@@ -171,7 +171,7 @@
                         </div>
                     </div>
                 </app-toolbar>
-                <user-cart order="[[order]]"></user-cart>
+                <user-cart order="[[order]]" on-dish-removed="removeDishFromOrder"></user-cart>
             </app-drawer>
 
             <app-header-layout>
@@ -198,7 +198,7 @@
                         </div>
                     </app-toolbar>
                 </app-header>
-                <menu-order on-dish-added="addDishToOrder"></menu-order>
+                <menu-order on-dish-added="addDishToOrder" on-dish-removed="removeDishFromOrder"></menu-order>
 
                 <date-picker class="end" month="6" day="21" auto-confirm date="{{max}}" min="{{min}}"
                              vertical-align="top"></date-picker>
@@ -230,6 +230,12 @@
                             dish: dish
                         }
                     },
+                    removeDish(dish) {
+                        return {
+                            type: ArrayAction.REMOVE_DISH,
+                            dish: dish
+                        }
+                    },
                 }
             }
 
@@ -254,8 +260,11 @@
             }
 
             addDishToOrder(e) {
-                console.log(e.detail);
                 this.dispatch('addDish', e.detail);
+            }
+
+            removeDishFromOrder(e) {
+                this.dispatch('removeDish', e.detail);
             }
         }
 

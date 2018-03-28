@@ -132,8 +132,7 @@
                 const dish = {};
                 dish.vendor = e.model.parentModel.__data.dish.vendor;
                 dish.name = e.model.__data.d.title;
-                console.log(dish);
-                this.dispatchEvent(new CustomEvent('dish-removed', dish));
+                this.dispatchEvent(new CustomEvent('dish-removed', {detail: dish}));
             }
         }
 
