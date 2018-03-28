@@ -170,7 +170,7 @@
                         </div>
                     </div>
                 </app-toolbar>
-                <user-cart order="[[order]]"></user-cart>
+                <user-cart order="[[order]]" on-dish-removed="removeDishFromOrder"></user-cart>
             </app-drawer>
 
             <app-header-layout>
@@ -208,8 +208,6 @@
                     <user-history name="history"></user-history>
                 </iron-pages>
 
-                [[routeData.page]]
-
             </app-header-layout>
 
         </app-drawer-layout>
@@ -233,6 +231,12 @@
                     addDish(dish) {
                         return {
                             type: ArrayAction.ADD_DISH,
+                            dish: dish
+                        }
+                    },
+                    removeDish(dish) {
+                        return {
+                            type: ArrayAction.REMOVE_DISH,
                             dish: dish
                         }
                     },
@@ -260,8 +264,11 @@
             }
 
             addDishToOrder(e) {
-                console.log(e.detail);
                 this.dispatch('addDish', e.detail);
+            }
+
+            removeDishFromOrder(e) {
+                this.dispatch('removeDish', e.detail);
             }
         }
 
