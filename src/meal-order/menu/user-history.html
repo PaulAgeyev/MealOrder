@@ -16,15 +16,29 @@
 
             vaadin-grid {
                 height: max-content;
+
                 width: 70%;
                 display: block;
                 margin-left: 15%;
-
             }
 
             .vendor {
                 margin-left: 15%;
                 font: bold 24px/1.5 Times, 'New Century Schoolbook', serif;
+            }
+
+            @media only screen and (max-width: 600px) {
+                .vendor {
+                    margin-left: 5%;
+                }
+
+                vaadin-grid {
+                    width: 90%;
+                    display: block;
+                    margin-left: 5%;
+                    margin-right: 5%;
+                    padding-right: 0;
+                }
             }
         </style>
         <div class="history">
@@ -35,24 +49,23 @@
                         <div class="vendor">[[vendor.vendor]]</div>
                         <vaadin-grid title="vendor" aria-label="Basic Binding Example" items="[[vendor.dishes]]"
                                      as="vendor">
-                            <vaadin-grid-column>
-                                <template class="header">Title</template>
+                            <vaadin-grid-column resizable="true">
+                                <template class="header">Наименование</template>
                                 <template>[[item.title]]</template>
                             </vaadin-grid-column>
 
-                            <vaadin-grid-column>
-                                <template class="header">Price</template>
+                            <vaadin-grid-column width="20px" class="price">
+                                <template class="header">Цена</template>
                                 <template>[[item.price]]</template>
                             </vaadin-grid-column>
 
-                            <vaadin-grid-column width="150px">
-                                <template class="header">Quantity</template>
+                            <vaadin-grid-column width="50px">
+                                <template class="header">Кл-во</template>
                                 <template>
-                                    <p style="white-space: normal">[[item.quantity]]</p>
+                                    <p>[[item.quantity]]</p>
                                 </template>
-                                <template class="footer">Total 15000</template>
+                                <template class="footer">Итого: [[getTotal(vendor)]]</template>
                             </vaadin-grid-column>
-
                         </vaadin-grid>
                     </template>
                 </dom-repeat>
@@ -94,8 +107,15 @@
                 }
             };
 
+            getTotal(vendor) {
+                const dishes = vendor.dishes;
+                let sum = 0;
+                for (let i = 0; i < dishes.length; i++) {
+                    sum += (dishes[i].price) * dishes[i].quantity;
+                }
+                return sum;
+            }
         }
-
         window.customElements.define(UserHistory.is, UserHistory);
     </script>
 </dom-module>
