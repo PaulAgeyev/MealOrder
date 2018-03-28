@@ -131,20 +131,11 @@
 
             app-drawer {
                 --app-drawer-width: 300px;
-            date-picker.end {
-                --input-color: #fff;
-                --input-background: #594894;
-                --input-picker-color: #fff;
-                --input-picker-background: #594894;
-                --input-focus-color: #fff;
-                --input-focus-background: #7551ee;
-                --input-style: {
-                }
             }
 
             #date-picker {
                 --app-datepicker-selection-bg: #d0d0d0;
-                --app-datepicker-selection-color: #179EFF;
+                --app-datepicker-selection-color: #616161;
                 --app-datepicker-selected-day-bg: #179EFF;
                 --app-datepicker-today-color: #179EFF;
                 --app-datepicker-date-hover-background-color: #179EFF;
@@ -185,7 +176,7 @@
                         fallback-selection="view404"
                         role="main">
                     <user-cart name="menu" order="[[order]]" on-dish-removed="removeDishFromOrder"></user-cart>
-                    <app-datepicker id="datePicker" name="history" view="vertical"
+                    <app-datepicker id="date-picker" name="history" view="vertical"
                                     date="{{currentDate}}" auto-update-date="true"></app-datepicker>
 
                 </iron-pages>
