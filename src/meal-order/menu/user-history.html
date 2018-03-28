@@ -40,6 +40,7 @@
             .dish {
                 padding-left: 5%;
             }
+
             @media only screen and (max-width: 600px) {
                 .vendor {
                     margin-left: 5%;
@@ -55,37 +56,37 @@
             }
         </style>
         <div class="history">
-                <dom-repeat items="[[cart]]" as="vendor">
-                    <template>
-                        <div class="vendor">[[vendor.vendor]]</div>
-                        <vaadin-grid title="vendor" aria-label="Basic Binding Example" items="[[vendor.dishes]]"
-                                     as="vendor">
-                            <vaadin-grid-column>
-                                <template class="header">
-                                    <p class="dish">Наименование</p>
-                                </template>
-                                <template>
-                                    <p class="dish">[[item.title]]</p>
-                                </template>
-                            </vaadin-grid-column>
+            <dom-repeat items="[[cart]]" as="vendor">
+                <template>
+                    <div class="vendor">[[vendor.vendor]]</div>
+                    <vaadin-grid title="vendor" aria-label="Basic Binding Example" items="[[vendor.dishes]]"
+                                 as="vendor">
+                        <vaadin-grid-column>
+                            <template class="header">
+                                <p class="dish">Наименование</p>
+                            </template>
+                            <template>
+                                <p class="dish">[[item.title]]</p>
+                            </template>
+                        </vaadin-grid-column>
 
-                            <vaadin-grid-column width="15px">
-                                <template class="header"><p class="price">Цена</p></template>
-                                <template>
-                                    <p class="price">[[item.price]]</p>
-                                </template>
-                            </vaadin-grid-column>
+                        <vaadin-grid-column width="15px">
+                            <template class="header"><p class="price">Цена</p></template>
+                            <template>
+                                <p class="price">[[item.price]]</p>
+                            </template>
+                        </vaadin-grid-column>
 
-                            <vaadin-grid-column width="50px">
-                                <template class="header"><p class="quantity">Количество</p></template>
-                                <template>
-                                    <p class="quantity">[[item.quantity]]</p>
-                                </template>
-                                <template class="footer">Итого: [[getTotal(vendor)]]</template>
-                            </vaadin-grid-column>
-                        </vaadin-grid>
-                    </template>
-                </dom-repeat>
+                        <vaadin-grid-column width="50px">
+                            <template class="header"><p class="quantity">Количество</p></template>
+                            <template>
+                                <p class="quantity">[[item.quantity]]</p>
+                            </template>
+                            <template class="footer">Итого: [[getTotal(vendor)]]</template>
+                        </vaadin-grid-column>
+                    </vaadin-grid>
+                </template>
+            </dom-repeat>
         </div>
 
     </template>
@@ -97,27 +98,7 @@
 
             static get properties() {
                 return {
-                    cart: {
-                        type: Array,
-                        value: [{
-                            vendor: "Пюре",
-                            dishes: [
-                                {title: 'Борщ украинский', price: 35, quantity: 1},
-                                {title: 'Солянка', price: 40, quantity: 1},
-                                {title: 'Суп гороховый', price: 40, quantity: 1},
-                                {title: 'Уха', price: 35, quantity: 1},
-                                {title: 'Суп-пюре грибной', price: 40, quantity: 1},
-                                {title: 'Суп куриный', price: 40, quantity: 1},]
-                        }, {
-                            vendor: 'Позитив',
-                            dishes: [{title: 'Суп куриный', price: 35, quantity: 1}, {
-                                title: 'Стейк из лосося',
-                                price: 35,
-                                quantity: 1
-                            }]
-                        }],
-                    }
-
+                    cart: {type: Array}
                 }
             };
 

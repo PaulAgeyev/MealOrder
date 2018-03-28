@@ -129,7 +129,7 @@
 
             }
 
-            app-drawer {
+            app-drawer.history {
                 --app-drawer-width: 300px;
             }
 
@@ -227,7 +227,7 @@
                         role="main">
 
                     <menu-order name="menu" on-dish-added="addDishToOrder"></menu-order>
-                    <user-history name="history"></user-history>
+                    <user-history name="history" cart="[[history]]"></user-history>
                 </iron-pages>
             </app-header-layout>
 
@@ -270,6 +270,10 @@
                     order: {
                         type: Array,
                         statePath: 'order'
+                    },
+                    history: {
+                        type: Array,
+                        statePath: 'history'
                     }
                 }
             };
