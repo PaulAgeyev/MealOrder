@@ -127,12 +127,10 @@
                     display: none;
                 }
 
-                vaadin-date-picker {
-                    position: absolute;
-                    left: 300px;
-                }
             }
 
+            app-drawer {
+                --app-drawer-width: 300px;
             date-picker.end {
                 --input-color: #fff;
                 --input-background: #594894;
@@ -187,16 +185,13 @@
                         fallback-selection="view404"
                         role="main">
                     <user-cart name="menu" order="[[order]]" on-dish-removed="removeDishFromOrder"></user-cart>
-                    <app-datepicker id="date-picker" name="history" view="vertical"></app-datepicker>
+                    <app-datepicker id="datePicker" name="history" view="vertical"
+                                    date="{{currentDate}}" auto-update-date="true"></app-datepicker>
 
                 </iron-pages>
-
-
             </app-drawer>
 
             <app-header-layout>
-                <vaadin-date-picker value="{{currentDate}}"></vaadin-date-picker>
-
                 <app-header slot="header" reveals effects="waterfall">
 
                     <app-toolbar>
@@ -308,6 +303,16 @@
 
             getClassForDrawer(page) {
                 return page;
+            }
+
+            updateDate() {
+                console.log("sdad");
+            }
+
+            updatePicker() {
+                console.log(this.$.datePicker);
+                console.log(this.currentDate);
+                this.$.datePicker.enforceDateChange();
             }
         }
 
