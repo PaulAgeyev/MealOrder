@@ -6,6 +6,7 @@
 <link rel="import" href="../../../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../shell/redux-store.html">
 <link rel="import" href="../../../bower_components/polymer/lib/elements/dom-repeat.html">
+<link rel="import" href="../../../bower_components/app-datepicker/app-datepicker.html">
 
 <link rel="import" href="vendor-menus.html">
 <link rel="import" href="user-history.html">
@@ -81,7 +82,7 @@
             <template is="dom-repeat" items="{{menuForDates}}" as="calendar">
                 <paper-tab key="[[calendar.date.year]]-[[calendar.date.month]]-[[calendar.date.day]]" link>
                     <a class="link" name="[[calendar.date.year]]-[[calendar.date.month]]-[[calendar.date.day]]"
-                       href="/menu/#/[[calendar.date.year]]-[[calendar.date.month]]-[[calendar.date.day]]"
+                       href="/#/menu/#/[[calendar.date.year]]-[[calendar.date.month]]-[[calendar.date.day]]"
                        on-click="_handleClick">
                         <div>
                             <div class="day-of-the-week">Пн</div>
@@ -100,7 +101,6 @@
 
             <vendor-menus name="[[routeData.menu]]"
                           items="[[menu]]" route="[[subroute]]" on-dish-added="addDishToOrder"></vendor-menus>
-
         </iron-pages>
 
     </template>
@@ -150,7 +150,7 @@
 
             _pageChanged() {
                 if (!this.route.path) {
-                    this.set('route.path', '/2018-03-21');
+                    this.set('route.path', '/menu/#/2018-03-21');
                 }
             }
 
