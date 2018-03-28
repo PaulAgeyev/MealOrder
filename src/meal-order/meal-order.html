@@ -20,7 +20,6 @@
 <link rel="import" href="../../bower_components/datetime-picker/date-picker.html">
 
 
-
 <link rel="import" href="menu/user-cart.html">
 <link rel="import" href="menu/menu-order.html">
 <dom-module id="meal-order">
@@ -198,11 +197,16 @@
                         </div>
                     </app-toolbar>
                 </app-header>
-                <menu-order on-dish-added="addDishToOrder" on-dish-removed="removeDishFromOrder"></menu-order>
 
-                <date-picker class="end" month="6" day="21" auto-confirm date="{{max}}" min="{{min}}"
-                             vertical-align="top"></date-picker>
+                <iron-pages
+                        selected="[[routeData.page]]"
+                        attr-for-selected="name"
+                        fallback-selection="view404"
+                        role="main">
 
+                    <menu-order name="menu" on-dish-added="addDishToOrder"></menu-order>
+                    <user-history name="history"></user-history>
+                </iron-pages>
 
             </app-header-layout>
 
