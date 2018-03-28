@@ -141,7 +141,20 @@
                 --input-focus-color: #fff;
                 --input-focus-background: #7551ee;
                 --input-style: {
+                }
+            }
 
+            #date-picker {
+                --app-datepicker-selection-bg: #d0d0d0;
+                --app-datepicker-selection-color: #179EFF;
+                --app-datepicker-selected-day-bg: #179EFF;
+                --app-datepicker-today-color: #179EFF;
+                --app-datepicker-date-hover-background-color: #179EFF;
+            }
+
+            app-drawer {
+                --app-drawer-content-container: {
+                    background-color: #fafafa;
                 }
             }
 
@@ -158,12 +171,11 @@
         <app-drawer-layout fullbleed>
 
             <app-drawer slot="drawer" align="right" class$="[[getClassForDrawer(routeData.page)]]">
-                <app-toolbar>
+                <app-toolbar style="background-color: white">
                     <div class="order-date">
                         <div class="order">Заказ</div>
                         <div>
-                            <div class="day">Пн
-                            </div>
+                            <div class="day">Пн</div>
                             <div class="day-of-the-week">21</div>
                         </div>
                     </div>
@@ -174,9 +186,8 @@
                         attr-for-selected="name"
                         fallback-selection="view404"
                         role="main">
-
                     <user-cart name="menu" order="[[order]]" on-dish-removed="removeDishFromOrder"></user-cart>
-                    <app-datepicker name="history" view="vertical"></app-datepicker>
+                    <app-datepicker id="date-picker" name="history" view="vertical"></app-datepicker>
 
                 </iron-pages>
 
@@ -197,12 +208,27 @@
                                     <div class="calendar">Март&nbsp;2018</div>
                                 </div>
                             </div>
-                            <div>
-                                <div class="history-of-orders"><a href="/#/history/">История заказов</a></div>
-                                <a href="">
-                                    <iron-icon class="history-icon" icon="maps:icons:history"></iron-icon>
-                                </a>
-                            </div>
+                            <iron-pages
+                                    selected="[[routeData.page]]"
+                                    attr-for-selected="name"
+                                    fallback-selection="view404"
+                                    role="main">
+
+                                <div name="menu">
+                                    <div class="history-of-orders"><a href="/#/history/">История заказов</a></div>
+                                    <a href="/#/history/">
+                                        <iron-icon class="history-icon" icon="maps:icons:history"></iron-icon>
+                                    </a>
+                                </div>
+
+                                <div name="history">
+                                    <div class="history-of-orders"><a href="/#/menu/">Сделать заказ</a></div>
+                                    <a href="/#/menu/">
+                                        <iron-icon class="history-icon" icon="maps:icons:create"></iron-icon>
+                                    </a>
+                                </div>
+
+                            </iron-pages>
                             <iron-icon class="order" icon="icons:shopping-cart" drawer-toggle></iron-icon>
                         </div>
                     </app-toolbar>
