@@ -80,8 +80,8 @@
         <paper-tabs class="tabs" selected="[[routeData.menu]]" attr-for-selected='key'>
             <template is="dom-repeat" items="{{menuForDates}}" as="calendar">
                 <paper-tab key="[[calendar.date.year]]-[[calendar.date.month]]-[[calendar.date.day]]" link>
-                    <a class="link" name="[[calendar.date.year]]-[[calendar.date.month]]-[[calendar.date.day]]"
-                       href="/#/menu/#/[[calendar.date.year]]-[[calendar.date.month]]-[[calendar.date.day]]"
+                    <a class="link" name="[[calendar.date.year]]/[[calendar.date.month]]/[[calendar.date.day]]"
+                       href="/#/menu/#/[[calendar.date.year]]/[[calendar.date.month]]/[[calendar.date.day]]"
                        on-click="_handleClick">
                         <div>
                             <div class="day-of-the-week">Пн</div>
@@ -174,7 +174,7 @@
 
             _pageChanged() {
                 if (!this.route.path) {
-                    this.set('route.path', '/menu/#/2018-03-21');
+                    this.set('route.path', '/menu/#/2018/03/21');
                 }
             }
 

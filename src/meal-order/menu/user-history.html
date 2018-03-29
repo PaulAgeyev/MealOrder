@@ -41,48 +41,86 @@
                 padding-left: 5%;
             }
 
+
+            vaadin-grid .right-align {
+                text-align: right;
+            }
+
+            vaadin-grid .table-padding {
+                padding: 2% 0;
+            }
+
+            vaadin-grid .left-padding {
+                padding-left: 6%;
+            }
+
+            vaadin-grid .right-padding {
+                padding-right: 6%;
+            }
+
+            .bolder {
+                font-weight: bolder;
+            }
+
             @media only screen and (max-width: 600px) {
                 .vendor {
                     margin-left: 5%;
                 }
 
                 vaadin-grid {
-                    width: 90%;
-                    display: block;
-                    margin-left: 5%;
-                    margin-right: 5%;
+                    width: 98%;
+                    margin-left: 1%;
+                    margin-right: 1%;
+                }
+
+                vaadin-grid .left-padding {
+                    padding-left: 0;
+                }
+
+                vaadin-grid .right-padding {
                     padding-right: 0;
                 }
+
             }
+
         </style>
         <div class="history">
             <dom-repeat items="[[cart]]" as="vendor">
                 <template>
-                    <div class="vendor">[[vendor.vendor]]</div>
-                    <vaadin-grid title="vendor" aria-label="Basic Binding Example" items="[[vendor.dishes]]"
+                    <div class="vendor" style="margin-top: 3%">[[vendor.vendor]]</div>
+                    <vaadin-grid title="vendor" items="[[vendor.dishes]]"
                                  as="vendor">
-                        <vaadin-grid-column>
+
+                        <vaadin-grid-column width="[[width.column1]]" flex-grow="0">
                             <template class="header">
-                                <p class="dish">Наименование</p>
+                                <div class$="dish" class="left-padding">Наименование</div>
                             </template>
                             <template>
-                                <p class="dish">[[item.title]]</p>
+                                <div class$="dish" class="left-padding">[[item.title]]</div>
                             </template>
                         </vaadin-grid-column>
 
-                        <vaadin-grid-column width="15px">
-                            <template class="header"><p class="price">Цена</p></template>
+                        <vaadin-grid-column width="[[width.column2]]" flex-grow="0">
+                            <template class="header ">
+                                <div class$="price" class="right-align table-padding">Цена</div>
+                            </template>
                             <template>
-                                <p class="price">[[item.price]]</p>
+                                <div class$="price" class="right-align table-padding">[[item.price]]</div>
                             </template>
                         </vaadin-grid-column>
 
-                        <vaadin-grid-column width="50px">
-                            <template class="header"><p class="quantity">Количество</p></template>
-                            <template>
-                                <p class="quantity">[[item.quantity]]</p>
+                        <vaadin-grid-column width="[[width.column3]]" flex-grow="0">
+                            <template class="header">
+                                <div class$="quantity" class="right-align right-padding">[[width.quantity]]</div>
                             </template>
-                            <template class="footer">Итого: [[_getTotal(vendor)]]</template>
+                            <template>
+                                <div class$="quantity" class="right-align right-padding">[[item.quantity]]</div>
+                            </template>
+                            <template class="footer">
+                                <div class$="quantity" class="right-align table-padding right-padding bolder">
+                                    Итого: [[_getTotal(vendor)]]₴
+                                </div>
+                            </template>
                         </vaadin-grid-column>
                     </vaadin-grid>
                 </template>
@@ -104,12 +142,32 @@
                 return 'user-history';
             }
 
+            static get observers() {
+                return [
+                    'tableWidth(narrow)'
+                ]
+            }
+
             static get properties() {
                 return {
                     /**
                      * An array containing items to be displayed.
                      */
-                    cart: {type: Array}
+                    cart: {type: Array},
+                    width: {
+                        type: Object,
+                        value: {
+                            column1: {},
+                            column2: {},
+                            column3: {},
+                            quantity: {},
+                        }
+                    },
+                    narrow: {
+                        type: Boolean,
+                    },
+
+
                 }
             };
 
@@ -120,6 +178,21 @@
                     sum += (dishes[i].price) * dishes[i].quantity;
                 }
                 return sum;
+            }
+
+            tableWidth(narrow) {
+                if (window.innerWidth <= 1200) {
+                    this.set('width.column1', `49%`);
+                    this.set('width.column2', `17%`);
+                    this.set('width.column3', `34%`);
+                    this.set('width.quantity', 'Кол-во')
+                }
+                else {
+                    this.set('width.column1', `20%`);
+                    this.set('width.column2', `35%`);
+                    this.set('width.column3', `45%`);
+                    this.set('width.quantity', `Количество`);
+                }
             }
         }
 
