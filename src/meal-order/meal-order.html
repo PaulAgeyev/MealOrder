@@ -319,9 +319,11 @@
             }
 
             _changehistoryUrl() {
-                const newRouteData = {};
-                newRouteData.page = 'history/' + '#/' + this.currentDate;
-                this.set('routeData', newRouteData);
+                if (this.routeData.page.startsWith('history')) {
+                    const newRouteData = {};
+                    newRouteData.page = 'history/' + '#/' + this.currentDate;
+                    this.set('routeData', newRouteData);
+                }
             }
 
             _updateDate() {
@@ -344,9 +346,7 @@
             _getClassForDrawer(page) {
                 return page;
             }
-
         }
-
         window.customElements.define(MealOrder.is, MealOrder);
     </script>
 </dom-module>
