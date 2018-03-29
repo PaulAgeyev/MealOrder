@@ -190,7 +190,6 @@
                             <div class="order-container">
                                 <div class="main-title">Заказ обедов</div>
                                 <div class="date-container">
-                                    <!--<iron-icon class="date-range-icon" icon="maps:icons:date-range"></iron-icon>-->
                                     <div class="calendar">Март&nbsp;2018</div>
                                 </div>
                             </div>
@@ -272,6 +271,8 @@
 
             static get properties() {
                 return {
+                    routeData: {},
+                    route: {},
                     currentDate: {},
                     order: {
                         type: Array,
@@ -286,8 +287,16 @@
 
             static get observers() {
                 return [
-                    '_updateDate(currentDate)'
+                    '_updateDate(currentDate)',
+                    '_changehistoryUrl(currentDate)'
                 ];
+            }
+
+            _changehistoryUrl() {
+                const newRouteData = {};
+                newRouteData.page = 'history/' + '#/' + this.currentDate;
+                this.set('routeData', newRouteData);
+                console.log(this.currentDate);
             }
 
             _updateDate() {
@@ -298,6 +307,7 @@
                 date.day = arr[2];
                 this.dispatch('changeHistoryDate', date);
             }
+
             addDishToOrder(e) {
                 this.dispatch('addDish', e.detail);
             }
