@@ -159,7 +159,7 @@
 
         <app-drawer-layout fullbleed>
 
-            <app-drawer slot="drawer" align="right" class$="[[getClassForDrawer(routeData.page)]]">
+            <app-drawer slot="drawer" align="right" class$="[[_getClassForDrawer(routeData.page)]]">
                 <app-toolbar style="background-color: white">
                     <div class="order-date">
                         <div class="order">Заказ</div>
@@ -175,7 +175,7 @@
                         attr-for-selected="name"
                         fallback-selection="view404"
                         role="main">
-                    <user-cart name="menu" order="[[order]]" on-dish-removed="removeDishFromOrder"></user-cart>
+                    <user-cart name="menu" order="[[order]]" on-dish-removed="_removeDishFromOrder"></user-cart>
                     <app-datepicker id="date-picker" name="history" view="vertical"
                                     date="{{currentDate}}" auto-update-date="true"></app-datepicker>
 
@@ -225,7 +225,7 @@
                         fallback-selection="view404"
                         role="main">
 
-                    <menu-order name="menu" on-dish-added="addDishToOrder"></menu-order>
+                    <menu-order name="menu" on-dish-added="_addDishToOrder"></menu-order>
                     <user-history name="history" cart="[[history]]"></user-history>
                 </iron-pages>
             </app-header-layout>
@@ -236,10 +236,22 @@
 
     <script>
         /**
-         * MealOrder
+         * Main user meal order component.
+         *
+         * <p>Is adopted for both desktop and mobile.
+         * Consists of 2 page:
+         * 1. A page with vendor menus, and user's shopping cart.
+         * 2. A page with user's history.
+         *
+         * The redux mixin provides its own data system and data flow.
+         * Fires following redux events:
+         * <li>addDish</li>
+         * <li>removeDish</li>
+         * <li>changeHistoryDate</li>
          *
          * @customElement
          * @polymer
+         * @ReduxMixin
          */
         class MealOrder extends ReduxMixin(Polymer.Element) {
             static get is() {
@@ -271,13 +283,24 @@
 
             static get properties() {
                 return {
+                    /**
+                     * Used for routing.
+                     */
                     routeData: {},
-                    route: {},
+                    /**
+                     * Chosen date.
+                     */
                     currentDate: {},
+                    /**
+                     * Current user's meal order.
+                     */
                     order: {
                         type: Array,
                         statePath: 'currentOrder'
                     },
+                    /**
+                     * User's history for the chosen day.
+                     */
                     history: {
                         type: Array,
                         statePath: 'currentHistory'
@@ -296,7 +319,6 @@
                 const newRouteData = {};
                 newRouteData.page = 'history/' + '#/' + this.currentDate;
                 this.set('routeData', newRouteData);
-                console.log(this.currentDate);
             }
 
             _updateDate() {
@@ -308,15 +330,15 @@
                 this.dispatch('changeHistoryDate', date);
             }
 
-            addDishToOrder(e) {
+            _addDishToOrder(e) {
                 this.dispatch('addDish', e.detail);
             }
 
-            removeDishFromOrder(e) {
+            _removeDishFromOrder(e) {
                 this.dispatch('removeDish', e.detail);
             }
 
-            getClassForDrawer(page) {
+            _getClassForDrawer(page) {
                 return page;
             }
 

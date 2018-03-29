@@ -82,7 +82,7 @@
                             <template>
                                 <p class="quantity">[[item.quantity]]</p>
                             </template>
-                            <template class="footer">Итого: [[getTotal(vendor)]]</template>
+                            <template class="footer">Итого: [[_getTotal(vendor)]]</template>
                         </vaadin-grid-column>
                     </vaadin-grid>
                 </template>
@@ -91,6 +91,14 @@
 
     </template>
     <script>
+        /**
+         * User's history for individual day.
+         *
+         * <p>Is adopted for both desktop and mobile.
+         *
+         * @customElement
+         * @polymer
+         */
         class UserHistory extends Polymer.Element {
             static get is() {
                 return 'user-history';
@@ -98,11 +106,14 @@
 
             static get properties() {
                 return {
+                    /**
+                     * An array containing items to be displayed.
+                     */
                     cart: {type: Array}
                 }
             };
 
-            getTotal(vendor) {
+            _getTotal(vendor) {
                 const dishes = vendor.dishes;
                 let sum = 0;
                 for (let i = 0; i < dishes.length; i++) {
