@@ -92,7 +92,7 @@
                                 <div class="order-title">[[d.title]]</div>
                                 <div class="order-price">[[d.price]] ₴</div>
                                 <div class="order-quantity">[[d.quantity]]</div>
-                                <paper-icon-button icon="remove" on-click="removeDish"></paper-icon-button>
+                                <paper-icon-button icon="remove" on-click="_removeDish"></paper-icon-button>
                             </div>
                         </template>
                     </dom-repeat>
@@ -115,6 +115,14 @@
 
     </template>
     <script>
+        /**
+         * user-cart is user's order for current date.
+         *
+         * <p>Is adopted for both desktop and mobile.
+         *
+         * @customElement
+         * @polymer
+         */
         class UserCart extends Polymer.Element {
             static get is() {
                 return 'user-cart';
@@ -122,13 +130,30 @@
 
             static get properties() {
                 return {
+                    /**
+                     * Fired on dish remove button tap.
+                     *
+                     * @event `dish-removed`
+                     * @param {dish} contains vendor, title.
+                     */
+
+                    /**
+                     * Fired when a dish add button is tapped.
+                     *
+                     * @event `order-removed`
+                     * @param {order} contains vendor.
+                     */
+
+                    /**
+                     * Array to be displayed in a user cart.
+                     */
                     order: {
-                      type: Array,
+                        type: Array,
                     }
                 }
             };
 
-            removeDish(e) {
+            _removeDish(e) {
                 const dish = {};
                 dish.vendor = e.model.parentModel.__data.dish.vendor;
                 dish.name = e.model.__data.d.title;

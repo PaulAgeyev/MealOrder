@@ -118,7 +118,7 @@
                             </template>
                             <template class="footer">
                                 <div class$="quantity" class="right-align table-padding right-padding bolder">
-                                    Итого: [[getTotal(vendor)]]₴
+                                    Итого: [[_getTotal(vendor)]]₴
                                 </div>
                             </template>
                         </vaadin-grid-column>
@@ -129,7 +129,14 @@
 
     </template>
     <script>
-
+        /**
+         * User's history for individual day.
+         *
+         * <p>Is adopted for both desktop and mobile.
+         *
+         * @customElement
+         * @polymer
+         */
         class UserHistory extends Polymer.Element {
             static get is() {
                 return 'user-history';
@@ -143,6 +150,10 @@
 
             static get properties() {
                 return {
+                    /**
+                     * An array containing items to be displayed.
+                     */
+                    cart: {type: Array},
                     width: {
                         type: Object,
                         value: {
@@ -155,31 +166,12 @@
                     narrow: {
                         type: Boolean,
                     },
-                    cart: {
-                        type: Array,
-                        value: [{
-                            vendor: "Пюре",
-                            dishes: [
-                                {title: 'Борщ украинский', price: 35, quantity: 1},
-                                {title: 'Солянка', price: 40, quantity: 1},
-                                {title: 'Суп гороховый', price: 40, quantity: 1},
-                                {title: 'Уха', price: 35, quantity: 1},
-                                {title: 'Суп-пюре грибной', price: 40, quantity: 1},
-                                {title: 'Суп куриный', price: 40, quantity: 1},]
-                        }, {
-                            vendor: 'Позитив',
-                            dishes: [{title: 'Суп куриный', price: 35, quantity: 1}, {
-                                title: 'Стейк из лосося',
-                                price: 35,
-                                quantity: 1
-                            }]
-                        }],
-                    }
+
 
                 }
             };
 
-            getTotal(vendor) {
+            _getTotal(vendor) {
                 const dishes = vendor.dishes;
                 let sum = 0;
                 for (let i = 0; i < dishes.length; i++) {

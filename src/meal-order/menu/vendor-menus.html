@@ -179,7 +179,7 @@
         <paper-search-bar query="{{filter}}" hide-filter-button="true" placeholder="Поиск"></paper-search-bar>
 
         <iron-list scroll-target="document" id="list" items="[[filtered]]" as="item" selection-enabled
-                   multi-selection on-selected-items-changed="selectionChanged">
+                   multi-selection>
             <template>
                 <div class="non-select">
                     <div class$="[[getClassForItem(selected)]]" tabindex$="[[tabIndex]]">
@@ -240,6 +240,15 @@
         </iron-list>
     </template>
     <script>
+        /**
+         * vendor-menus represents an expanding list of menus for current date and filter.
+         *
+         * <p>Is adopted for both desktop and mobile.
+         * Contains search by dish keywords.
+         *
+         * @customElement
+         * @polymer
+         */
         class VendorMenus extends Polymer.Element {
             static get is() {
                 return 'vendor-menus';
@@ -247,23 +256,39 @@
 
             static get properties() {
                 return {
+                    /**
+                     * Fired when a dish add button is tapped.
+                     *
+                     * @event `dish-added`
+                     * @param {dish} contains vendor, category, title.
+                     */
+
+                    /**
+                     * Full menu for day.
+                     * For structure details see {@code redux-store.html} or inner template.
+                     */
                     items: {
                         type: Array,
                     },
+
+                    /**
+                     * Menu with filter applied.
+                     */
                     filtered: {
                         type: Array,
                         computed: 'filteredItems(items,filter)',
                         reflectToAttribute: true
                     },
+
+                    /**
+                     * Inputted key word or word part to search in menu.
+                     */
                     filter: {
                         type: String,
                         value: '',
                         notify: true
-                    },
-                    selectedVendors: {
-                        type: Array,
-                        value: []
                     }
+
                 }
             };
 
@@ -321,10 +346,6 @@
                 return filtered;
             }
 
-            selectionChanged(e) {
-                const div = this.shadowRoot.querySelector("#list");
-                this.set('selectedVendors', div.selectedItems);
-            }
 
             getClassForItem(selected) {
                 return selected ? 'item expand' : 'item';
@@ -349,7 +370,6 @@
                     div.deselectIndex(e.model.index);
                 }
             }
-
         }
 
         window.customElements.define(VendorMenus.is, VendorMenus);

@@ -1,3 +1,4 @@
+<script src="../utils/Utils.js"></script>
 <script>
     const reducer = (state, action) => {
             if (!state) {
@@ -13,12 +14,23 @@
                             arr[k] = initialState.menu[i];
                             k++;
                         }
-
                     }
-
                     return Object.assign({}, state, {
                             dateForMenu: initialState.dateForMenu,
                             menuForDay: arr
+                        }
+                    );
+                }
+                case ArrayAction.CHANGE_HISTORY_DAY: {
+                    let newHistory = [];
+                    for (let i = 0; i < initialState.history.length; i++) {
+                        if (Utils.compareObjects(action.date, initialState.history[i].date)) {
+                            newHistory = initialState.history[i].order;
+                            break;
+                        }
+                    }
+                    return Object.assign({}, state, {
+                            currentHistory: newHistory
                         }
                     );
                 }
