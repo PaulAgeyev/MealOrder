@@ -33,6 +33,7 @@
             app-header {
                 background-color: #616161;
                 color: #fff;
+                right: 300px;
             }
 
             app-header .main-title {
@@ -129,13 +130,14 @@
 
             }
 
-            app-drawer {
+            app-drawer.history {
                 --app-drawer-width: 300px;
             }
 
             #date-picker {
-                --app-datepicker-selection-bg: #d0d0d0;
+                --app-datepicker-selection-bg: #fafafa;
                 --app-datepicker-selection-color: #616161;
+                --app-datepicker-iron-selected: #616161;
                 --app-datepicker-selected-day-bg: #179EFF;
                 --app-datepicker-today-color: #179EFF;
                 --app-datepicker-date-hover-background-color: #179EFF;
@@ -145,6 +147,16 @@
                 --app-drawer-content-container: {
                     background-color: #fafafa;
                 }
+            }
+
+            .menu-history {
+                margin-right: 44px;
+            }
+
+            .icon-container {
+                width: 100px;
+                display: flex;
+                justify-content: space-around;
             }
 
         </style>
@@ -157,18 +169,30 @@
                 pattern="/:page"
                 data="{{routeData}}"></app-route>
 
-        <app-drawer-layout fullbleed>
+        <app-drawer-layout fullbleed narrow="{{narrow}}">
 
             <app-drawer slot="drawer" align="right" class$="[[getClassForDrawer(routeData.page)]]">
-                <app-toolbar style="background-color: white">
-                    <div class="order-date">
-                        <div class="order">Заказ</div>
-                        <div>
-                            <div class="day">Пн</div>
-                            <div class="day-of-the-week">21</div>
+
+                <iron-pages selected="[[routeData.page]]"
+                            attr-for-selected="name"
+                            fallback-selection="view404"
+                            role="main">
+                    <app-toolbar name="menu">
+                        <div class="order-date">
+                            <div class="order">Заказ</div>
+                            <div>
+                                <div class="day">Пн</div>
+                                <div class="day-of-the-week">21</div>
+                            </div>
                         </div>
-                    </div>
-                </app-toolbar>
+                    </app-toolbar>
+
+                    <app-toolbar name="history">
+                        <div class="order-date">
+                            <div class="order">История заказов</div>
+                        </div>
+                    </app-toolbar>
+                </iron-pages>
 
                 <iron-pages
                         selected="[[routeData.page]]"
@@ -202,20 +226,32 @@
 
                                 <div name="menu">
                                     <div class="history-of-orders"><a href="/#/history/">История заказов</a></div>
-                                    <a href="/#/history/">
-                                        <iron-icon class="history-icon" icon="maps:icons:history"></iron-icon>
-                                    </a>
+                                    <div class="icon-container">
+                                        <a href="/#/history/">
+                                            <iron-icon class="history-icon" icon="maps:icons:history"></iron-icon>
+                                        </a>
+                                        <div>
+                                            <iron-icon class="order" icon="icons:shopping-cart"
+                                                       drawer-toggle></iron-icon>
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <div name="history">
-                                    <div class="history-of-orders"><a href="/#/menu/">Сделать заказ</a></div>
+                                    <div class="history-of-orders menu-history"><a href="/#/menu/">Сделать заказ</a>
+                                    </div>
+                                    <div class="icon-container">
                                     <a href="/#/menu/">
                                         <iron-icon class="history-icon" icon="maps:icons:create"></iron-icon>
                                     </a>
+                                        <div>
+                                            <iron-icon class="order" icon="icons:date-range"
+                                                       drawer-toggle></iron-icon>
+                                        </div>
+                                    </div>
                                 </div>
-
                             </iron-pages>
-                            <iron-icon class="order" icon="icons:shopping-cart" drawer-toggle></iron-icon>
+
                         </div>
                     </app-toolbar>
                 </app-header>
@@ -227,7 +263,7 @@
                         role="main">
 
                     <menu-order name="menu" on-dish-added="addDishToOrder"></menu-order>
-                    <user-history name="history"></user-history>
+                    <user-history name="history" narrow="[[narrow]]"></user-history>
                 </iron-pages>
             </app-header-layout>
 
