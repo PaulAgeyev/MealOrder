@@ -1,0 +1,165 @@
+<script src="../../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+<link rel="import" href="../../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../../bower_components/iron-list/iron-list.html">
+<link rel="import" href="../../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../../bower_components/paper-icon-button/paper-icon-button.html">
+
+
+<dom-module id="vendor-list">
+    <template>
+        <style>
+            :host {
+                font-family: 'Roboto', 'Noto', sans-serif;
+                display: block;
+                padding: 0;
+            }
+
+            app-toolbar paper-icon-button {
+                --paper-icon-button-ink-color: white;
+            }
+
+            iron-list {
+                --iron-list-items-container: {
+                    width: 70%;
+                    margin: 10% auto;
+                };
+            }
+
+            paper-item {
+                width: 100%;
+            }
+
+            .item {
+                @apply --layout-horizontal;
+                padding: 20px;
+                display: flex;
+                background-color: white;
+                border: 1px solid #ddd;
+                cursor: pointer;
+                margin-bottom: 10px;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .pad {
+                padding: 0;
+                @apply --layout-flex;
+                @apply --layout-vertical;
+                font-size: 15px;
+                text-align: center;
+            }
+
+            @media (max-width: 460px) {
+                paper-toolbar .bottom.title {
+                    font-size: 14px;
+                }
+            }
+
+            .phone {
+                text-align: left;
+            }
+
+            .non-select {
+                -webkit-touch-callout: none; /* iOS Safari */
+                -webkit-user-select: none; /* Safari */
+                -khtml-user-select: none; /* Konqueror HTML */
+                -moz-user-select: none; /* Firefox */
+                -ms-user-select: none; /* Internet Explorer/Edge */
+                user-select: none;
+
+                /* Non-prefixed version, currently supported by Chrome and Opera */
+            }
+
+            @media only screen and (max-width: 600px) {
+
+                iron-list {
+                    --iron-list-items-container: {
+                        margin: 4% auto;
+                        width: 100%;
+                    }
+                }
+            }
+
+            .vendor-name {
+                text-align: left;
+                width: 10%;
+            }
+
+            .email {
+                text-align: left;
+                padding-left: 5%;
+                width: 25%;
+            }
+
+            .phone {
+                width: 25%
+            }
+
+            .deadline {
+                width: 20%;
+            }
+
+            .edit {
+                width: 10%;
+            }
+
+            .remove {
+                width: 10%;
+            }
+
+        </style>
+        <h1>Поставщики</h1>
+        <iron-list id="list" items="[[vendors]]" as="vendor" scroll-target="document" scroll-offset="200">
+            <template>
+                <div class="non-select">
+                    <div class="pad">
+                        <div class="item">
+                            <div class="vendor-name">[[vendor.title]]</div>
+                            <div class="email">[[vendor.email]]</div>
+                            <div class="phone">[[vendor.phone]]</div>
+                            <div class="deadline">[[vendor.deadline]]</div>
+                            <div class="edit">
+                                <paper-icon-button icon="create"></paper-icon-button>
+                            </div>
+                            <div class="remove">
+                                <paper-icon-button icon="close"></paper-icon-button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </template>
+        </iron-list>
+
+    </template>
+    <script>
+
+        class VendorList extends Polymer.Element {
+            static get is() {
+                return 'vendor-list';
+            }
+
+            static get properties() {
+                return {
+                    vendors: {
+                        type: Array,
+                        value: [
+                            {
+                                title: 'Пюре',
+                                phone: '+38(050)12-45-876',
+                                email: 'smashpotato.com',
+                                deadline: '11:00'
+                            }, {
+                                title: 'Позитив',
+                                phone: '+38(050)14-88-322',
+                                email: 'Positiv.com',
+                                deadline: '10:00'
+                            }]
+                    }
+                }
+            };
+
+        }
+
+        window.customElements.define(VendorList.is, VendorList);
+    </script>
+</dom-module>
