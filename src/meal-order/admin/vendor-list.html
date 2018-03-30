@@ -20,8 +20,7 @@
 
             iron-list {
                 --iron-list-items-container: {
-                    width: 70%;
-                    margin-left: 10%;
+
                 };
             }
 
@@ -38,12 +37,6 @@
                 cursor: pointer;
                 justify-content: space-between;
                 align-items: center;
-            }
-
-            @media (max-width: 460px) {
-                paper-toolbar .bottom.title {
-                    font-size: 14px;
-                }
             }
 
             .phone {
@@ -63,12 +56,6 @@
 
             @media only screen and (max-width: 600px) {
 
-                iron-list {
-                    --iron-list-items-container: {
-                        margin: 4% auto;
-                        width: 100%;
-                    }
-                }
             }
 
             .vendor-name {
@@ -87,11 +74,13 @@
             }
 
             .deadline {
-                width: 20%;
+                width: 15%;
+                text-align: right;
             }
 
             .edit {
-                width: 5%;
+                text-align: right;
+                width: 10%;
             }
 
             .remove {
@@ -99,39 +88,71 @@
             }
 
             .header {
-                width: 66.5%;
-                margin-left: 10%;
+                display: flex;
                 font: bold 24px serif;
             }
+
+            .main-content {
+                margin: 10%;
+                width: 1000px;
+            }
+
+            .upper {
+                @apply --layout-horizontal;
+                display: flex;
+                cursor: pointer;
+                justify-content: space-between;
+                align-items: center;
+                margin-top: 5%;
+                margin-left: 10%;
+                margin-right: 15%;
+            }
+
+            paper-icon-button.add-vendor {
+                --paper-icon-button: {
+                    --iron-icon-fill-color: white;
+                    background-color: #4285f4;
+                    border-radius: 50px;
+                    padding: 12px;
+                    width: 50px;
+                    height: 50px;
+                    box-shadow: 2px 3px 10px rgba(0, 0, 0, 0.5);
+                }
+            }
+
         </style>
-        <h1>Поставщики</h1>
-        <div class="item non-select header">
-            <div class="vendor-name">Название</div>
-            <div class="email">Почта</div>
-            <div class="phone">Телефон</div>
-            <div class="deadline">Заказать до</div>
-            <div class="edit"></div>
-            <div class="remove"></div>
+        <div class="upper">
+            <h1>Поставщики</h1>
+            <paper-icon-button icon="add" class="add-vendor"></paper-icon-button>
         </div>
-        <iron-list id="list" items="[[vendors]]" as="vendor" scroll-target="document" scroll-offset="200">
-            <template>
-                <div class="non-select">
-                    <div class="item">
-                        <div class="vendor-name">[[vendor.title]]</div>
-                        <div class="email">[[vendor.email]]</div>
-                        <div class="phone">[[vendor.phone]]</div>
-                        <div class="deadline">[[vendor.deadline]]</div>
-                        <div class="edit">
-                            <paper-icon-button icon="create"></paper-icon-button>
-                        </div>
-                        <div class="remove">
-                            <paper-icon-button icon="close"></paper-icon-button>
+        <div class="main-content">
+            <div class="item non-select header">
+                <div class="vendor-name">Название</div>
+                <div class="email">Почта</div>
+                <div class="phone">Телефон</div>
+                <div class="deadline">Заказать до</div>
+                <div class="edit"></div>
+                <div class="remove"></div>
+            </div>
+            <iron-list id="list" items="[[vendors]]" as="vendor" scroll-target="document" scroll-offset="200">
+                <template>
+                    <div class="non-select">
+                        <div class="item">
+                            <div class="vendor-name">[[vendor.title]]</div>
+                            <div class="email">[[vendor.email]]</div>
+                            <div class="phone">[[vendor.phone]]</div>
+                            <div class="deadline">[[vendor.deadline]]</div>
+                            <div class="edit">
+                                <paper-icon-button icon="create"></paper-icon-button>
+                            </div>
+                            <div class="remove">
+                                <paper-icon-button icon="close"></paper-icon-button>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </template>
-        </iron-list>
-
+                </template>
+            </iron-list>
+        </div>
     </template>
     <script>
 
@@ -159,7 +180,6 @@
                     }
                 }
             };
-
         }
 
         window.customElements.define(VendorList.is, VendorList);
