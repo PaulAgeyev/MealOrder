@@ -123,7 +123,7 @@
         </style>
         <div class="upper">
             <h1>Поставщики</h1>
-            <paper-icon-button icon="add" class="add-vendor"></paper-icon-button>
+            <paper-icon-button icon="add" class="add-vendor" on-click="_addVendor"></paper-icon-button>
         </div>
         <div class="main-content">
             <div class="item non-select header">
@@ -143,10 +143,10 @@
                             <div class="phone">[[vendor.phone]]</div>
                             <div class="deadline">[[vendor.deadline]]</div>
                             <div class="edit">
-                                <paper-icon-button icon="create"></paper-icon-button>
+                                <paper-icon-button icon="create" on-click="_editVendor"></paper-icon-button>
                             </div>
                             <div class="remove">
-                                <paper-icon-button icon="close"></paper-icon-button>
+                                <paper-icon-button icon="close" on-click="_removeVendor"></paper-icon-button>
                             </div>
                         </div>
                     </div>
@@ -169,17 +169,30 @@
                             {
                                 title: 'Пюре',
                                 phone: '+38(050)12-45-876',
-                                email: 'smashpotato.com',
+                                email: 'smashpotato@gmail.com',
                                 deadline: '11:00'
                             }, {
                                 title: 'Позитив',
                                 phone: '+38(050)14-88-322',
-                                email: 'Positiv.com',
+                                email: 'Positiv@gmail.com',
                                 deadline: '10:00'
                             }]
                     }
                 }
             };
+
+            _removeVendor(e) {
+                this.dispatchEvent(new CustomEvent('remove-vendor', {detail: e.model.index}));
+            }
+
+            _editVendor(e) {
+                this.dispatchEvent(new CustomEvent('edit-vendor', {detail: e.model.index}));
+
+            }
+
+            _addVendor() {
+                this.dispatchEvent(new CustomEvent('add-vendor', {}));
+            }
         }
 
         window.customElements.define(VendorList.is, VendorList);
