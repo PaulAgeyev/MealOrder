@@ -21,7 +21,7 @@
             iron-list {
                 --iron-list-items-container: {
                     width: 70%;
-                    margin: 10% auto;
+                    margin-left: 10%;
                 };
             }
 
@@ -36,17 +36,8 @@
                 background-color: white;
                 border: 1px solid #ddd;
                 cursor: pointer;
-                margin-bottom: 10px;
                 justify-content: space-between;
                 align-items: center;
-            }
-
-            .pad {
-                padding: 0;
-                @apply --layout-flex;
-                @apply --layout-vertical;
-                font-size: 15px;
-                text-align: center;
             }
 
             @media (max-width: 460px) {
@@ -82,13 +73,13 @@
 
             .vendor-name {
                 text-align: left;
-                width: 10%;
+                width: 15%;
             }
 
             .email {
                 text-align: left;
                 padding-left: 5%;
-                width: 25%;
+                width: 30%;
             }
 
             .phone {
@@ -100,30 +91,41 @@
             }
 
             .edit {
-                width: 10%;
+                width: 5%;
             }
 
             .remove {
-                width: 10%;
+                width: 5%;
             }
 
+            .header {
+                width: 66.5%;
+                margin-left: 10%;
+                font: bold 24px serif;
+            }
         </style>
         <h1>Поставщики</h1>
+        <div class="item non-select header">
+            <div class="vendor-name">Название</div>
+            <div class="email">Почта</div>
+            <div class="phone">Телефон</div>
+            <div class="deadline">Заказать до</div>
+            <div class="edit"></div>
+            <div class="remove"></div>
+        </div>
         <iron-list id="list" items="[[vendors]]" as="vendor" scroll-target="document" scroll-offset="200">
             <template>
                 <div class="non-select">
-                    <div class="pad">
-                        <div class="item">
-                            <div class="vendor-name">[[vendor.title]]</div>
-                            <div class="email">[[vendor.email]]</div>
-                            <div class="phone">[[vendor.phone]]</div>
-                            <div class="deadline">[[vendor.deadline]]</div>
-                            <div class="edit">
-                                <paper-icon-button icon="create"></paper-icon-button>
-                            </div>
-                            <div class="remove">
-                                <paper-icon-button icon="close"></paper-icon-button>
-                            </div>
+                    <div class="item">
+                        <div class="vendor-name">[[vendor.title]]</div>
+                        <div class="email">[[vendor.email]]</div>
+                        <div class="phone">[[vendor.phone]]</div>
+                        <div class="deadline">[[vendor.deadline]]</div>
+                        <div class="edit">
+                            <paper-icon-button icon="create"></paper-icon-button>
+                        </div>
+                        <div class="remove">
+                            <paper-icon-button icon="close"></paper-icon-button>
                         </div>
                     </div>
                 </div>
