@@ -27,7 +27,9 @@
     "paper-input": "PolymerElements/paper-input#^2.2.0",
     "vaadin-grid": "vaadin/vaadin-grid#^4.1.7",
     "paper-card": "PolymerElements/paper-card#^2.1.0",
-    "app-datepicker": "motss/app-datepicker#^2.12.0"
+    "app-datepicker": "motss/app-datepicker#^2.12.0",
+    "paper-dialog": "PolymerElements/paper-dialog#^2.1.1",
+    "gold-phone-input": "PolymerElements/gold-phone-input#^2.1.0"
   },
   "devDependencies": {
     "iron-demo-helpers": "PolymerElements/iron-demo-helpers#^2.0.0",
