@@ -1,0 +1,59 @@
+<script src="../../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+<link rel="import" href="../../../bower_components/polymer/polymer-element.html">
+
+<dom-module id="monthly-spending">
+    <template>
+        <style>
+            body {
+                font-family: 'Roboto', 'Noto', sans-serif;
+                margin: 0;
+                display: flex;
+                align-items: flex-end;
+                height: 80px;
+                background: #009688;
+                color: white;
+            }
+
+            .header {
+                display: flex;
+                width: 80%;
+                justify-content: space-between;
+                align-items: center;
+
+            }
+
+            @media only screen and (max-width: 600px) {
+
+                paper-tabs {
+                    margin-top: 3%;
+
+                }
+
+                .header {
+                    width: 100%;
+                }
+            }
+
+        </style>
+
+
+    </template>
+    <script>
+
+        class MonthlySpending extends ReduxMixin(Polymer.Element) {
+
+            static get is() {
+                return 'monthly-spending';
+            }
+
+
+            static get properties() {
+                return {};
+            }
+
+
+        }
+
+        window.customElements.define(MonthlySpending.is, MonthlySpending);
+    </script>
+</dom-module>
