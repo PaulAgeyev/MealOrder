@@ -185,18 +185,18 @@
                             {
                                 title: 'Пюре',
                                 date: '05/01/18',
-                                isCorrect: true
+                                status: 'correct'
                             }, {
                                 title: 'Позитив',
                                 date: '07/02/18',
-                                isCorrect: false
+                                status: 'incorrect'
                             }]
                     }
                 }
             };
 
             _getClassForStatus(po) {
-                return (po.isCorrect) ? 'correct' : 'incorrect';
+                return po.status;
             }
 
             _openDialog() {
