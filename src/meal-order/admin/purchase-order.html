@@ -4,6 +4,7 @@
 <link rel="import" href="../../../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../../../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../../../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../../../bower_components/app-datepicker/app-datepicker.html">
 
 <dom-module id="purchase-order">
     <template>
@@ -57,7 +58,6 @@
 
             .main-content {
                 margin: 10%;
-                width: 1000px;
             }
 
             paper-icon-button.add-vendor {
@@ -105,8 +105,41 @@
             }
 
             @media only screen and (max-width: 600px) {
+                .main-content {
+                    width: 500px;
+                    margin: 2%;
+                }
+
+                .vendor-name {
+                    width: 35%;
+                }
+
+                .date {
+                    width: 20%;
+                    text-align: left;
+                }
+
+                .status {
+                    width: 30%;
+                    text-align: left;
+                }
+
+                .edit {
+                    text-align: right;
+                }
             }
 
+            paper-icon-button#calendar {
+                --paper-icon-button: {
+                    background-color: white;
+                    border-radius: 50px;
+                    box-shadow: 2px 3px 10px rgba(0, 0, 0, 0.5);
+                }
+            }
+
+            app-datepicker {
+                display: none;
+            }
         </style>
         <div class="main-content">
             <div class="item non-select header">
@@ -132,6 +165,9 @@
                     </div>
                 </template>
             </iron-list>
+
+            <paper-icon-button id="calendar" icon="today" on-click="openDatePicker"></paper-icon-button>
+            <app-datepicker id="picker" view="vertical" date="{{currentDate}}"></app-datepicker>
         </div>
     </template>
     <script>
@@ -160,12 +196,22 @@
             };
 
             _getClassForStatus(po) {
-                console.log(po.isCorrect);
                 return (po.isCorrect) ? 'correct' : 'incorrect';
             }
 
             _openDialog() {
                 this.$.animated.open();
+            }
+
+            openDatePicker() {
+                if (this.$.picker.style.display !== 'inline') {
+                    this.$.calendar.style.backgroundColor = '#0085d3';
+                    this.$.picker.style = 'display:inline;';
+                }
+                else {
+                    this.$.picker.style = 'display:none;';
+                    this.$.calendar.style.backgroundColor = 'white';
+                }
             }
         }
 
