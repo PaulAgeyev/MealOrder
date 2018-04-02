@@ -1,0 +1,167 @@
+<script src="../../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+<link rel="import" href="../../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../../bower_components/paper-tabs/paper-tabs.html">
+<link rel="import" href="../../../bower_components/app-route/app-location.html">
+<link rel="import" href="../../../bower_components/app-route/app-route.html">
+<link rel="import" href="../shell/redux-store.html">
+<link rel="import" href="../../../bower_components/polymer/lib/elements/dom-repeat.html">
+<link rel="import" href="purchase-order.html">
+
+<dom-module id="vendor-orders">
+    <template>
+        <style>
+            body {
+                font-family: 'Roboto', 'Noto', sans-serif;
+                margin: 0;
+                display: flex;
+                align-items: flex-end;
+                height: 80px;
+                background: #009688;
+                color: white;
+            }
+
+            paper-tabs {
+                -webkit-font-smoothing: antialiased;
+                width: 100%;
+                margin-bottom: 1px;
+                --paper-tabs-selection-bar-color: #179EFF;
+                --paper-tab-ink: #179EFF;
+            }
+
+            paper-tabs {
+                margin: 3% auto;
+            }
+
+            paper-tab.iron-selected .day-of-the-week {
+                color: #179EFF;
+            }
+
+            paper-tab.iron-selected .day {
+                color: #179EFF;
+            }
+
+            .link {
+                @apply --layout-horizontal;
+                @apply --layout-center-center;
+                text-decoration: none;
+                color: #4f4f4f;
+                font-size: 1.5em;
+            }
+
+            paper-icon-button#calendar {
+                --paper-icon-button: {
+                    background-color: white;
+                    border-radius: 50px;
+                    box-shadow: 2px 3px 10px rgba(0, 0, 0, 0.5);
+                }
+            }
+
+            app-datepicker {
+                display: none;
+            }
+
+            .header {
+                width: 80%;
+                justify-content: space-between;
+            }
+
+            @media only screen and (max-width: 600px) {
+
+                paper-tabs {
+                    margin-top: 3%;
+
+                }
+
+                .header {
+                    width: 100%;
+                }
+            }
+
+        </style>
+
+        <app-location route="{{route}}"
+                      use-hash-as-path></app-location>
+
+        <app-route
+                route="{{route}}"
+                pattern="/:menu"
+                data="{{routeData}}"
+                tail="{{subroute}}">
+        </app-route>
+        <h1>Заказ поставщику</h1>
+        <div class="header">
+            <paper-tabs class="tabs" selected="[[routeData.menu]]" attr-for-selected='key'>
+                <template is="dom-repeat" items="{{menuForDates}}" as="calendar">
+                    <paper-tab key="[[calendar.date.year]]-[[calendar.date.month]]-[[calendar.date.day]]" link>
+                        <a class="link" name="[[calendar.date.year]]/[[calendar.date.month]]/[[calendar.date.day]]"
+                           href="/#/vendor-orders/#/[[calendar.date.year]]/[[calendar.date.month]]/[[calendar.date.day]]"
+                           on-click="_handleClick">
+                            <div>
+                                <div class="day">{{calendar.date.day}}</div>
+                            </div>
+                        </a>
+                    </paper-tab>
+                </template>
+            </paper-tabs>
+            <paper-icon-button id="calendar" icon="today" on-click="openDatePicker"></paper-icon-button>
+            <app-datepicker id="picker" view="vertical" date="{{currentDate}}"></app-datepicker>
+        </div>
+        <purchase-order></purchase-order>
+
+
+    </template>
+    <script>
+
+        class VendorOrders extends ReduxMixin(Polymer.Element) {
+
+            static get is() {
+                return 'vendor-orders';
+            }
+
+            static get actions() {
+                return {
+                    menuForDay(date) {
+                        return {
+                            type: ArrayAction.MENU_FOR_DAY,
+                            date: date
+                        }
+                    },
+                }
+            }
+
+            static get properties() {
+                return {
+                    menuForDates: {
+                        type: Array,
+                        statePath: 'menuForDates'
+                    }
+                };
+            }
+
+            static get observers() {
+                return [
+                    '_pageChanged(routeData.menu)'
+                ];
+            }
+
+            _pageChanged() {
+                if (!this.route.path) {
+                    this.set('route.path', '/menu/#/2018/03/21');
+                }
+            }
+
+            openDatePicker() {
+                if (this.$.picker.style.display !== 'inline') {
+                    this.$.calendar.style.backgroundColor = '#0085d3';
+                    this.$.picker.style = 'display:inline;';
+                }
+                else {
+                    this.$.picker.style = 'display:none;';
+                    this.$.calendar.style.backgroundColor = 'white';
+                }
+            }
+        }
+
+        window.customElements.define(VendorOrders.is, VendorOrders);
+    </script>
+</dom-module>
