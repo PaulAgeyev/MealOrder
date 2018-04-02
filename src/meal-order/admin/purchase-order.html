@@ -1,0 +1,174 @@
+<script src="../../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+<link rel="import" href="../../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../../bower_components/iron-list/iron-list.html">
+<link rel="import" href="../../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../../bower_components/paper-dialog/paper-dialog.html">
+
+<dom-module id="purchase-order">
+    <template>
+        <style>
+            :host {
+                font-family: 'Roboto', 'Noto', sans-serif;
+                display: block;
+                padding: 0;
+            }
+
+            app-toolbar paper-icon-button {
+                --paper-icon-button-ink-color: white;
+            }
+
+            iron-list {
+                --iron-list-items-container: {
+
+                };
+            }
+
+            paper-item {
+                width: 100%;
+            }
+
+            .header {
+                display: flex;
+                font: bold 24px serif;
+            }
+
+            .item {
+                @apply --layout-horizontal;
+                padding: 20px;
+                display: flex;
+                background-color: white;
+                border: 1px solid #ddd;
+                cursor: pointer;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .non-select {
+                -webkit-touch-callout: none; /* iOS Safari */
+                -webkit-user-select: none; /* Safari */
+                -khtml-user-select: none; /* Konqueror HTML */
+                -moz-user-select: none; /* Firefox */
+                -ms-user-select: none; /* Internet Explorer/Edge */
+                user-select: none;
+
+                /* Non-prefixed version, currently supported by Chrome and Opera */
+            }
+
+            .main-content {
+                margin: 10%;
+                width: 1000px;
+            }
+
+            paper-icon-button.add-vendor {
+                --paper-icon-button: {
+                    --iron-icon-fill-color: white;
+                    background-color: #0085d3;
+                    border-radius: 50px;
+                    padding: 12px;
+                    width: 50px;
+                    height: 50px;
+                    box-shadow: 2px 3px 10px rgba(0, 0, 0, 0.5);
+                }
+            }
+
+            paper-input {
+                margin-top: 5%;
+            }
+
+            .vendor-name {
+                width: 25%;
+            }
+
+            .date {
+                width: 30%;
+                text-align: left;
+            }
+
+            .status {
+                width: 30%;
+                text-align: left;
+            }
+
+            .correct::after {
+                color: #0085d3;
+                content: 'Отправленный';
+            }
+
+            .incorrect::after {
+                color: #af0000;
+                content: 'Некорректный';
+            }
+
+            .edit {
+                width: 15%;
+            }
+
+            @media only screen and (max-width: 600px) {
+            }
+
+        </style>
+        <div class="main-content">
+            <div class="item non-select header">
+                <div class="vendor-name">Поставщик</div>
+                <div class="date">Дата</div>
+                <div class="status">Статус</div>
+                <div class="edit"></div>
+            </div>
+            <iron-list id="list" items="[[purchaseOrders]]" as="PO" scroll-target="document" scroll-offset="200">
+                <template>
+                    <div class="non-select">
+                        <div class="item">
+                            <div class="vendor-name">[[PO.title]]</div>
+                            <div class="date">[[PO.date]]</div>
+                            <div class="status">
+                                <div class$="[[_getClassForStatus(PO)]]"></div>
+                            </div>
+                            <div class="edit">
+                                <paper-icon-button icon="create" on-click="_editVendor"></paper-icon-button>
+                            </div>
+
+                        </div>
+                    </div>
+                </template>
+            </iron-list>
+        </div>
+    </template>
+    <script>
+
+        class PurchaseOrder extends Polymer.Element {
+            static get is() {
+                return 'purchase-order';
+            }
+
+            static get properties() {
+                return {
+                    purchaseOrders: {
+                        type: Array,
+                        value: [
+                            {
+                                title: 'Пюре',
+                                date: '05/01/18',
+                                isCorrect: true
+                            }, {
+                                title: 'Позитив',
+                                date: '07/02/18',
+                                isCorrect: false
+                            }]
+                    }
+                }
+            };
+
+            _getClassForStatus(po) {
+                console.log(po.isCorrect);
+                return (po.isCorrect) ? 'correct' : 'incorrect';
+            }
+
+            _openDialog() {
+                this.$.animated.open();
+            }
+        }
+
+        window.customElements.define(PurchaseOrder.is, PurchaseOrder);
+    </script>
+</dom-module>
