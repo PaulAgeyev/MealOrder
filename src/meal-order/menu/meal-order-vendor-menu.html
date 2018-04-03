@@ -147,13 +147,20 @@
 
             static get properties() {
                 return {
+                    /**
+                     * Menu of a vendor.
+                     *
+                     * Initial state represents its structure.
+                     */
                     items: {
-                        type: Array
+                        type: Array,
+                        value: [{categoryName: '', dishes: [{title: '', price: ''}, {}]}, {}]
                     }
                 }
             };
 
             addDish(e) {
+                console.log(this.items);
                 const dish = {};
                 //dish.category = e.model.parentModel.__data.category.categoryName;
                 dish.vendor = this.vendor;
