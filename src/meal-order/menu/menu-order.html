@@ -7,7 +7,7 @@
 <link rel="import" href="../shell/redux-store.html">
 <link rel="import" href="../../../bower_components/polymer/lib/elements/dom-repeat.html">
 
-<link rel="import" href="vendor-menus.html">
+<link rel="import" href="meal-order-vendor-menus.html">
 <link rel="import" href="user-history.html">
 <dom-module id="menu-order">
     <template>
@@ -98,8 +98,9 @@
                 fallback-selection="view404"
                 role="main">
 
-            <vendor-menus name="[[routeData.menu]]"
-                          items="[[menu]]" route="[[subroute]]" on-dish-added="addDishToOrder"></vendor-menus>
+            <meal-order-vendor-menus name="[[routeData.menu]]"
+                                     items="[[menu]]" route="[[subroute]]"
+                                     on-dish-added="addDishToOrder"></meal-order-vendor-menus>
         </iron-pages>
 
     </template>
