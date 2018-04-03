@@ -99,7 +99,7 @@
         <dom-repeat items="[[items]]" as="item">
             [[item.categoryName]]
             <template>
-                <dom-if if=" [[true]]">
+                <dom-if if="[[item.dishes.length]]">
                     <template>
                         <div class="vendor">
 
@@ -141,7 +141,6 @@
                 </dom-if>
             </template>
         </dom-repeat>
-        <paper-button on-click="log">Click</paper-button>
     </template>
     <script>
 
@@ -157,10 +156,6 @@
                     }
                 }
             };
-
-            log() {
-                console.log(this.items);
-            }
         }
 
         window.customElements.define(MealOrderVendorMenu.is, MealOrderVendorMenu);
