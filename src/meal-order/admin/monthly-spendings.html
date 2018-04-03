@@ -1,25 +1,50 @@
 <script src="../../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
 <link rel="import" href="../../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../../bower_components/iron-list/iron-list.html">
+<link rel="import" href="../../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../../../bower_components/paper-listbox/paper-listbox.html">
 
 <dom-module id="monthly-spending">
     <template>
         <style>
             body {
                 font-family: 'Roboto', 'Noto', sans-serif;
-                margin: 0;
-                display: flex;
-                align-items: flex-end;
-                height: 80px;
-                background: #009688;
-                color: white;
+                display: block;
+                padding: 0;
             }
 
             .header {
                 display: flex;
-                width: 80%;
+                font: bold 24px serif;
+            }
+
+            .item {
+                @apply --layout-horizontal;
+                padding: 20px;
+                display: flex;
+                background-color: white;
+                border: 1px solid #ddd;
+                cursor: pointer;
                 justify-content: space-between;
                 align-items: center;
+            }
 
+            .upper {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .main-content {
+                margin: 10%;
+            }
+
+            .amount {
+                padding-right: 10%;
+            }
+
+            .footer {
+                font: bold 16px serif;
             }
 
             @media only screen and (max-width: 600px) {
@@ -35,8 +60,44 @@
             }
 
         </style>
-
-
+        <div class="main-content">
+            <div class="upper">
+                <paper-dropdown-menu label="Месяц">
+                    <paper-listbox slot="dropdown-content">
+                        <paper-item>декабрь</paper-item>
+                        <paper-item>январь</paper-item>
+                        <paper-item>февраль</paper-item>
+                        <paper-item>март</paper-item>
+                    </paper-listbox>
+                </paper-dropdown-menu>
+                <paper-dropdown-menu label="год">
+                    <paper-listbox slot="dropdown-content">
+                        <paper-item>2017</paper-item>
+                        <paper-item>2018</paper-item>
+                        <paper-item>2019</paper-item>
+                    </paper-listbox>
+                </paper-dropdown-menu>
+                <paper-button>Сгенерировать документ</paper-button>
+            </div>
+            <div class="item non-select header">
+                <div class="user-name">Пользователь</div>
+                <div class="amount">Сумма, ₴</div>
+            </div>
+            <iron-list id="list" items="[[records]]" as="record" scroll-target="document" scroll-offset="200">
+                <template>
+                    <div class="non-select">
+                        <div class="item">
+                            <div class="user-name">[[record.user]]</div>
+                            <div class="amount">[[record.amount]]</div>
+                        </div>
+                    </div>
+                </template>
+            </iron-list>
+            <div class="item footer">
+                <div class="user-name">Всего:</div>
+                <div class="amount">[[_getTotal()]]</div>
+            </div>
+        </div>
     </template>
     <script>
 
@@ -48,9 +109,27 @@
 
 
             static get properties() {
-                return {};
+                return {
+                    records: {
+                        type: Array,
+                        value: [{user: 'Женя Сидоров', amount: 1000}, {
+                            user: 'Антон Сокол',
+                            amount: 2000
+                        }, {user: 'Вова Бессонов', amount: 938}, {
+                            user: 'Андрей Жданов',
+                            amount: 3567
+                        }, {user: 'Яна Смешарикова', amount: 100}]
+                    }
+                };
             }
 
+            _getTotal() {
+                let sum = 0;
+                for (let i = 0; i < this.records.length; i++) {
+                    sum += this.records[i].amount;
+                }
+                return sum;
+            }
 
         }
 
