@@ -173,11 +173,28 @@
                 }
 
                 paper-input {
-                    max-width: 200px;
+                    width: 100%;
                 }
 
                 gold-phone-input {
-                    max-width: 200px;
+                    width: 100%;
+                }
+
+                .add-vendor-paper-dialog {
+                    max-height: 100%;
+                    max-width: 100%;
+                    width: 100vh;
+                }
+
+                .dialog {
+                    width: 90%;
+                    padding-left: 5%;
+                    padding-right: 5%;
+                }
+
+                .upper {
+                    margin-left: 5%;
+                    margin-right: 10%;
                 }
             }
 
@@ -214,7 +231,7 @@
                 </template>
             </iron-list>
         </div>
-        <paper-dialog id="animated" with-backdrop modal>
+        <paper-dialog id="animated" class="add-vendor-paper-dialog" with-backdrop modal>
             <div class="dialog">
                 <div class="inner">
                     <h2>Добавить поставищика</h2>
