@@ -66,8 +66,8 @@
             },
             hasMenu: true
         }];
-
-    const initialState = {
+    {
+        window.initialState = {
         menuForDates: arrayOfDates,
         menuForDay: [],
 
@@ -235,5 +235,6 @@
     };
 
     const store = Redux.createStore(reducer);
-    const ReduxMixin = PolymerRedux(store);
+        window.ReduxMixin = PolymerRedux(store);
+    }
 </script>

@@ -33,6 +33,7 @@
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
+                margin-bottom: 50px;
             }
 
             .main-content {
@@ -45,6 +46,11 @@
 
             .footer {
                 font: bold 16px serif;
+            }
+
+            #generate {
+                background-color: #0085d3;
+                color: white;
             }
 
             @media only screen and (max-width: 600px) {
@@ -77,7 +83,7 @@
                         <paper-item>2019</paper-item>
                     </paper-listbox>
                 </paper-dropdown-menu>
-                <paper-button>Сгенерировать документ</paper-button>
+                <paper-button id="generate">Сгенерировать документ</paper-button>
             </div>
             <div class="item non-select header">
                 <div class="user-name">Пользователь</div>
