@@ -55,6 +55,7 @@
                 border-radius: 5px;
                 background-color: #ffffff;
             }
+
             .item {
                 @apply --layout-horizontal;
                 /*padding: 20px;*/
@@ -141,6 +142,9 @@
                                                         on-dish-added="addDish"></meal-order-vendor-menu>
                             </div>
 
+                            <meal-order-vendor-menu menu="[[item]]" on-dish-added="addDish"
+                                                    on-vendor-menu-resize="_resize"></meal-order-vendor-menu>
+
                         </div>
                     </div>
                 </div>
@@ -206,12 +210,10 @@
                 ];
             }
 
-            categoryExists(item) {
-                return item.dishes.length > 0;
+            _resize() {
+                this.shadowRoot.querySelector("#list").notifyResize();
             }
-
             addDish(e) {
-                console.log(e.detail);
                 this.dispatchEvent(new CustomEvent('dish-added', {detail: e.detail}));
             }
 
