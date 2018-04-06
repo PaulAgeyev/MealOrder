@@ -49,12 +49,11 @@
 
             paper-item {
                 font-size: 15px;
-                padding: 0;
-                width: 100%;
-
+                padding: 5px 5%;
+                width: 90%;
             }
 
-            .menu-dashboard {
+            .menu-dishes {
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
@@ -62,7 +61,7 @@
                 border-bottom: 1px solid #fcfcfc;
             }
 
-            .category {
+            .wrapper {
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
@@ -95,22 +94,38 @@
 
             .expanded {
                 display: block;
+                transition: background-color 1s linear;
+            }
+
+            .menu-caption {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                font-size: 16px;
+                width: 100%;
+            }
+
+            @media only screen and (max-width: 600px) {
+                paper-item {
+                    padding: 2px 2%;
+                }
             }
         </style>
-        <div class="primary">
-            [[menu.name]]
-            <paper-icon-button id="expand-button" icon="add"
-                               on-click="_toggle"></paper-icon-button>
+        <div class="wrapper">
+            <paper-item on-click="_toggle" class="menu-caption">
+                <div class="menu-caption">
+                    [[menu.name]]
+                    <paper-icon-button id="expand" icon="expand-less"></paper-icon-button>
+                </div>
+            </paper-item>
         </div>
-
         <div id="menu" class="expanded">
             <dom-repeat items="[[menu.categories]]" as="item">
                 <template>
                     <dom-if if="[[item.dishes.length]]">
                         <template>
-                            <div class="vendor">
-
-                                <div class="category">
+                            <div>
+                                <div class="wrapper">
                                     <paper-item>
                                         <div class="dish-title bolder">
                                             [[item.categoryName]]
@@ -119,15 +134,14 @@
                                             Цена
                                         </div>
                                         <div class="add-dish-icon">
-                                            <paper-icon-button
-                                                    icon=""></paper-icon-button>
+
                                         </div>
                                     </paper-item>
                                 </div>
 
                                 <dom-repeat items="[[item.dishes]]" as="dish">
                                     <template>
-                                        <div class="menu-dashboard">
+                                        <div class="menu-dishes">
                                             <paper-item>
                                                 <div class="dish-title">
                                                     [[dish.title]]
@@ -170,20 +184,31 @@
                 }
             };
 
+            _getExpandIcon() {
+                if (this.$.menu.className === 'expanded') {
+                    console.log('expanded');
+                    return 'expand-less';
+                }
+                else {
+                    console.log('collapsed');
+
+                    return 'expand-more';
+                }
+            }
             _toggle(e) {
                 if (this.$.menu.className === 'collapsed') {
                     this.$.menu.className = 'expanded';
+                    this.$.expand.icon = 'expand-less';
                 }
                 else {
                     this.$.menu.className = 'collapsed';
+                    this.$.expand.icon = 'expand-more';
                 }
                 this.dispatchEvent(new CustomEvent('vendor-menu-resize'));
             }
 
             addDish(e) {
-                console.log(this.items);
                 const dish = {};
-                //dish.category = e.model.parentModel.__data.category.categoryName;
                 dish.vendor = this.vendor;
                 dish.name = e.model.__data.dish.title;
                 dish.price = e.model.__data.dish.price;
