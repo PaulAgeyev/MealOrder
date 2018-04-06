@@ -38,6 +38,7 @@
                 --iron-list-items-container: {
                     width: 70%;
                     margin: 2% auto;
+                    border-bottom: 1px solid #ddd;
                 };
             }
 
@@ -63,11 +64,6 @@
                 border-radius: 15px;
             }
 
-            @media (max-width: 460px) {
-                paper-toolbar .bottom.title {
-                    font-size: 14px;
-                }
-            }
 
             .non-select {
                 -webkit-touch-callout: none; /* iOS Safari */
@@ -175,17 +171,6 @@
             }
             addDish(e) {
                 this.dispatchEvent(new CustomEvent('dish-added', {detail: e.detail}));
-            }
-
-
-            _handleInput() {
-                const div = this.shadowRoot.querySelector("#list");
-                for (let i = 0; i < this.items.length; i++) {
-                    if (this.filter !== '') {
-                        div.selectIndex(i);
-                        div.selectIndex(i);
-                    }
-                }
             }
 
             filteredItems() {
