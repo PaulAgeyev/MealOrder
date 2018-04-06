@@ -160,12 +160,6 @@
                 }
             };
 
-            static get observers() {
-                return [
-                    '_handleInput(filter)'
-                ];
-            }
-
             _resize() {
                 this.shadowRoot.querySelector("#list").notifyResize();
             }
