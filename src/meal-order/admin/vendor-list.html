@@ -6,6 +6,7 @@
 <link rel="import" href="../../../bower_components/paper-dialog/paper-dialog.html">
 <link rel="import" href="../../../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../../../bower_components/gold-phone-input/gold-phone-input.html">
+<link rel="import" href="../../../bower_components/iron-form/iron-form.html">
 
 <dom-module id="vendor-list">
     <template>
@@ -14,10 +15,6 @@
                 font-family: 'Roboto', 'Noto', sans-serif;
                 display: block;
                 padding: 0;
-            }
-
-            app-toolbar paper-icon-button {
-                --paper-icon-button-ink-color: white;
             }
 
             iron-list {
@@ -52,7 +49,6 @@
                 -moz-user-select: none; /* Firefox */
                 -ms-user-select: none; /* Internet Explorer/Edge */
                 user-select: none;
-
                 /* Non-prefixed version, currently supported by Chrome and Opera */
             }
 
@@ -90,12 +86,12 @@
                 font: bold 24px serif;
             }
 
-            .main-content {
-                margin: 10%;
+            #main-content {
+                margin: 50px 10%;
                 width: 1000px;
             }
 
-            .upper {
+            #upper {
                 @apply --layout-horizontal;
                 display: flex;
                 cursor: pointer;
@@ -104,6 +100,7 @@
                 margin-top: 5%;
                 margin-left: 10%;
                 margin-right: 15%;
+                width: 1000px;
             }
 
             paper-icon-button.add-vendor {
@@ -118,7 +115,7 @@
                 }
             }
 
-            .dialog {
+            #dialog {
                 width: 500px;
                 height: 500px;
             }
@@ -136,13 +133,13 @@
                 margin-bottom: 5%;
             }
 
-            .time {
+            #time {
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
             }
 
-            .buttons {
+            #buttons {
                 display: flex;
                 justify-content: space-between;
                 margin-left: 60%;
@@ -163,7 +160,7 @@
                     font-size: 16px;
                 }
 
-                .buttons {
+                #buttons {
                     margin-left: 0;
                     display: block;
                 }
@@ -180,30 +177,30 @@
                     width: 100%;
                 }
 
-                .add-vendor-paper-dialog {
+                #add-vendor-paper-dialog {
                     max-height: 100%;
                     max-width: 100%;
                     width: 100vh;
                 }
 
-                .dialog {
+                #dialog {
                     width: 90%;
                     padding-left: 5%;
                     padding-right: 5%;
                 }
 
-                .upper {
+                #upper {
                     margin-left: 5%;
                     margin-right: 10%;
                 }
             }
 
         </style>
-        <div class="upper">
+        <div id="upper">
             <h1>Поставщики</h1>
             <paper-icon-button icon="add" class="add-vendor" on-click="_openDialog"></paper-icon-button>
         </div>
-        <div class="main-content">
+        <div id="main-content">
             <div class="item non-select header">
                 <div class="vendor-name">Название</div>
                 <div class="email">Почта</div>
@@ -231,37 +228,39 @@
                 </template>
             </iron-list>
         </div>
-        <paper-dialog id="animated" class="add-vendor-paper-dialog" with-backdrop modal>
-            <div class="dialog">
-                <div class="inner">
-                    <h2>Добавить поставищика</h2>
-                    <paper-input value="{{newTitle}}"
-                                 error-message="[[invalid.message]]"
-                                 label="Название"
-                                 invalid="[[invalid.message.length]]"></paper-input>
-                    <paper-input value="{{newMail}}"
-                                 error-message="[[invalid.message]]"
-                                 label="Почта"
-                                 invalid="[[invalid.message.length]]">
-                    </paper-input>
-                    <gold-phone-input
-                            country-code="38"
-                            phone-number-pattern="xxx-xx-xx-xxx" value="{{phone}}">
-                    </gold-phone-input>
-                    <div>Заказать до</div>
-                    <div class="time">
-                        <paper-input label="Часов" type="number" value="{{hours}}">
-                            <div slot="prefix"></div>
+        <paper-dialog id="animated" id="add-vendor-paper-dialog" with-backdrop modal>
+            <div id="dialog">
+                <iron-form id="form">
+                    <form>
+                        <h2>Добавить поставищика</h2>
+                        <paper-input value="{{newTitle}}"
+                                     error-message="Обязательное поле"
+                                     label="Название" required="true"></paper-input>
+                        <paper-input value="{{newMail}}"
+                                     label="Почта" type="email" required="true"
+                                     error-message="Неверный формат почты">
                         </paper-input>
-                        <paper-input label="Минут" type="number" value="{{minutes}}">
-                            <div slot="prefix"></div>
-                        </paper-input>
+                        <gold-phone-input
+                                country-code="38"
+                                phone-number-pattern="xxx-xx-xx-xxx" value="{{phone}}" required="true"
+                                error-message="Неверный формат телефона">
+                        </gold-phone-input>
+                        <div>Заказать до</div>
+                        <div id="time">
+                            <paper-input label="Часов" type="number" value="{{hours}}" required="true">
+                                <div slot="prefix"></div>
+                            </paper-input>
+                            <paper-input label="Минут" type="number" value="{{minutes}}" required="true">
+                                <div slot="prefix"></div>
+                            </paper-input>
+                        </div>
+                    </form>
+                    <div id="buttons">
+                        <paper-button dialog-dismiss>Отмена</paper-button>
+                        <paper-button class="save" on-tap="_addVendor">Сохранить
+                        </paper-button>
                     </div>
-                </div>
-                <div class="buttons">
-                    <paper-button dialog-dismiss>Отмена</paper-button>
-                    <paper-button dialog-confirm autofocus class="save" on-click="_addVendor">Сохранить</paper-button>
-                </div>
+                </iron-form>
             </div>
         </paper-dialog>
     </template>
@@ -307,18 +306,20 @@
 
             _editVendor(e) {
                 this.dispatchEvent(new CustomEvent('edit-vendor', {detail: e.model.index}));
-
             }
 
             _addVendor() {
-                const vendor = {};
-                vendor.title = this.newTitle;
-                vendor.mail = this.newMail;
-                vendor.phone = this.phone;
-                vendor.hours = this.hours;
-                vendor.minutes = this.minutes;
-                console.log(vendor);
-                this.dispatchEvent(new CustomEvent('add-vendor', {detail: vendor}));
+                if (this.$.form.validate()) {
+                    const vendor = {};
+                    vendor.title = this.newTitle;
+                    vendor.mail = this.newMail;
+                    vendor.phone = this.phone;
+                    vendor.hours = this.hours;
+                    vendor.minutes = this.minutes;
+                    this.dispatchEvent(new CustomEvent('add-vendor', {detail: vendor}));
+                    this.$.form.reset();
+                    this.$.animated.toggle();
+                }
             }
         }
 
