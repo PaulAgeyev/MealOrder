@@ -23,29 +23,12 @@
 <link rel="import" href="../../../bower_components/iron-list/iron-list.html">
 <link rel="import" href="../../../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../../../bower_components/iron-icons/iron-icons.html">
-<link rel="import" href="../../../bower_components/paper-search/paper-search-bar.html">
+<link rel="import" href="../../../bower_components/paper-checkbox/paper-checkbox.html">
 
 <link rel="import" href="admin-vendor-menu.html">
 <dom-module id="admin-vendor-menus">
     <template>
         <style>
-            app-toolbar {
-                background-color: var(--google-green-700);
-                box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.3);
-                font-weight: bold;
-                color: white;
-                font-size: 18px;
-                z-index: 1;
-                position: fixed;
-                top: 0;
-                left: 0;
-                right: 0;
-            }
-
-            app-toolbar paper-icon-button {
-                --paper-icon-button-ink-color: white;
-            }
-
             #main-content {
                 margin-left: 15%;
                 margin-right: 15%;
@@ -86,15 +69,6 @@
                 padding: 0;
             }
 
-            .item.expand .vendor {
-                display: block;
-            }
-
-            @media (max-width: 460px) {
-                paper-toolbar .bottom.title {
-                    font-size: 14px;
-                }
-            }
 
             .non-select {
                 -webkit-touch-callout: none; /* iOS Safari */
@@ -146,10 +120,6 @@
                 height: 85%;
             }
 
-            .container {
-                margin: 4% auto;
-                width: 70%;
-            }
 
             .add-dish-paper-dialog {
                 max-height: 450px;
@@ -171,8 +141,11 @@
                 width: auto;
             }
 
-            @media only screen and (max-width: 640px) {
+            #header-table {
+                margin: 0 2%;
+            }
 
+            @media only screen and (max-width: 640px) {
                 paper-search-bar {
                     margin: 0 auto;
                     width: 100%;
@@ -254,6 +227,15 @@
             </div>
         </paper-dialog>
         <div id="main-content">
+            <div id="header-table" style="display: flex; justify-content: space-between;">
+                <div><h1>Меню</h1></div>
+                <div style="display: flex; flex-direction: column;">
+                    <paper-icon-button icon="add" class="add-vendor" on-click="_openDialog"
+                                       style="margin-bottom: 10%; align-self: flex-end;"></paper-icon-button>
+                    <paper-checkbox checked style="margin-bottom: 5%;">Архивные</paper-checkbox>
+                </div>
+            </div>
+
             <paper-item id="header-item">
                 <div class="" style="margin-left: 15px; width: 20%">
                     Поставщик
