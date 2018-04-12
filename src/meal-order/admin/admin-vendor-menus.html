@@ -1,0 +1,359 @@
+<!--
+  ~ Copyright 2018, TeamDev Ltd. All rights reserved.
+  ~
+  ~ Redistribution and use in source and/or binary forms, with or without
+  ~ modification, must retain the above copyright notice and the following
+  ~ disclaimer.
+  ~
+  ~ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  ~ "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  ~ LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+  ~ A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+  ~ OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+  ~ SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+  ~ LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+  ~ DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+  ~ THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+  ~ (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+  ~ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  -->
+
+<script src="../../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+<link rel="import" href="../../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../../bower_components/iron-list/iron-list.html">
+<link rel="import" href="../../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../../bower_components/paper-search/paper-search-bar.html">
+
+<link rel="import" href="admin-vendor-menu.html">
+<dom-module id="admin-vendor-menus">
+    <template>
+        <style>
+            app-toolbar {
+                background-color: var(--google-green-700);
+                box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.3);
+                font-weight: bold;
+                color: white;
+                font-size: 18px;
+                z-index: 1;
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+            }
+
+            app-toolbar paper-icon-button {
+                --paper-icon-button-ink-color: white;
+            }
+
+            #main-content {
+                margin-left: 15%;
+                margin-right: 15%;
+                width: 70%;
+            }
+
+            iron-list {
+                --iron-list-items-container: {
+                    width: 100%;
+                    border-bottom: 1px solid #ddd;
+                };
+            }
+
+            div[role="listbox"] {
+                border: 1px solid #e5e5e5;
+            }
+
+            paper-item {
+                width: 100%;
+            }
+
+            .item {
+                @apply --layout-horizontal;
+                /*padding: 20px;*/
+                background-color: white;
+                border: 1px solid #ddd;
+                cursor: pointer;
+            }
+
+            .pad {
+                @apply --layout-flex;
+                @apply --layout-vertical;
+                font-size: 15px;
+            }
+
+            paper-item {
+                font-size: 15px;
+                padding: 0;
+            }
+
+            .item.expand .vendor {
+                display: block;
+            }
+
+            @media (max-width: 460px) {
+                paper-toolbar .bottom.title {
+                    font-size: 14px;
+                }
+            }
+
+            .non-select {
+                -webkit-touch-callout: none; /* iOS Safari */
+                -webkit-user-select: none; /* Safari */
+                -khtml-user-select: none; /* Konqueror HTML */
+                -moz-user-select: none; /* Firefox */
+                -ms-user-select: none; /* Internet Explorer/Edge */
+                user-select: none;
+                /* Non-prefixed version, currently supported by Chrome and Opera */
+            }
+
+            paper-icon-button.add-vendor {
+                --paper-icon-button: {
+                    --iron-icon-fill-color: white;
+                    background-color: #0085d3;
+                    border-radius: 50px;
+                    padding: 12px;
+                    width: 50px;
+                    height: 50px;
+                    box-shadow: 2px 3px 10px rgba(0, 0, 0, 0.5);
+                }
+            }
+
+            paper-checkbox {
+                --paper-checkbox-unchecked-background-color: #f2f2f2;
+                --paper-checkbox-checked-color: #0085d3;
+            }
+
+            paper-dialog.size-position {
+                height: 100%;
+                position: fixed;
+                top: 40%;
+                left: 50%;
+                transform: translate(-57%, -50%);
+            }
+
+            paper-dropdown-menu {
+                width: 100%;
+            }
+
+            .dialog {
+                height: 100%;
+            }
+
+            .inner {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-around;
+                height: 85%;
+            }
+
+            .container {
+                margin: 4% auto;
+                width: 70%;
+            }
+
+            .add-dish-paper-dialog {
+                max-height: 450px;
+                width: 50vh;
+            }
+
+            @media only screen and (max-width: 1000px) {
+                .add-dish-paper-dialog {
+                    max-width: 400px;
+                    width: 100vh;
+                }
+            }
+
+            #header-item {
+                display: flex;
+                background-color: #f2f2f2;
+                font-weight: bolder;
+                border: 1px solid #cdcdcd;
+                width: auto;
+            }
+
+            @media only screen and (max-width: 640px) {
+
+                paper-search-bar {
+                    margin: 0 auto;
+                    width: 100%;
+                }
+
+                #main-content {
+                    margin-left: 2.5%;
+                    margin-right: 2.5%;
+                    width: 95%;
+                }
+
+                iron-list {
+                    --iron-list-items-container: {
+                        margin: 0 auto;
+                        width: 100%;
+                    }
+                }
+
+                .add-dish-paper-dialog {
+                    max-height: 100%;
+                    max-width: 100%;
+                    width: 100vh;
+                }
+
+                .dialog {
+                    margin-top: 10%;
+                }
+
+                paper-dialog.size-position {
+                    height: 100%;
+                    top: 8%;
+                    left: 0;
+                    transform: none;
+                    margin: 0;
+                }
+            }
+
+
+        </style>
+
+        <paper-dialog id="animated" class="add-dish-paper-dialog size-position">
+            <div class="dialog">
+                <h2>Добавить меню</h2>
+                <div class="inner">
+
+                    <paper-dropdown-menu value="{{newTitle}}"
+                                         error-message="[[invalid.message]]"
+                                         label="Поставщик"
+                                         invalid="[[invalid.message.length]]">
+                        <paper-listbox slot="dropdown-content" selected="1">
+                            <paper-item>Позитив</paper-item>
+                            <paper-item>Пюре</paper-item>
+                        </paper-listbox>
+                    </paper-dropdown-menu>
+
+
+                    <paper-input value="{{newMail}}"
+                                 error-message="[[invalid.message]]"
+                                 label="Ссылка на меню"
+                                 invalid="[[invalid.message.length]]">
+                    </paper-input>
+
+                    <div class="time" style="display: flex; justify-content: space-between;">
+                        <paper-input label="От" type="date" value="{{hours}}">
+                            <div slot="prefix"></div>
+                        </paper-input>
+                        <paper-input label="До" type="date" value="{{minutes}}">
+                            <div slot="prefix"></div>
+                        </paper-input>
+                    </div>
+
+                    <div class="buttons" style="align-self: flex-end;">
+                        <paper-button dialog-dismiss>Отмена</paper-button>
+                        <paper-button class="button-apply" dialog-confirm autofocus class="save" on-click="_addMenu">
+                            Применить
+                        </paper-button>
+                    </div>
+                </div>
+            </div>
+        </paper-dialog>
+        <div id="main-content">
+            <paper-item id="header-item">
+                <div class="" style="margin-left: 15px; width: 20%">
+                    Поставщик
+                </div>
+                <div class="" style="width: 20%;">
+                    От
+                </div>
+                <div style="width: 20%;">
+                    До
+                </div>
+                <div style="width: 20%;">
+                    Статус
+                </div>
+                <div style="width:20%"></div>
+            </paper-item>
+            <iron-list scroll-target="document" id="list" items="[[items]]" as="item"
+                       selection-enabled
+                       multi-selection>
+                <template>
+                    <div class="non-select">
+                        <div class="item">
+                            <div class="pad">
+                                <admin-vendor-menu menu="[[item]]"
+                                                   on-vendor-menu-resize="_resize"></admin-vendor-menu>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </iron-list>
+        </div>
+    </template>
+    <script>
+        /**
+         * admin-vendor-menus represents an expanding list of menus for current date for admin using.
+         *
+         * @customElement
+         * @polymer
+         */
+        class AdminVendorMenus extends Polymer.Element {
+            static get is() {
+                return 'admin-vendor-menus';
+            }
+
+            static get properties() {
+                return {
+                    /**
+                     * Full menu for day.
+                     *
+                     * @property {array} each item is a menu of a vendor for a day.
+                     */
+                    items: {
+                        type: Array,
+                        value: [
+                            {
+                                name: 'Пюре',
+                                categories: [{
+                                    categoryName: 'Первое блюдо', dishes: [
+                                        {title: 'Суп гречневый', price: 35},
+                                        {title: 'Солянка', price: 40},
+                                        {title: 'Суп гороховый', price: 140},
+                                        {title: 'Уха', price: 35},
+                                        {title: 'Суп-пюре грибной', price: 40}]
+                                }
+                                    , {
+                                        categoryName: 'Второе блюдо', dishes: [
+                                            {title: 'Утиные крылышки', price: 40},
+                                            {title: 'Куриные крылышки', price: 45}]
+                                    }
+                                ]
+                            },
+                            {
+                                name: 'Позитив',
+                                categories: [{
+                                    categoryName: 'Первое блюдо', dishes: [
+                                        {title: 'Суп сырный', price: 35},
+                                        {title: 'Суп с лапшой', price: 40},
+                                        {title: 'Борщ красный', price: 40},
+                                        {title: 'Борщ зеленый', price: 35}]
+                                }
+                                    , {
+                                        categoryName: 'Второе блюдо', dishes: [
+                                            {title: 'Стейк из лосося', price: 40},
+                                            {title: 'Стейк из говядины', price: 45}]
+                                    },
+                                    {
+                                        categoryName: 'Напитки', dishes: [
+                                            {title: 'Лимонад', price: 40}]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+
+            _resize() {
+                this.shadowRoot.querySelector("#list").notifyResize();
+            }
+        }
+
+        window.customElements.define(AdminVendorMenus.is, AdminVendorMenus);
+    </script>
+</dom-module>

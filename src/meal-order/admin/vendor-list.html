@@ -135,8 +135,6 @@
 
             #time {
                 display: flex;
-                justify-content: space-between;
-                align-items: center;
             }
 
             #buttons {
@@ -162,10 +160,6 @@
 
                 #buttons {
                     margin-left: 0;
-                    display: block;
-                }
-
-                .time {
                     display: block;
                 }
 
@@ -247,17 +241,14 @@
                         </gold-phone-input>
                         <div>Заказать до</div>
                         <div id="time">
-                            <paper-input label="Часов" type="number" value="{{hours}}" required="true">
-                                <div slot="prefix"></div>
-                            </paper-input>
-                            <paper-input label="Минут" type="number" value="{{minutes}}" required="true">
+                            <paper-input label="Последний срок" type="time" value="{{deadline}}" required="true">
                                 <div slot="prefix"></div>
                             </paper-input>
                         </div>
                     </form>
                     <div id="buttons">
                         <paper-button dialog-dismiss>Отмена</paper-button>
-                        <paper-button class="save" on-tap="_addVendor">Сохранить
+                        <paper-button class="save" on-click="_addVendor">Сохранить
                         </paper-button>
                     </div>
                 </iron-form>
@@ -276,8 +267,7 @@
                     newTitle: {},
                     newMail: {},
                     phone: {},
-                    hours: {},
-                    minutes: {},
+                    deadline: {},
                     vendors: {
                         type: Array,
                         value: [
@@ -295,6 +285,10 @@
                     }
                 }
             };
+
+            _hourValidate() {
+                console.log('validation');
+            }
 
             _openDialog() {
                 this.$.animated.open();
@@ -314,8 +308,7 @@
                     vendor.title = this.newTitle;
                     vendor.mail = this.newMail;
                     vendor.phone = this.phone;
-                    vendor.hours = this.hours;
-                    vendor.minutes = this.minutes;
+                    vendor.deadline = this.deadline;
                     this.dispatchEvent(new CustomEvent('add-vendor', {detail: vendor}));
                     this.$.form.reset();
                     this.$.animated.toggle();
