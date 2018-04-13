@@ -31,9 +31,11 @@
             }
 
             _dialogChanged() {
-                if (this.dialog.length) {
-                    const el = document.createElement(this.dialog);
-                    const manager = this.shadowRoot.appendChild(el);
+                if (this.dialog && this.dialog.tagName) {
+                    const element = document.createElement(this.dialog.tagName);
+                    element.inputData = this.dialog.inputData || {};
+                    element.mode = this.dialog.mode;
+                    const manager = this.shadowRoot.appendChild(element);
                     const dialog = manager.shadowRoot.querySelector('#dialog');
                     dialog.open();
                 }

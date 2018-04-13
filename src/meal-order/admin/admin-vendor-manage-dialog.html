@@ -97,21 +97,22 @@
                                 <h2>Редактировать поставищика</h2>
                             </template>
                         </dom-if>
-                        <paper-input value="{{newTitle}}"
+                        <paper-input value="{{inputData.newTitle}}"
                                      error-message="Обязательное поле"
                                      label="Название" required="true"></paper-input>
-                        <paper-input value="{{newMail}}"
+                        <paper-input value="{{inputData.newMail}}"
                                      label="Почта" type="email" required="true"
                                      error-message="Неверный формат почты">
                         </paper-input>
                         <gold-phone-input
                                 country-code="38"
-                                phone-number-pattern="xxx-xx-xx-xxx" value="{{phone}}" required="true"
+                                phone-number-pattern="xxx-xx-xx-xxx" value="{{inputData.phone}}" required="true"
                                 error-message="Неверный формат телефона">
                         </gold-phone-input>
                         <div>Заказать до</div>
                         <div id="time">
-                            <paper-input label="Последний срок" type="time" value="{{deadline}}" required="true">
+                            <paper-input label="Последний срок" type="time" value="{{inputData.deadline}}"
+                                         required="true">
                                 <div slot="prefix"></div>
                             </paper-input>
                         </div>
@@ -143,13 +144,17 @@
             static get properties() {
                 return {
                     mode: {
-                        type: String,
-                        value: 'add'
+                        type: String
                     },
-                    newTitle: {},
-                    newMail: {},
-                    phone: {},
-                    deadline: {},
+                    // newTitle: {},
+                    // newMail: {},
+                    // phone: {},
+                    // deadline: {},
+
+                    inputData: {
+                        type: Object,
+                        value: {}
+                    }
                 }
             };
 
@@ -166,15 +171,28 @@
             _addVendor() {
                 if (this.$.form.validate()) {
                     const vendor = {};
-                    vendor.title = this.newTitle;
-                    vendor.mail = this.newMail;
-                    vendor.phone = this.phone;
-                    vendor.deadline = this.deadline;
+                    vendor.title = this.inputData.newTitle;
+                    vendor.mail = this.inputData.newMail;
+                    vendor.phone = this.inputData.phone;
+                    vendor.deadline = this.inputData.deadline;
+                    console.log(vendor);
                     this.dispatchEvent(new CustomEvent('add-vendor', {detail: vendor}));
                     this._closeDialog();
                 }
             }
 
+            _updateVendor() {
+                if (this.$.form.validate()) {
+                    const vendor = {};
+                    vendor.title = this.inputData.newTitle;
+                    vendor.mail = this.inputData.newMail;
+                    vendor.phone = this.inputData.phone;
+                    vendor.deadline = this.inputData.deadline;
+                    console.log(vendor);
+                    this.dispatchEvent(new CustomEvent('update-vendor', {detail: vendor}));
+                    this._closeDialog();
+                }
+            }
             _closeDialog() {
                 this.$.dialog.close();
                 this.parentNode.removeChild(this);
