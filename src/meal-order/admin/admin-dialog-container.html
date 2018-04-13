@@ -34,13 +34,9 @@
                 if (this.dialog.length) {
                     const el = document.createElement(this.dialog);
                     const manager = this.shadowRoot.appendChild(el);
-                    const dialog = manager.shadowRoot.querySelector('#vendor-manage');
+                    const dialog = manager.shadowRoot.querySelector('#dialog');
                     dialog.open();
                 }
-            }
-
-            _closeDialog() {
-
             }
         }
 

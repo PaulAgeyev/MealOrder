@@ -18,7 +18,7 @@
                 /* Non-prefixed version, currently supported by Chrome and Opera */
             }
 
-            #dialog {
+            #dialog-content {
                 width: 500px;
                 height: 500px;
             }
@@ -74,7 +74,7 @@
                     width: 100%;
                 }
 
-                #dialog {
+                #dialog-content {
                     width: 90%;
                     padding-left: 5%;
                     padding-right: 5%;
@@ -83,8 +83,8 @@
 
         </style>
 
-        <paper-dialog id="vendor-manage" id="add-vendor-paper-dialog" with-backdrop modal>
-            <div id="dialog">
+        <paper-dialog id="dialog" with-backdrop modal>
+            <div id="dialog-content">
                 <iron-form id="form">
                     <form>
                         <h2>Добавить поставищика</h2>
@@ -108,7 +108,7 @@
                         </div>
                     </form>
                     <div id="buttons">
-                        <paper-button dialog-dismiss>Отмена</paper-button>
+                        <paper-button on-click="_closeDialog">Отмена</paper-button>
                         <paper-button class="save" on-click="_addVendor">Сохранить
                         </paper-button>
                     </div>
@@ -134,10 +134,9 @@
 
             static get actions() {
                 return {
-                    vendorManage(properties) {
+                    closeDialog() {
                         return {
-                            type: ArrayAction.CLOSE_VENDOR_MANAGE,
-                            properties: properties
+                            type: ArrayAction.CLOSE_VENDOR_MANAGE
                         }
                     }
                 }
@@ -151,8 +150,14 @@
                     vendor.phone = this.phone;
                     vendor.deadline = this.deadline;
                     this.dispatchEvent(new CustomEvent('add-vendor', {detail: vendor}));
-                    this.dispatch();
+                    this._closeDialog();
                 }
+            }
+
+            _closeDialog() {
+                this.$.dialog.close();
+                this.parentNode.removeChild(this);
+                this.dispatch('closeDialog');
             }
         }
 
