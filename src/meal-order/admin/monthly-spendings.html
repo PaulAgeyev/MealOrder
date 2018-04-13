@@ -15,7 +15,7 @@
 
             .header {
                 display: flex;
-                font: bold 24px serif;
+                font-weight: bold;
             }
 
             .item {
@@ -47,22 +47,24 @@
 
             .user-name {
                 padding-left: 1%;
-                width: 50%;
+                width: 33.3%;
             }
 
             .amount {
-                width: 50%;
+                width: 33.3%;
                 text-align: right;
             }
 
+            .column {
+                width: 33.3%;
+            }
+
             .footer {
-                font: bold 16px serif;
+                font-weight: bold;
             }
 
             #generate {
                 background-color: #cbcbcb;
-
-
             }
 
             @media only screen and (max-width: 600px) {
@@ -96,6 +98,7 @@
             <div class="item non-select header">
                 <div class="user-name">Пользователь</div>
                 <div class="amount">Сумма, ₴</div>
+                <div class="column"></div>
             </div>
             <iron-list id="list" items="[[records]]" as="record" scroll-target="document" scroll-offset="200">
                 <template>
@@ -103,6 +106,7 @@
                         <div class="item">
                             <div class="user-name">[[record.user]]</div>
                             <div class="amount">[[record.amount]]</div>
+                            <div class="column"></div>
                         </div>
                     </div>
                 </template>
@@ -110,6 +114,7 @@
             <div class="item footer">
                 <div class="user-name">Всего:</div>
                 <div class="amount">[[_getTotal()]]</div>
+                <div class="column"></div>
             </div>
         </div>
     </template>
