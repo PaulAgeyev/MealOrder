@@ -1,5 +1,6 @@
 <script src="../../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
 <link rel="import" href="../../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="admin-vendor-manage-dialog.html">
 
 <dom-module id="admin-dialog-container">
     <template>
@@ -12,15 +13,35 @@
     </template>
     <script>
 
-        class AdminDialogContainer extends Polymer.Element {
+        class AdminDialogContainer extends MealOrderApp.ReduxMixin(Polymer.Element) {
             static get is() {
                 return 'admin-dialog-container';
             }
 
             static get properties() {
-                return {}
+                return {
+                    dialog: {
+                        type: Object,
+                        statePath: 'currentDialog'
+                    }
+                }
             };
 
+            static get observers() {
+                return [
+                    '_dialogChanged(dialog)'
+                ];
+            }
+
+            _dialogChanged() {
+                if (this.dialog.length) {
+                    const el = document.createElement(this.dialog);
+                    this.shadowRoot.appendChild(el);
+                    const manager = this.shadowRoot.querySelector('admin-vendor-manage-dialog');
+                    const dialog = manager.shadowRoot.querySelector('#vendor-manage');
+                    dialog.open();
+                }
+            }
         }
 
         window.customElements.define(AdminDialogContainer.is, AdminDialogContainer);
