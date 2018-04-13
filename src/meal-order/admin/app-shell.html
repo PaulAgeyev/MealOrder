@@ -2,6 +2,8 @@
 <link rel="import" href="../../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../../../bower_components/paper-button/paper-button.html">
 <link rel="import" href="admin-dialog-container.html">
+<link rel="import" href="admin-vendor-manage-dialog.html">
+
 
 <dom-module id="app-shell">
     <template>
@@ -23,8 +25,19 @@
                 return {}
             };
 
+            static get actions() {
+                return {
+                    vendorManage(properties) {
+                        return {
+                            type: ArrayAction.OPEN_VENDOR_MANAGE,
+                            properties: properties
+                        }
+                    }
+                }
+            }
+
             openVendorManage() {
-                this.dispatch();
+                this.dispatch('vendorManage', AdminVendorManageDialog.is);
             }
         }
 
