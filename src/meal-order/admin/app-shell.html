@@ -2,8 +2,7 @@
 <link rel="import" href="../../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../../../bower_components/paper-button/paper-button.html">
 <link rel="import" href="admin-dialog-container.html">
-<link rel="import" href="admin-vendor-manage-dialog.html">
-<link rel=import href="../meal-order.html">
+<link rel="import" href="vendor-list.html">
 
 <dom-module id="app-shell">
     <template>
@@ -13,11 +12,11 @@
         </style>
 
         <admin-dialog-container></admin-dialog-container>
-        <meal-order></meal-order>
+        <vendor-list></vendor-list>
     </template>
     <script>
 
-        class AppShell extends MealOrderApp.ReduxMixin(Polymer.Element) {
+        class AppShell extends Polymer.Element {
             static get is() {
                 return 'app-shell';
             }
@@ -26,20 +25,7 @@
                 return {}
             };
 
-            static get actions() {
-                return {
-                    vendorManage(properties) {
-                        return {
-                            type: ArrayAction.OPEN_VENDOR_MANAGE,
-                            properties: properties
-                        }
-                    }
-                }
-            }
 
-            openVendorManage() {
-                this.dispatch('vendorManage', AdminVendorManageDialog.is);
-            }
         }
 
         window.customElements.define(AppShell.is, AppShell);

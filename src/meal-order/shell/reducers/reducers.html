@@ -53,6 +53,12 @@
                         }
                     );
                 }
+                case ArrayAction.CLOSE_VENDOR_MANAGE: {
+                    return Object.assign({}, state, {
+                            currentDialog: ''
+                        }
+                    );
+                }
                 case ArrayAction.ADD_DISH: {
                     return state;
                 }

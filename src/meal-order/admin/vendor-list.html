@@ -11,12 +11,6 @@
 <dom-module id="vendor-list">
     <template>
         <style>
-            :host {
-                font-family: 'Roboto', 'Noto', sans-serif;
-                display: block;
-                padding: 0;
-            }
-
             iron-list {
                 --iron-list-items-container: {
 
@@ -222,52 +216,18 @@
                 </template>
             </iron-list>
         </div>
-        <paper-dialog id="animated" id="add-vendor-paper-dialog" with-backdrop modal>
-            <div id="dialog">
-                <iron-form id="form">
-                    <form>
-                        <h2>Добавить поставищика</h2>
-                        <paper-input value="{{newTitle}}"
-                                     error-message="Обязательное поле"
-                                     label="Название" required="true"></paper-input>
-                        <paper-input value="{{newMail}}"
-                                     label="Почта" type="email" required="true"
-                                     error-message="Неверный формат почты">
-                        </paper-input>
-                        <gold-phone-input
-                                country-code="38"
-                                phone-number-pattern="xxx-xx-xx-xxx" value="{{phone}}" required="true"
-                                error-message="Неверный формат телефона">
-                        </gold-phone-input>
-                        <div>Заказать до</div>
-                        <div id="time">
-                            <paper-input label="Последний срок" type="time" value="{{deadline}}" required="true">
-                                <div slot="prefix"></div>
-                            </paper-input>
-                        </div>
-                    </form>
-                    <div id="buttons">
-                        <paper-button dialog-dismiss>Отмена</paper-button>
-                        <paper-button class="save" on-click="_addVendor">Сохранить
-                        </paper-button>
-                    </div>
-                </iron-form>
-            </div>
-        </paper-dialog>
+
     </template>
     <script>
 
-        class VendorList extends Polymer.Element {
+        class VendorList extends MealOrderApp.ReduxMixin(Polymer.Element) {
             static get is() {
                 return 'vendor-list';
             }
 
             static get properties() {
                 return {
-                    newTitle: {},
-                    newMail: {},
-                    phone: {},
-                    deadline: {},
+
                     vendors: {
                         type: Array,
                         value: [
@@ -286,12 +246,19 @@
                 }
             };
 
-            _hourValidate() {
-                console.log('validation');
+            static get actions() {
+                return {
+                    vendorManage(properties) {
+                        return {
+                            type: ArrayAction.OPEN_VENDOR_MANAGE,
+                            properties: properties
+                        }
+                    }
+                }
             }
 
             _openDialog() {
-                this.$.animated.open();
+                this.dispatch('vendorManage', AdminVendorManageDialog.is);
             }
 
             _removeVendor(e) {
@@ -302,18 +269,7 @@
                 this.dispatchEvent(new CustomEvent('edit-vendor', {detail: e.model.index}));
             }
 
-            _addVendor() {
-                if (this.$.form.validate()) {
-                    const vendor = {};
-                    vendor.title = this.newTitle;
-                    vendor.mail = this.newMail;
-                    vendor.phone = this.phone;
-                    vendor.deadline = this.deadline;
-                    this.dispatchEvent(new CustomEvent('add-vendor', {detail: vendor}));
-                    this.$.form.reset();
-                    this.$.animated.toggle();
-                }
-            }
+
         }
 
         window.customElements.define(VendorList.is, VendorList);
