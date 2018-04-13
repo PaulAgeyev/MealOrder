@@ -1,0 +1,152 @@
+<script src="../../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+<link rel="import" href="../../../bower_components/polymer/polymer-element.html">
+
+<dom-module id="admin-menu-dialog">
+    <template>
+        <style>
+            paper-dialog.size-position {
+                height: 100%;
+                position: fixed;
+                top: 40%;
+                left: 50%;
+                transform: translate(-57%, -50%);
+            }
+
+            paper-dropdown-menu {
+                width: 100%;
+            }
+
+            .dialog {
+                height: 100%;
+            }
+
+            .inner {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-around;
+                height: 85%;
+            }
+
+            .add-dish-paper-dialog {
+                max-height: 450px;
+                width: 50vh;
+            }
+
+            @media only screen and (max-width: 1000px) {
+                .add-dish-paper-dialog {
+                    max-width: 400px;
+                    width: 100vh;
+                }
+            }
+
+            @media only screen and (max-width: 680px) {
+
+                iron-list {
+                    --iron-list-items-container: {
+                        margin: 0 auto;
+                        width: 100%;
+                    }
+                }
+
+                .add-dish-paper-dialog {
+                    max-height: 100%;
+                    max-width: 100%;
+                    width: 100vh;
+                }
+
+                .dialog {
+                    margin-top: 10%;
+                }
+
+                paper-dialog.size-position {
+                    height: 100%;
+                    top: 8%;
+                    left: 0;
+                    transform: none;
+                    margin: 0;
+                }
+            }
+
+        </style>
+
+        <paper-dialog id="animated" class="add-dish-paper-dialog size-position">
+            <div class="dialog">
+                <h2>Добавить меню</h2>
+                <div class="inner">
+
+                    <paper-dropdown-menu value="{{newTitle}}"
+                                         error-message="[[invalid.message]]"
+                                         label="Поставщик"
+                                         invalid="[[invalid.message.length]]">
+                        <paper-listbox slot="dropdown-content" selected="1">
+                            <paper-item>Позитив</paper-item>
+                            <paper-item>Пюре</paper-item>
+                        </paper-listbox>
+                    </paper-dropdown-menu>
+
+
+                    <paper-input value="{{newMail}}"
+                                 error-message="[[invalid.message]]"
+                                 label="Ссылка на меню"
+                                 invalid="[[invalid.message.length]]">
+                    </paper-input>
+
+                    <div class="time" style="display: flex; justify-content: space-between;">
+                        <paper-input label="От" type="date" value="{{hours}}">
+                            <div slot="prefix"></div>
+                        </paper-input>
+                        <paper-input label="До" type="date" value="{{minutes}}">
+                            <div slot="prefix"></div>
+                        </paper-input>
+                    </div>
+
+                    <div class="buttons" style="align-self: flex-end;">
+                        <paper-button dialog-dismiss>Отмена</paper-button>
+                        <paper-button class="button-apply" dialog-confirm autofocus class="save" on-click="_addMenu">
+                            Применить
+                        </paper-button>
+                    </div>
+                </div>
+            </div>
+        </paper-dialog>
+    </template>
+    <script>
+
+        class AdminMenuDialog extends MealOrderApp.ReduxMixin(Polymer.Element) {
+            static get is() {
+                return 'admin-menu-dialog';
+            }
+
+            static get properties() {
+                return {}
+            };
+
+            static get actions() {
+                return {
+                    closeDialog() {
+                        return {
+                            type: ArrayAction.CLOSE_MENU
+                        }
+                    }
+                }
+            }
+
+            _addVendor() {
+                if (this.$.form.validate()) {
+                    const vendor = {};
+
+                    this.dispatchEvent(new CustomEvent('add-vendor', {detail: vendor}));
+                    this._closeDialog();
+                }
+            }
+
+            _closeDialog() {
+                this.$.dialog.close();
+                this.parentNode.removeChild(this);
+                this.dispatch('closeDialog');
+            }
+        }
+
+        window.customElements.define(AdminMenuDialog.is, AdminMenuDialog);
+    </script>
+</dom-module>

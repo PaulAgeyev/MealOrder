@@ -26,6 +26,7 @@
 <link rel="import" href="../../../bower_components/paper-checkbox/paper-checkbox.html">
 
 <link rel="import" href="admin-vendor-menu.html">
+<link rel="import" href="admin-menu-dialog.html">
 <dom-module id="admin-vendor-menus">
     <template>
         <style>
@@ -109,28 +110,6 @@
                 width: 100%;
             }
 
-            .dialog {
-                height: 100%;
-            }
-
-            .inner {
-                display: flex;
-                flex-direction: column;
-                justify-content: space-around;
-                height: 85%;
-            }
-
-            .add-dish-paper-dialog {
-                max-height: 450px;
-                width: 50vh;
-            }
-
-            @media only screen and (max-width: 1000px) {
-                .add-dish-paper-dialog {
-                    max-width: 400px;
-                    width: 100vh;
-                }
-            }
 
             #header-item {
                 display: flex;
@@ -189,16 +168,6 @@
                     }
                 }
 
-                .add-dish-paper-dialog {
-                    max-height: 100%;
-                    max-width: 100%;
-                    width: 100vh;
-                }
-
-                .dialog {
-                    margin-top: 10%;
-                }
-
                 paper-dialog.size-position {
                     height: 100%;
                     top: 8%;
@@ -215,46 +184,7 @@
 
         </style>
 
-        <paper-dialog id="animated" class="add-dish-paper-dialog size-position">
-            <div class="dialog">
-                <h2>Добавить меню</h2>
-                <div class="inner">
 
-                    <paper-dropdown-menu value="{{newTitle}}"
-                                         error-message="[[invalid.message]]"
-                                         label="Поставщик"
-                                         invalid="[[invalid.message.length]]">
-                        <paper-listbox slot="dropdown-content" selected="1">
-                            <paper-item>Позитив</paper-item>
-                            <paper-item>Пюре</paper-item>
-                        </paper-listbox>
-                    </paper-dropdown-menu>
-
-
-                    <paper-input value="{{newMail}}"
-                                 error-message="[[invalid.message]]"
-                                 label="Ссылка на меню"
-                                 invalid="[[invalid.message.length]]">
-                    </paper-input>
-
-                    <div class="time" style="display: flex; justify-content: space-between;">
-                        <paper-input label="От" type="date" value="{{hours}}">
-                            <div slot="prefix"></div>
-                        </paper-input>
-                        <paper-input label="До" type="date" value="{{minutes}}">
-                            <div slot="prefix"></div>
-                        </paper-input>
-                    </div>
-
-                    <div class="buttons" style="align-self: flex-end;">
-                        <paper-button dialog-dismiss>Отмена</paper-button>
-                        <paper-button class="button-apply" dialog-confirm autofocus class="save" on-click="_addMenu">
-                            Применить
-                        </paper-button>
-                    </div>
-                </div>
-            </div>
-        </paper-dialog>
         <div id="main-content">
             <div id="header-table" style="display: flex; justify-content: space-between;">
                 <div><h1>Меню</h1></div>
@@ -303,7 +233,7 @@
          * @customElement
          * @polymer
          */
-        class AdminVendorMenus extends Polymer.Element {
+        class AdminVendorMenus extends MealOrderApp.ReduxMixin(Polymer.Element) {
             static get is() {
                 return 'admin-vendor-menus';
             }
@@ -360,6 +290,22 @@
                 }
             }
 
+            static get actions() {
+                return {
+                    vendorMenu(properties) {
+                        return {
+                            type: ArrayAction.OPEN_MENU,
+                            properties: properties
+                        }
+                    }
+                }
+            }
+
+            _openDialog() {
+                const properties = {};
+                properties.tagName = AdminMenuDialog.is;
+                this.dispatch('vendorMenu', properties);
+            }
             _resize() {
                 this.shadowRoot.querySelector("#list").notifyResize();
             }
