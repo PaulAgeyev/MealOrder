@@ -1,0 +1,33 @@
+<script src="../../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+<link rel="import" href="../../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="admin-dialog-container.html">
+
+<dom-module id="app-shell">
+    <template>
+        <style>
+
+
+        </style>
+        <paper-button on-click="openVendorManage">Open dialog</paper-button>
+        <admin-dialog-container></admin-dialog-container>
+    </template>
+    <script>
+
+        class AppShell extends MealOrderApp.ReduxMixin(Polymer.Element) {
+            static get is() {
+                return 'app-shell';
+            }
+
+            static get properties() {
+                return {}
+            };
+
+            openVendorManage() {
+                this.dispatch();
+            }
+        }
+
+        window.customElements.define(AppShell.is, AppShell);
+    </script>
+</dom-module>

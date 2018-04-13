@@ -1,0 +1,59 @@
+<script src="../../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+<link rel="import" href="../../../bower_components/polymer/polymer-element.html">
+
+<dom-module id="admin-vendor-manage-dialog">
+    <template>
+        <style>
+
+
+        </style>
+
+        <paper-dialog id="animated" id="add-vendor-paper-dialog" with-backdrop modal>
+            <div id="dialog">
+                <iron-form id="form">
+                    <form>
+                        <h2>Добавить поставищика</h2>
+                        <paper-input value="{{newTitle}}"
+                                     error-message="Обязательное поле"
+                                     label="Название" required="true"></paper-input>
+                        <paper-input value="{{newMail}}"
+                                     label="Почта" type="email" required="true"
+                                     error-message="Неверный формат почты">
+                        </paper-input>
+                        <gold-phone-input
+                                country-code="38"
+                                phone-number-pattern="xxx-xx-xx-xxx" value="{{phone}}" required="true"
+                                error-message="Неверный формат телефона">
+                        </gold-phone-input>
+                        <div>Заказать до</div>
+                        <div id="time">
+                            <paper-input label="Последний срок" type="time" value="{{deadline}}" required="true">
+                                <div slot="prefix"></div>
+                            </paper-input>
+                        </div>
+                    </form>
+                    <div id="buttons">
+                        <paper-button dialog-dismiss>Отмена</paper-button>
+                        <paper-button class="save" on-click="_addVendor">Сохранить
+                        </paper-button>
+                    </div>
+                </iron-form>
+            </div>
+        </paper-dialog>
+    </template>
+    <script>
+
+        class AdminVendorManageDialog extends Polymer.Element {
+            static get is() {
+                return 'admin-vendor-manage-dialog';
+            }
+
+            static get properties() {
+                return {}
+            };
+
+        }
+
+        window.customElements.define(AdminVendorManageDialog.is, AdminVendorManageDialog);
+    </script>
+</dom-module>
