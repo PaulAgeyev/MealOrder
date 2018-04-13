@@ -1,0 +1,198 @@
+<script src="../../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+
+<link rel="import" href="../../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../../bower_components/app-layout/app-drawer/app-drawer.html">
+<link rel="import" href="../../../bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
+<link rel="import" href="../../../bower_components/app-layout/app-header/app-header.html">
+<link rel="import" href="../../../bower_components/app-layout/app-header-layout/app-header-layout.html">
+<link rel="import" href="../../../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
+<link rel="import" href="../../../bower_components/app-layout/app-toolbar/app-toolbar.html">
+<link rel="import" href="../../../bower_components/app-route/app-location.html">
+<link rel="import" href="../../../bower_components/app-route/app-route.html">
+<link rel="import" href="../../../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../../../bower_components/iron-selector/iron-selector.html">
+<link rel="import" href="../../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../../bower_components/paper-tabs/paper-tabs.html">
+<link rel="import" href="../../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../../bower_components/iron-icons/maps-icons.html">
+<link rel="import" href="../shell/redux-store.html">
+<link rel="import" href="../admin/vendor-list.html">
+<link rel="import" href="../admin/admin-vendor-menus.html">
+<link rel="import" href="../admin/monthly-spendings.html">
+
+<dom-module id="meal-order">
+    <template>
+        <style>
+
+            app-header {
+                background-color: #616161;
+                color: #fff;
+            }
+
+            .main-title {
+                font-size: 1.375em;
+                color: white;
+            }
+
+            app-drawer-layout {
+                background-color: #F2F2F2;
+            }
+
+            app-drawer-layout:not([narrow]) [drawer-toggle] {
+                display: none;
+            }
+
+            app-header app-toolbar .container {
+                display: flex;
+                width: 100%;
+                align-items: center;
+                justify-content: space-between;
+            }
+
+            .iron-container {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                height: 200px;
+
+                margin-top: 10%;
+            }
+
+            app-drawer {
+                --app-drawer-content-container: {
+                    background-color: #fafafa;
+                }
+            }
+
+            .tab {
+                display: flex;
+                align-items: center;
+                height: 40px;
+                text-decoration: none;
+                color: var(--paper-grey-800);
+            }
+
+            .tab:hover {
+                background-color: #f2f2f2;
+            }
+
+            .tab-icon {
+                width: 30%;
+            }
+
+            app-header .tab a {
+                font-size: 0.8em;
+                text-decoration: none;
+                color: white;
+            }
+
+            app-header .tab a:hover {
+                color: #179EFF;
+            }
+
+            #tab-selector .iron-selected {
+                background-color: #e2e2e2;
+                font-weight: bold;
+                color: black;
+            }
+
+            @media only screen and (max-width: 640px) {
+
+            }
+
+        </style>
+
+        <app-location route="{{route}}"
+                      use-hash-as-path></app-location>
+
+        <app-route
+                route="{{route}}"
+                pattern="/:page"
+                data="{{routeData}}"></app-route>
+
+        <app-drawer-layout fullbleed>
+            <app-drawer slot="drawer" align="left" class$="[[_getClassForDrawer(routeData.page)]]">
+
+                <app-toolbar style="background-color: #616161;">
+                    <div class="app-toolbar-header">
+                        <div class="main-title">Заказ обедов</div>
+                    </div>
+                </app-toolbar>
+
+                <iron-selector id="tab-selector" class="iron-container"
+                               selected="[[routeData.page]]" attr-for-selected="data-page">
+                    <a href="/#/vendor/" data-page="vendor" class="tab">
+                        <iron-icon class="tab-icon" icon="icons:assignment-ind"></iron-icon>
+                        <div class="tab-name">Поставщик</div>
+                    </a>
+                    <a href="/#/menu/" data-page="menu" class="tab">
+                        <iron-icon class="tab-icon" icon="icons:content-paste"></iron-icon>
+                        <div class="tab-name">Меню</div>
+                    </a>
+                    <a href="/#/order/" data-page="order" class="tab">
+                        <iron-icon class="tab-icon" icon="icons:assignment"></iron-icon>
+                        <div class="tab-name">Заказ поставщику</div>
+                    </a>
+                    <a href="/#/costs/" data-page="costs" class="tab">
+                        <iron-icon class="tab-icon" icon="icons:credit-card"></iron-icon>
+                        <div class="tab-name">Расходы пользователей</div>
+                    </a>
+                </iron-selector>
+
+                </div>
+
+            </app-drawer>
+
+            <app-header-layout>
+                <app-header slot="header" reveals effects="waterfall">
+
+                    <app-toolbar>
+                        <div class="container">
+
+                            <iron-icon class="app-toolbar-content"
+                                       icon="icons:menu"
+                                       drawer-toggle></iron-icon>
+                        </div>
+                    </app-toolbar>
+                </app-header>
+
+                <iron-pages
+                        selected="[[routeData.page]]"
+                        attr-for-selected="data-page"
+                        fallback-selection="view404"
+                        role="main">
+
+                    <vendor-list data-page="vendor"></vendor-list>
+                    <admin-vendor-menus data-page="menu"></admin-vendor-menus>
+                    <monthly-spending data-page="costs"></monthly-spending>
+
+                </iron-pages>
+
+            </app-header-layout>
+
+        </app-drawer-layout>
+
+    </template>
+
+    <script>
+        class MealOrder extends ReduxMixin(Polymer.Element) {
+            static get is() {
+                return 'meal-order';
+            }
+
+            static get actions() {
+                return {}
+            }
+
+            static get properties() {
+                return {}
+            };
+
+            static get observers() {
+                return [];
+            }
+        }
+
+        window.customElements.define(MealOrder.is, MealOrder);
+    </script>
+</dom-module>

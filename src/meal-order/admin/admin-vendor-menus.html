@@ -33,6 +33,7 @@
                 margin-left: 15%;
                 margin-right: 15%;
                 width: 70%;
+                margin-top: 4%;
             }
 
             iron-list {
@@ -54,7 +55,7 @@
                 @apply --layout-horizontal;
                 /*padding: 20px;*/
                 background-color: white;
-                border: 1px solid #ddd;
+                bottom-border: 1px solid #ddd;
                 cursor: pointer;
             }
 
@@ -68,7 +69,6 @@
                 font-size: 15px;
                 padding: 0;
             }
-
 
             .non-select {
                 -webkit-touch-callout: none; /* iOS Safari */
@@ -120,7 +120,6 @@
                 height: 85%;
             }
 
-
             .add-dish-paper-dialog {
                 max-height: 450px;
                 width: 50vh;
@@ -137,24 +136,50 @@
                 display: flex;
                 background-color: #f2f2f2;
                 font-weight: bolder;
-                border: 1px solid #cdcdcd;
+                border: 1px solid #ddd;
                 width: auto;
+                height: 50px;
+                align-items: center;
+                padding: 0 2%;
             }
 
-            #header-table {
-                margin: 0 2%;
+            .item-vendor {
+                padding-left: 2%;
+                width: 25%
             }
 
-            @media only screen and (max-width: 640px) {
-                paper-search-bar {
-                    margin: 0 auto;
-                    width: 100%;
+            .item-from {
+                width: 25%
+            }
+
+            .item-to {
+                width: 25%
+            }
+
+            .item-status {
+                width: 25%;
+            }
+
+            .item-icons {
+                width: 40px;
+                height: 40px;
+            }
+
+            @media only screen and (max-width: 1024px) {
+                #header-table {
+                    margin: 0 1%;
                 }
 
                 #main-content {
-                    margin-left: 2.5%;
-                    margin-right: 2.5%;
-                    width: 95%;
+                    margin: 4% auto;
+                    width: 100%;
+                }
+            }
+
+            @media only screen and (max-width: 680px) {
+
+                #header-item {
+                    padding: 0;
                 }
 
                 iron-list {
@@ -181,8 +206,12 @@
                     transform: none;
                     margin: 0;
                 }
-            }
 
+                .item-vendor {
+                    width: 30%;
+                }
+
+            }
 
         </style>
 
@@ -236,21 +265,21 @@
                 </div>
             </div>
 
-            <paper-item id="header-item">
-                <div class="" style="margin-left: 15px; width: 20%">
+            <div id="header-item">
+                <div class="item-vendor">
                     Поставщик
                 </div>
-                <div class="" style="width: 20%;">
+                <div class="item-from">
                     От
                 </div>
-                <div style="width: 20%;">
+                <div class="item-to">
                     До
                 </div>
-                <div style="width: 20%;">
+                <div class="item-status">
                     Статус
                 </div>
-                <div style="width:20%"></div>
-            </paper-item>
+                <div class="item-icons"></div>
+            </div>
             <iron-list scroll-target="document" id="list" items="[[items]]" as="item"
                        selection-enabled
                        multi-selection>

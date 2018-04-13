@@ -20,28 +20,38 @@
 
             .item {
                 @apply --layout-horizontal;
-                padding: 20px;
+                height: 50px;
                 display: flex;
                 background-color: white;
                 border: 1px solid #ddd;
                 cursor: pointer;
-                justify-content: space-between;
                 align-items: center;
             }
 
             .upper {
                 display: flex;
-                justify-content: space-between;
                 align-items: center;
-                margin-bottom: 50px;
+                justify-content: space-between;
+                width: 60%;
+            }
+
+            .header {
+                height: 50px;
             }
 
             .main-content {
-                margin: 10%;
+                margin: 4% auto;
+                width: 70%;
+            }
+
+            .user-name {
+                padding-left: 1%;
+                width: 50%;
             }
 
             .amount {
-                padding-right: 10%;
+                width: 50%;
+                text-align: right;
             }
 
             .footer {
@@ -55,11 +65,6 @@
 
             @media only screen and (max-width: 600px) {
 
-                paper-tabs {
-                    margin-top: 3%;
-
-                }
-
                 .header {
                     width: 100%;
                 }
@@ -67,6 +72,7 @@
 
         </style>
         <div class="main-content">
+            <div style="font-size: 2em; font-weight: bold;">Расходы за месяц</div>
             <div class="upper">
                 <paper-dropdown-menu label="Месяц">
                     <paper-listbox slot="dropdown-content">
@@ -107,7 +113,7 @@
     </template>
     <script>
 
-        class MonthlySpending extends MealOrderApp.ReduxMixin(Polymer.Element) {
+        class MonthlySpending extends Polymer.Element {
 
             static get is() {
                 return 'monthly-spending';
@@ -142,3 +148,4 @@
         window.customElements.define(MonthlySpending.is, MonthlySpending);
     </script>
 </dom-module>
+

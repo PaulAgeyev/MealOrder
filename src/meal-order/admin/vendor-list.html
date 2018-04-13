@@ -11,6 +11,12 @@
 <dom-module id="vendor-list">
     <template>
         <style>
+            :host {
+                font-family: 'Roboto', 'Noto', sans-serif;
+                display: block;
+                padding: 0;
+            }
+
             iron-list {
                 --iron-list-items-container: {
 
@@ -23,13 +29,17 @@
 
             .item {
                 @apply --layout-horizontal;
-                padding: 20px;
+                height: 50px;
                 display: flex;
                 background-color: white;
-                border: 1px solid #ddd;
+                border-bottom: 1px solid #ddd;
                 cursor: pointer;
                 justify-content: space-between;
                 align-items: center;
+            }
+
+            .item:hover .icons-container {
+                display: block;
             }
 
             .phone {
@@ -46,43 +56,45 @@
                 /* Non-prefixed version, currently supported by Chrome and Opera */
             }
 
+
             .vendor-name {
                 text-align: left;
-                width: 15%;
+                width: 20%;
+                padding-left: 2%;
             }
 
             .email {
                 text-align: left;
-                padding-left: 5%;
-                width: 30%;
+                width: 20%;
             }
 
             .phone {
-                width: 25%
+                width: 15%
             }
 
             .deadline {
-                width: 15%;
+                width: 10%;
                 text-align: right;
             }
 
-            .edit {
-                text-align: right;
+            .icons {
                 width: 10%;
             }
 
-            .remove {
-                width: 5%;
+            .icons-container {
+                display: none;
             }
 
             .header {
                 display: flex;
-                font: bold 24px serif;
+                font-weight: bold;
+                background-color: #f2f2f2;
+                border: 1px solid #ddd;
             }
 
             #main-content {
-                margin: 50px 10%;
-                width: 1000px;
+                margin: 0 auto;
+                width: 70%;
             }
 
             #upper {
@@ -91,10 +103,8 @@
                 cursor: pointer;
                 justify-content: space-between;
                 align-items: center;
-                margin-top: 5%;
-                margin-left: 10%;
-                margin-right: 15%;
-                width: 1000px;
+                margin: 4% auto 0 auto;
+                width: 70%;
             }
 
             paper-icon-button.add-vendor {
@@ -107,11 +117,6 @@
                     height: 50px;
                     box-shadow: 2px 3px 10px rgba(0, 0, 0, 0.5);
                 }
-            }
-
-            #dialog {
-                width: 500px;
-                height: 500px;
             }
 
             paper-input {
@@ -127,34 +132,37 @@
                 margin-bottom: 5%;
             }
 
-            #time {
-                display: flex;
+            @media only screen and (max-width: 1300px) {
+                #upper {
+                    width: 98%;
+
+                }
+
+                #main-content {
+                    width: 100%;
+                }
+
+                .email {
+                    width: 25%;
+                }
+
+                .phone {
+                    width: 20%;
+                }
+
+                .icons {
+                    width: 11%;
+                }
+
             }
 
-            #buttons {
-                display: flex;
-                justify-content: space-between;
-                margin-left: 60%;
-                margin-top: 10%;
-            }
-
-            .save {
-                background-color: #0085d3;
-                color: white;
-            }
-
-            @media only screen and (max-width: 600px) {
+            @media only screen and (max-width: 800px) {
                 paper-input {
                     margin-top: 0;
                 }
 
                 h2 {
                     font-size: 16px;
-                }
-
-                #buttons {
-                    margin-left: 0;
-                    display: block;
                 }
 
                 paper-input {
@@ -165,22 +173,10 @@
                     width: 100%;
                 }
 
-                #add-vendor-paper-dialog {
-                    max-height: 100%;
-                    max-width: 100%;
-                    width: 100vh;
+                #main-content {
+                    width: 1000px;
                 }
 
-                #dialog {
-                    width: 90%;
-                    padding-left: 5%;
-                    padding-right: 5%;
-                }
-
-                #upper {
-                    margin-left: 5%;
-                    margin-right: 10%;
-                }
             }
 
         </style>
@@ -194,8 +190,8 @@
                 <div class="email">Почта</div>
                 <div class="phone">Телефон</div>
                 <div class="deadline">Заказать до</div>
-                <div class="edit"></div>
-                <div class="remove"></div>
+                <div class="icons"></div>
+
             </div>
             <iron-list id="list" items="[[vendors]]" as="vendor" scroll-target="document" scroll-offset="200">
                 <template>
@@ -205,11 +201,11 @@
                             <div class="email">[[vendor.email]]</div>
                             <div class="phone">[[vendor.phone]]</div>
                             <div class="deadline">[[vendor.deadline]]</div>
-                            <div class="edit">
-                                <paper-icon-button icon="create" on-click="_editVendor"></paper-icon-button>
-                            </div>
-                            <div class="remove">
-                                <paper-icon-button icon="close" on-click="_removeVendor"></paper-icon-button>
+                            <div class="icons">
+                                <div class="icons-container">
+                                    <paper-icon-button icon="create" on-click="_editVendor"></paper-icon-button>
+                                    <paper-icon-button icon="close" on-click="_removeVendor"></paper-icon-button>
+                                </div>
                             </div>
                         </div>
                     </div>
