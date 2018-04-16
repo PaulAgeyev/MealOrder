@@ -4,9 +4,7 @@
 <dom-module id="admin-vendor-manage-dialog">
     <template>
         <style>
-            paper-item {
-                width: 100%;
-            }
+
 
             .non-select {
                 -webkit-touch-callout: none; /* iOS Safari */
@@ -18,9 +16,24 @@
                 /* Non-prefixed version, currently supported by Chrome and Opera */
             }
 
+            #dialog {
+                max-height: 500px;
+            }
+
             #dialog-content {
-                width: 500px;
-                height: 500px;
+                display: flex;
+                flex-direction: column;
+                width: auto;
+
+            }
+
+            paper-dialog.size-position {
+                height: 100%;
+                position: fixed;
+                top: 40%;
+                left: 50%;
+                transform: translate(-57%, -50%);
+                color: var(--google-grey-700);
             }
 
             paper-input {
@@ -37,14 +50,13 @@
             }
 
             #time {
-                display: flex;
+                width: 25%;
             }
 
-            #buttons {
+            .buttons {
+                margin-top: 5%;
                 display: flex;
-                justify-content: space-between;
-                margin-left: 60%;
-                margin-top: 10%;
+                justify-content: flex-end;
             }
 
             .confirm {
@@ -52,44 +64,62 @@
                 color: white;
             }
 
-            @media only screen and (max-width: 600px) {
-                paper-input {
-                    margin-top: 0;
+            @media only screen and (max-width: 1024px) {
+                #dialog {
+                    max-width: 400px;
+                    width: 100vh;
                 }
 
-                h2 {
-                    font-size: 16px;
+                .buttons {
+                    margin-top: 15%;
                 }
+            }
 
-                #buttons {
-                    margin-left: 0;
-                    display: block;
-                }
-
-                paper-input {
-                    width: 100%;
-                }
-
-                gold-phone-input {
-                    width: 100%;
-                }
+            @media only screen and (max-width: 660px) {
 
                 #dialog-content {
-                    width: 90%;
-                    padding-left: 5%;
-                    padding-right: 5%;
+                    width: 50vh;
+                }
+
+                #dialog {
+                    max-height: none;
+                    max-width: none;
+                }
+
+                .buttons {
+                    margin-top: 45%;
+                }
+
+                paper-dialog.size-position {
+                    height: 100%;
+                    top: 9%;
+                    left: 0;
+                    transform: none;
+                    margin: 0;
+                }
+
+                paper-dialog {
+                    max-height: 100%;
+                    max-width: 100%;
+                    width: 100vh;
+                }
+            }
+
+            @media only screen and (max-width: 320px) {
+                .buttons {
+                    margin-top: 25%;
                 }
             }
 
         </style>
 
-        <paper-dialog id="dialog" with-backdrop modal>
+        <paper-dialog  class="size-position" id="dialog" with-backdrop modal>
             <div id="dialog-content">
                 <iron-form id="form">
                     <form>
                         <dom-if if="[[_isAdd()]]">
                             <template>
-                                <h2>Добавить поставищика</h2>
+                                <h2>Добавить поставщика</h2>
                             </template>
                         </dom-if>
                         <dom-if if="[[_isUpdate()]]">
@@ -109,15 +139,14 @@
                                 phone-number-pattern="xxx-xx-xx-xxx" value="{{inputData.phone}}" required="true"
                                 error-message="Неверный формат телефона">
                         </gold-phone-input>
-                        <div>Заказать до</div>
                         <div id="time">
-                            <paper-input label="Последний срок" type="time" value="{{inputData.deadline}}"
+                            <paper-input label="Заказать до" type="time" value="{{inputData.deadline}}"
                                          required="true">
                                 <div slot="prefix"></div>
                             </paper-input>
                         </div>
                     </form>
-                    <div id="buttons">
+                    <div class="buttons">
                         <paper-button on-click="_closeDialog">Отмена</paper-button>
                         <dom-if if="[[_isAdd()]]">
                             <template>
