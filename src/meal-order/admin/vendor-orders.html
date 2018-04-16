@@ -24,20 +24,42 @@
                 -webkit-font-smoothing: antialiased;
                 width: 100%;
                 margin-bottom: 1px;
-                --paper-tabs-selection-bar-color: #179EFF;
-                --paper-tab-ink: #179EFF;
+                --paper-tabs-selection-bar-color: var(--paper-light-blue-500);
+                --paper-tab-ink: var(--paper-light-blue-500);
             }
 
             paper-tabs {
-                margin: 3% auto;
+                margin: 0 auto 1% auto;
+
             }
 
             paper-tab.iron-selected .day-of-the-week {
-                color: #179EFF;
+                color: var(--paper-light-blue-500);
             }
 
             paper-tab.iron-selected .day {
-                color: #179EFF;
+                color: var(--paper-light-blue-500);
+            }
+
+            paper-tab .paper-tab-container {
+                @apply --layout-horizontal;
+                @apply --layout-center-center;
+                text-decoration: none;
+                color: #323232;
+                font-size: 1.5em;
+            }
+
+            .disabled .day {
+                color: var(--paper-grey-500);
+            }
+
+            .disabled .day-of-the-week {
+                color: var(--paper-grey-500);
+            }
+
+            .day-of-the-week {
+                font-size: 0.7em;
+                font-weight: lighter;
             }
 
             .link {
@@ -67,8 +89,6 @@
                 display: flex;
                 width: 70%;
                 justify-content: space-between;
-                align-items: center;
-
             }
 
             @media only screen and (max-width: 600px) {
@@ -80,6 +100,7 @@
 
                 .header {
                     width: 100%;
+                    align-items: center;
                 }
             }
 
@@ -96,18 +117,43 @@
         </app-route>
         <h1 style="margin-left: 15%; margin-top: 5%">Заказ поставщику</h1>
         <div class="header">
-            <paper-tabs class="tabs" selected="[[routeData.menu]]" attr-for-selected='key'>
-                <template is="dom-repeat" items="{{menuForDates}}" as="calendar">
-                    <paper-tab key="[[calendar.date.year]]-[[calendar.date.month]]-[[calendar.date.day]]" link>
-                        <a class="link" name="[[calendar.date.year]]/[[calendar.date.month]]/[[calendar.date.day]]"
-                           href="/#/vendor-orders/#/[[calendar.date.year]]/[[calendar.date.month]]/[[calendar.date.day]]"
-                           on-click="_handleClick">
-                            <div>
-                                <div class="day">{{calendar.date.day}}</div>
-                            </div>
-                        </a>
-                    </paper-tab>
-                </template>
+            <paper-tabs class="tabs" selected="[[routeData.date]]" attr-for-selected='data-key'>
+                <dom-repeat items="{{menuForDates}}" as="calendar">
+                    <template>
+                        <dom-if if="[[calendar.hasMenu]]">
+                            <template>
+                                <paper-tab
+                                        data-key$="[[calendar.date.year]]-[[calendar.date.month]]-[[calendar.date.day]]"
+                                        link>
+                                    <a class="paper-tab-container"
+                                       href="/#/order/[[calendar.date.year]]-[[calendar.date.month]]-[[calendar.date.day]]"
+                                       on-click="_handleClick">
+                                        <div>
+                                            <div class="day-of-the-week">{{calendar.dayOfTheWeek}}
+                                            </div>
+                                            <div class="day">{{calendar.date.day}}</div>
+                                        </div>
+                                    </a>
+                                </paper-tab>
+                            </template>
+                        </dom-if>
+                        <dom-if if="[[!calendar.hasMenu]]">
+                            <template>
+                                <paper-tab
+                                        data-key$="[[calendar.date.year]]-[[calendar.date.month]]-[[calendar.date.day]]"
+                                        link disabled>
+                                    <div class="paper-tab-container disabled">
+                                        <div>
+                                            <div class="day-of-the-week">{{calendar.dayOfTheWeek}}
+                                            </div>
+                                            <div class="day">{{calendar.date.day}}</div>
+                                        </div>
+                                    </div>
+                                </paper-tab>
+                            </template>
+                        </dom-if>
+                    </template>
+                </dom-repeat>
             </paper-tabs>
             <paper-icon-button id="calendar" icon="today" on-click="openDatePicker"></paper-icon-button>
             <app-datepicker id="picker" view="vertical" date="{{currentDate}}"></app-datepicker>
