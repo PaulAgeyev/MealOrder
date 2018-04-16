@@ -91,7 +91,17 @@
                 justify-content: space-between;
             }
 
-            @media only screen and (max-width: 600px) {
+            .header-title {
+                margin-left: 15%;
+                margin-top: 5%
+            }
+
+            @media only screen and (max-width: 1024px) {
+                .header-title {
+                    margin-left: 1%;
+                    margin-bottom: 0;
+                }
+
 
                 paper-tabs {
                     margin-top: 3%;
@@ -104,6 +114,8 @@
                 }
             }
 
+
+
         </style>
 
         <app-location route="{{route}}"
@@ -115,7 +127,7 @@
                 data="{{routeData}}"
                 tail="{{subroute}}">
         </app-route>
-        <h1 style="margin-left: 15%; margin-top: 5%">Заказ поставщику</h1>
+        <h1 class="header-title">Заказ поставщику</h1>
         <div class="header">
             <paper-tabs class="tabs" selected="[[routeData.date]]" attr-for-selected='data-key'>
                 <dom-repeat items="{{menuForDates}}" as="calendar">
@@ -128,7 +140,7 @@
                                     <a class="paper-tab-container"
                                        href="/#/order/[[calendar.date.year]]-[[calendar.date.month]]-[[calendar.date.day]]"
                                        on-click="_handleClick">
-                                        <div>
+                                        <div style="display: flex; flex-direction: column; align-items: center;">
                                             <div class="day-of-the-week">{{calendar.dayOfTheWeek}}
                                             </div>
                                             <div class="day">{{calendar.date.day}}</div>
@@ -143,8 +155,8 @@
                                         data-key$="[[calendar.date.year]]-[[calendar.date.month]]-[[calendar.date.day]]"
                                         link disabled>
                                     <div class="paper-tab-container disabled">
-                                        <div>
-                                            <div class="day-of-the-week">{{calendar.dayOfTheWeek}}
+                                        <div style="display: flex; flex-direction: column; align-items: center;">
+                                            <div class="day-of-the-week">{{calendar.dayOfTheWeek}}, янв
                                             </div>
                                             <div class="day">{{calendar.date.day}}</div>
                                         </div>

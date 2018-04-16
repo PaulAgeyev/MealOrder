@@ -39,6 +39,11 @@
                 height: 50px;
                 padding-left: 2%;
             }
+
+            .item:hover .text {
+                display: block;
+            }
+
             .non-select {
                 -webkit-touch-callout: none; /* iOS Safari */
                 -webkit-user-select: none; /* Safari */
@@ -83,15 +88,26 @@
                 content: 'Некорректный';
             }
 
-            .edit {
+            .details {
                 width: 15%;
                 font-size: 14px;
             }
 
-            @media only screen and (max-width: 600px) {
+            .details .text {
+                display: none;
+            }
+
+
+            @media only screen and (max-width: 1024px) {
                 .main-content {
-                    width: 500px;
-                    margin: 2%;
+                    width: 100%;
+                }
+            }
+
+            @media only screen and (max-width: 600px) {
+
+                .main-content {
+
                 }
 
                 .vendor-name {
@@ -108,7 +124,7 @@
                     text-align: left;
                 }
 
-                .edit {
+                .details {
                     text-align: right;
                 }
             }
@@ -120,7 +136,7 @@
                 <div class="vendor-name">Поставщик</div>
                 <div class="date">Дата</div>
                 <div class="status">Статус</div>
-                <div class="edit"></div>
+                <div class="details"></div>
             </div>
             <iron-list id="list" items="[[purchaseOrders]]" as="PO" scroll-target="document" scroll-offset="200">
                 <template>
@@ -131,8 +147,10 @@
                             <div class="status">
                                 <div class$="[[_getClassForStatus(PO)]]"></div>
                             </div>
-                            <div class="edit">
-                               Детали
+                            <div class="details">
+                              <div class="text">
+                                  Детали
+                              </div>
                             </div>
 
                         </div>
@@ -156,11 +174,11 @@
                         value: [
                             {
                                 title: 'Пюре',
-                                date: '05/01/18',
+                                date: "05 янв '18",
                                 status: 'correct'
                             }, {
                                 title: 'Позитив',
-                                date: '07/02/18',
+                                date: "05 янв '18",
                                 status: 'incorrect'
                             }]
                     }
