@@ -1,7 +1,7 @@
 <script src="../../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
 <link rel="import" href="../../../bower_components/polymer/polymer-element.html">
 
-<dom-module id="purchase-order-details-by-user">
+<dom-module id="purchase-order-by-dish">
     <template>
         <style>
             .item {
@@ -11,8 +11,9 @@
                 background-color: white;
                 border-bottom: 1px solid #ddd;
                 cursor: pointer;
-                justify-content: space-between;
                 align-items: center;
+                padding-right: 10px;
+                padding-left: 10px;
             }
 
             .non-select {
@@ -37,6 +38,22 @@
                 width: 70%;
             }
 
+            .title {
+                width: 25%;
+            }
+
+            .price {
+                width: 25%;
+            }
+
+            .quantity {
+                width: 25%;
+            }
+
+            .cost {
+                width: 25%;
+            }
+
             #upper {
                 @apply --layout-horizontal;
                 display: flex;
@@ -45,6 +62,13 @@
                 align-items: center;
                 margin: 4% auto 0 auto;
                 width: 70%;
+            }
+
+            .footer {
+                justify-content: space-between;
+                @apply(--paper-font-display1);
+                padding-left: 20px;
+                padding-right: 20px;
             }
 
             @media only screen and (max-width: 800px) {
@@ -66,34 +90,35 @@
         </div>
         <div id="main-content">
             <div class="item non-select header">
-                <div class="user">Пользователь</div>
-                <div class="order">Заказ</div>
+                <div class="title">Наименование</div>
+                <div class="price">Цена, ₴</div>
+                <div class="quantity">Кл-во</div>
+                <div class="cost">Стоимость, ₴</div>
             </div>
-            <iron-list id="list" items="[[purchaseOrder.order]]" as="order" scroll-target="document"
+            <iron-list id="list" items="[[purchaseOrder.dishes]]" as="dish" scroll-target="document"
                        scroll-offset="200">
                 <template>
                     <div class="non-select">
                         <div class="item">
-                            <div class="user">[[order.user]]</div>
-                            <div class="order">
-                                <dom-repeat items="[[order.dishes]]" as="dish">
-                                    <template>
-                                        [[dish.title]]([[dish.quantity]])
-                                    </template>
-                                </dom-repeat>
-                            </div>
+                            <div class="title">[[dish.title]]</div>
+                            <div class="price">[[dish.price]]</div>
+                            <div class="quantity">[[dish.quantity]]</div>
+                            <div class="cost">[[_getCost(index)]]</div>
                         </div>
                     </div>
                 </template>
             </iron-list>
+            <div class="item footer">
+                <div>Всего:</div>
+                <div>[[_getTotal()]]</div>
+            </div>
         </div>
-
     </template>
     <script>
 
-        class PurchaseOrderDetailsByUser extends MealOrderApp.ReduxMixin(Polymer.Element) {
+        class PurchaseOrderByDish extends Polymer.Element {
             static get is() {
-                return 'purchase-order-details-by-user';
+                return 'purchase-order-by-dish';
             }
 
             static get properties() {
@@ -101,32 +126,36 @@
                     purchaseOrder: {
                         type: Object,
                         value: {
-                            vendor: 'Пюре', order: [{
-                                user: 'Таня Ижевская',
-                                dishes: [{title: 'Картофель', quantity: 1}, {
-                                    title: 'Жареная сельдь',
-                                    quantity: 1
-                                }, {title: 'Суп гороховый', quantity: 2}]
-                            }, {
-                                user: 'Жора Васильев',
-                                dishes: [{title: 'Борщ украинский', quantity: 1}, {title: 'Цезарь', quantity: 2}]
-                            }, {
-                                user: 'Петя Иванов',
-                                dishes: [{title: 'Картофель', quantity: 1}, {
-                                    title: 'Жареная сельдь',
-                                    quantity: 1
-                                }, {title: 'Суп гороховый', quantity: 2}]
-                            }, {
-                                user: 'Алина Рогачева',
-                                dishes: [{title: 'Картофель', quantity: 1}]
+                            vendor: 'Пюре',
+                            dishes: [{title: 'Картофель', price: 10, quantity: 1}, {
+                                title: 'Стейк куриный',
+                                price: 39,
+                                quantity: 2
+                            }, {title: 'Гречневая каша', price: 15, quantity: 4}, {
+                                title: 'Борщ украинский',
+                                price: 20,
+                                quantity: 3
                             }]
                         }
                     }
                 }
             };
 
+            _getCost(index) {
+                return this.purchaseOrder.dishes[index].price
+                    * this.purchaseOrder.dishes[index].quantity;
+            }
+
+            _getTotal() {
+                let sum = 0;
+                const dishes = this.purchaseOrder.dishes;
+                for (let i = 0; i < dishes.length; i++) {
+                    sum += this._getCost(i);
+                }
+                return sum;
+            }
         }
 
-        window.customElements.define(PurchaseOrderDetailsByUser.is, PurchaseOrderDetailsByUser);
+        window.customElements.define(PurchaseOrderByDish.is, PurchaseOrderByDish);
     </script>
 </dom-module>
