@@ -1,0 +1,32 @@
+<script src="../../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+<link rel="import" href="../../../bower_components/polymer/polymer-element.html">
+
+<dom-module id="purchase-order-details-by-user">
+    <template>
+        <style>
+
+
+            @media only screen and (max-width: 680px) {
+
+            }
+
+        </style>
+
+
+    </template>
+    <script>
+
+        class PurchaseOrderDetailsByUser extends MealOrderApp.ReduxMixin(Polymer.Element) {
+            static get is() {
+                return 'purchase-order-details-by-user';
+            }
+
+            static get properties() {
+                return {}
+            };
+
+        }
+
+        window.customElements.define(PurchaseOrderDetailsByUser.is, PurchaseOrderDetailsByUser);
+    </script>
+</dom-module>
