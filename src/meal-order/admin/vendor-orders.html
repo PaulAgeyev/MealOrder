@@ -116,12 +116,18 @@
                 margin-top: 5%
             }
 
+            @media only screen and (max-width: 1370px) {
+                app-datepicker {
+
+                    top: 60%;
+                }
+            }
+
             @media only screen and (max-width: 1024px) {
                 .header-title {
                     margin-left: 1%;
                     margin-bottom: 0;
                 }
-
 
                 paper-tabs {
                     margin-top: 3%;
@@ -131,6 +137,17 @@
                 .header {
                     width: 100%;
                     align-items: center;
+                }
+
+                app-datepicker {
+                    right: 0;
+                    top: 58%;
+                }
+            }
+
+            @media only screen and (max-width: 812px) {
+                app-datepicker {
+                    top: 54.5%;
                 }
             }
 
