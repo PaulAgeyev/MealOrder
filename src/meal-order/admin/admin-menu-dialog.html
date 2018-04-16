@@ -74,8 +74,7 @@
                 <h2>Добавить меню</h2>
                 <div class="inner">
 
-                    <paper-dropdown-menu value="{{newTitle}}"
-                                         error-message="[[invalid.message]]"
+                    <paper-dropdown-menu value="{{vendor}}"
                                          label="Поставщик"
                                          invalid="[[invalid.message.length]]">
                         <paper-listbox slot="dropdown-content" selected="1">
@@ -83,25 +82,29 @@
                             <paper-item>Пюре</paper-item>
                         </paper-listbox>
                     </paper-dropdown-menu>
+                    <iron-form id="form">
+                        <form>
+                            <paper-input value="{{menuUrl}}"
+                                         error-message="Неверный формат ссылки"
+                                         label="Ссылка на меню"
+                                         type="url" required>
+                            </paper-input>
 
-                    <paper-input value="{{newMail}}"
-                                 error-message="Неверный формат ссылки"
-                                 label="Ссылка на меню"
-                                 type="url">
-                    </paper-input>
-
-                    <div class="time" style="display: flex; justify-content: space-between;">
-                        <paper-input label="От" type="date" value="{{hours}}">
-                            <div slot="prefix"></div>
-                        </paper-input>
-                        <paper-input label="До" type="date" value="{{minutes}}">
-                            <div slot="prefix"></div>
-                        </paper-input>
-                    </div>
-
+                            <div class="time" style="display: flex; justify-content: space-between;">
+                                <paper-input label="От" type="date" value="{{dateFrom}}" required
+                                             error-message="Неверно указана дата">
+                                    <div slot="prefix"></div>
+                                </paper-input>
+                                <paper-input label="До" type="date" value="{{dateTill}}" required
+                                             error-message="Неверно указана дата">
+                                    <div slot="prefix"></div>
+                                </paper-input>
+                            </div>
+                        </form>
+                    </iron-form>
                     <div class="buttons" style="align-self: flex-end;">
-                        <paper-button dialog-dismiss>Отмена</paper-button>
-                        <paper-button class="button-apply" dialog-confirm autofocus class="save" on-click="_addMenu">
+                        <paper-button on-click="_closeDialog">Отмена</paper-button>
+                        <paper-button class="button-apply" class="save" on-click="_addMenu">
                             Применить
                         </paper-button>
                     </div>
@@ -117,7 +120,20 @@
             }
 
             static get properties() {
-                return {}
+                return {
+                    vendor: {
+                        type: String
+                    },
+                    menuUrl: {
+                        type: String
+                    },
+                    dateFrom: {
+                        type: String
+                    },
+                    dateTill: {
+                        type: String
+                    },
+                }
             };
 
             static get actions() {
@@ -130,11 +146,15 @@
                 }
             }
 
-            _addVendor() {
+            _addMenu() {
                 if (this.$.form.validate()) {
-                    const vendor = {};
-
-                    this.dispatchEvent(new CustomEvent('add-vendor', {detail: vendor}));
+                    const menu = {};
+                    menu.vendor = this.vendor;
+                    menu.menuUrl = this.menuUrl;
+                    menu.dateFrom = this.dateFrom;
+                    menu.dateTill = this.dateTill;
+                    console.log(menu);
+                    this.dispatchEvent(new CustomEvent('add-vendor', {detail: menu}));
                     this._closeDialog();
                 }
             }

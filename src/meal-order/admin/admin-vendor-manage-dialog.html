@@ -175,7 +175,6 @@
                     vendor.mail = this.inputData.newMail;
                     vendor.phone = this.inputData.phone;
                     vendor.deadline = this.inputData.deadline;
-                    console.log(vendor);
                     this.dispatchEvent(new CustomEvent('add-vendor', {detail: vendor}));
                     this._closeDialog();
                 }
