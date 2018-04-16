@@ -63,8 +63,9 @@
             }
 
             .header {
+                margin: 0 auto;
                 display: flex;
-                width: 80%;
+                width: 70%;
                 justify-content: space-between;
                 align-items: center;
 
@@ -93,7 +94,7 @@
                 data="{{routeData}}"
                 tail="{{subroute}}">
         </app-route>
-        <h1>Заказ поставщику</h1>
+        <h1 style="margin-left: 15%; margin-top: 5%">Заказ поставщику</h1>
         <div class="header">
             <paper-tabs class="tabs" selected="[[routeData.menu]]" attr-for-selected='key'>
                 <template is="dom-repeat" items="{{menuForDates}}" as="calendar">
