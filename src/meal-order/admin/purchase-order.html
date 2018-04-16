@@ -131,34 +131,56 @@
 
 
         </style>
-        <div class="main-content">
-            <div class="item non-select header">
-                <div class="vendor-name">Поставщик</div>
-                <div class="date">Дата</div>
-                <div class="status">Статус</div>
-                <div class="details"></div>
-            </div>
-            <iron-list id="list" items="[[purchaseOrders]]" as="PO" scroll-target="document" scroll-offset="200">
-                <template>
-                    <div class="non-select">
-                        <div class="item">
-                            <div class="vendor-name">[[PO.title]]</div>
-                            <div class="date">[[PO.date]]</div>
-                            <div class="status">
-                                <div class$="[[_getClassForStatus(PO)]]"></div>
-                            </div>
-                            <div class="details">
-                              <div class="text">
-                                  Детали
-                              </div>
-                            </div>
 
-                        </div>
+        <app-location route="{{route}}"
+                      use-hash-as-path></app-location>
+
+        <app-route
+                route="{{route}}"
+                pattern="/:page/:date/:vendor"
+                data="{{routeData}}"
+                tail="{{subroute}}">
+        </app-route>
+
+
+            <iron-pages
+                    selected="[[routeData.vendor]]"
+                    attr-for-selected="name"
+                    fallback-selection="view404"
+                    role="main">
+
+                <div class="main-content" name="">
+                    <div class="item non-select header">
+                        <div class="vendor-name">Поставщик</div>
+                        <div class="date">Дата</div>
+                        <div class="status">Статус</div>
+                        <div class="details"></div>
                     </div>
-                </template>
-            </iron-list>
+                    <iron-list id="list" items="[[purchaseOrders]]" as="PO" scroll-target="document" scroll-offset="200">
+                        <template>
+                            <div class="non-select">
+                                <div class="item">
+                                    <div class="vendor-name">[[PO.title]]</div>
+                                    <div class="date">[[PO.date]]</div>
+                                    <div class="status">
+                                        <div class$="[[_getClassForStatus(PO)]]"></div>
+                                    </div>
+                                    <div class="details">
+                                        <a href="#/order/[[routeData.date]]/Pure" class="text">
+                                            Детали
+                                        </a>
+                                    </div>
 
-        </div>
+                                </div>
+                            </div>
+                        </template>
+                    </iron-list>
+                </div>
+
+                <purchase-order-details-by-dish name="Pure"></purchase-order-details-by-dish>
+            </iron-pages>
+
+
     </template>
     <script>
 
