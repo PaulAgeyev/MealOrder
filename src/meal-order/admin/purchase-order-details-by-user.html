@@ -6,12 +6,13 @@
         <style>
             .item {
                 @apply --layout-horizontal;
-                height: 50px;
+                height: auto;
                 display: flex;
                 background-color: white;
                 border-bottom: 1px solid #ddd;
                 justify-content: space-between;
                 align-items: center;
+                min-height: 50px;
             }
 
             .non-select {
@@ -29,6 +30,7 @@
                 font-weight: bold;
                 background-color: #f2f2f2;
                 border: 1px solid #ddd;
+                height: 50px;
             }
 
             #main-content {
@@ -46,27 +48,98 @@
                 width: 70%;
             }
 
-            @media only screen and (max-width: 800px) {
-                paper-input {
-                    margin-top: 0;
-                }
+            .upper-container {
+                display: flex;
+                flex-direction: column;
+                height: 150px;
+                justify-content: space-around;
+            }
 
+            .status {
+                text-transform: uppercase;
+                color: #0085d3;
+                font-size: 22px;
+                align-self: flex-end;
+            }
+
+            .user {
+                padding-left: 2%;
+                width: 40%
+            }
+
+            .order {
+                width: 60%;
+                text-align: left;
+                padding-right: 2%;
+            }
+
+            paper-button {
+                font-family: 'Roboto', 'Noto', sans-serif;
+                font-weight: normal;
+                font-size: 14px;
+                -webkit-font-smoothing: antialiased;
+                background-color: #e1e1e1;
+                text-align: center;
+            }
+
+            .upper-header {
+                align-self: flex-start;
+            }
+
+            @media only screen and (max-width: 1024px) {
                 #upper {
                     width: 98%;
                 }
 
                 #main-content {
-                    width: 1000px;
+                    width: 100%;
+                }
+
+                .user {
+                    width: 50%
+                }
+
+                .order {
+                    width: 50%;
                 }
             }
+
+            @media only screen and (max-width: 640px) {
+
+                .upper-header {
+                    font-size: 24px;
+                }
+
+                .upper-container {
+                    width: 200px;
+                }
+
+                .button {
+                    font-size: 12px;
+                }
+            }
+
         </style>
         <div id="upper">
-            <h1>Детали заказа [[purchaseOrder.vendor]] за 05.01.2018</h1>
+            <h1 class="upper-header">Детали заказа [[purchaseOrder.vendor]] за 05.01.2018</h1>
+            <div class="upper-container">
+                <div class="status">Отправленный</div>
+                <div style="display: flex;">
+                    <paper-button class="button" style="">Печать</paper-button>
+                    <paper-button class="button" style="">Отметить как доставленным</paper-button>
+                </div>
+                <div style="display: flex; align-self: flex-end;">
+                    <a href="" style="color: var(--google-grey-700);">По блюдам</a>
+                    <div style="white-space: pre; font-weight: bold;"> | </div>
+                    <a href="" style="color: var(--google-grey-700);">По заказам</a>
+                </div>
+            </div>
         </div>
         <div id="main-content">
             <div class="item non-select header">
                 <div class="user">Пользователь</div>
                 <div class="order">Заказ</div>
+
             </div>
             <iron-list id="list" items="[[purchaseOrder.order]]" as="order" scroll-target="document"
                        scroll-offset="200">
@@ -77,10 +150,13 @@
                             <div class="order">
                                 <dom-repeat items="[[order.dishes]]" as="dish">
                                     <template>
-                                        [[dish.title]]([[dish.quantity]])
+                                        <div style="margin-top: 2%; margin-bottom: 2%;">
+                                            [[dish.title]]([[dish.quantity]])
+                                        </div>
                                     </template>
                                 </dom-repeat>
                             </div>
+
                         </div>
                     </div>
                 </template>
