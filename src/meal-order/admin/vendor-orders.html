@@ -82,6 +82,26 @@
                 display: none;
                 position: absolute;
                 z-index: 9999;
+                right: 15%;
+                top: 63%;
+            }
+
+            #picker {
+                --app-datepicker-selection-bg: var(--paper-light-blue-700);
+                --app-datepicker-selection-color: var(--google-grey-100);
+                --app-datepicker-iron-selected: var(--google-grey-100);
+                --app-datepicker-selected-day-bg: var(--paper-light-blue-700);
+                --app-datepicker-today-color: var(--paper-light-blue-500);
+                --app-datepicker-date-hover-background-color: var(--paper-light-blue-700);
+
+                --app-datepicker-selected-date: {
+                    font-weight: normal;
+                    font-size: 22px;
+                };
+
+                --app-datepicker-selected-year: {
+                    font-weight: normal;
+                }
             }
 
             .header {
@@ -156,7 +176,7 @@
                                         link disabled>
                                     <div class="paper-tab-container disabled">
                                         <div style="display: flex; flex-direction: column; align-items: center;">
-                                            <div class="day-of-the-week">{{calendar.dayOfTheWeek}}, янв
+                                            <div class="day-of-the-week">{{calendar.dayOfTheWeek}}
                                             </div>
                                             <div class="day">{{calendar.date.day}}</div>
                                         </div>
