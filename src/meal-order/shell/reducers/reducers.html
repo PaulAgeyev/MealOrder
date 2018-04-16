@@ -47,15 +47,27 @@
                         }
                     );
                 }
-                case ArrayAction.OPEN_VENDOR_MANAGE: {
+                case ArrayAction.OPEN_MENU: {
                     return Object.assign({}, state, {
                         currentDialog: action.properties
                         }
                     );
                 }
-                case ArrayAction.CLOSE_VENDOR_MANAGE: {
+                case ArrayAction.CLOSE_MENU: {
                     return Object.assign({}, state, {
                         currentDialog: {}
+                        }
+                    );
+                }
+                case ArrayAction.OPEN_VENDOR_MANAGE: {
+                    return Object.assign({}, state, {
+                            currentDialog: action.properties
+                        }
+                    );
+                }
+                case ArrayAction.CLOSE_VENDOR_MANAGE: {
+                    return Object.assign({}, state, {
+                            currentDialog: {}
                         }
                     );
                 }

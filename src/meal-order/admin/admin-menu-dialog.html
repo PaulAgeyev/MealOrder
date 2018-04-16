@@ -69,7 +69,7 @@
 
         </style>
 
-        <paper-dialog id="animated" class="add-dish-paper-dialog size-position">
+        <paper-dialog id="dialog" class="add-dish-paper-dialog size-position" with-backdrop modal>
             <div class="dialog">
                 <h2>Добавить меню</h2>
                 <div class="inner">
@@ -84,11 +84,10 @@
                         </paper-listbox>
                     </paper-dropdown-menu>
 
-
                     <paper-input value="{{newMail}}"
-                                 error-message="[[invalid.message]]"
+                                 error-message="Неверный формат ссылки"
                                  label="Ссылка на меню"
-                                 invalid="[[invalid.message.length]]">
+                                 type="url">
                     </paper-input>
 
                     <div class="time" style="display: flex; justify-content: space-between;">
