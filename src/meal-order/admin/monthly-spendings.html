@@ -23,6 +23,7 @@
             .header {
                 display: flex;
                 font-weight: bold;
+                background-color: #f2f2f2;
             }
 
             .item {
@@ -42,7 +43,13 @@
             }
 
             .header {
+                @apply --layout-horizontal;
                 height: 50px;
+                display: flex;
+                background-color: #f2f2f2;
+                border: 1px solid #ddd;
+                cursor: pointer;
+                align-items: center;
             }
 
             .main-content {
@@ -143,7 +150,7 @@
                 </paper-dropdown-menu>
                 <paper-button id="generate" style="">Сгенерировать документ</paper-button>
             </div>
-            <div class="item non-select header">
+            <div class="non-select header">
                 <div class="user-name">Пользователь</div>
                 <div class="amount">Сумма, ₴</div>
                 <div class="column"></div>
