@@ -25,18 +25,19 @@
 
             .header {
                 display: flex;
-                font: bold 24px serif;
+                font-weight: bold;
             }
 
             .item {
                 @apply --layout-horizontal;
-                padding: 20px;
                 display: flex;
                 background-color: white;
                 border: 1px solid #ddd;
                 cursor: pointer;
                 justify-content: space-between;
                 align-items: center;
+                height: 50px;
+                padding-left: 2%;
             }
 
             .non-select {
@@ -51,7 +52,8 @@
             }
 
             .main-content {
-                margin: 10%;
+                margin: 0 auto;
+                width: 70%;
             }
 
             paper-input {
