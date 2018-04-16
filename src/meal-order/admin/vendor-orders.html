@@ -111,7 +111,7 @@
 
         <app-route
                 route="{{route}}"
-                pattern="/:menu"
+                pattern="/:page/:date"
                 data="{{routeData}}"
                 tail="{{subroute}}">
         </app-route>
@@ -156,7 +156,7 @@
                 </dom-repeat>
             </paper-tabs>
             <paper-icon-button id="calendar" icon="today" on-click="openDatePicker"></paper-icon-button>
-            <app-datepicker id="picker" view="vertical" date="{{currentDate}}"></app-datepicker>
+            <app-datepicker id="picker" view="vertical" date="{{currentDate}}" auto-update-date="true"></app-datepicker>
         </div>
         <purchase-order></purchase-order>
 
@@ -186,19 +186,31 @@
                     menuForDates: {
                         type: Array,
                         statePath: 'menuForDates'
+                    },
+                    currentDate: {
+                        type: Object
                     }
                 };
             }
 
             static get observers() {
                 return [
-                    '_pageChanged(routeData.menu)'
+                    '_pageChanged(routeData.menu)',
+                    '_changeUrl(currentDate)'
                 ];
+            }
+
+            _changeUrl() {
+                const date = this.currentDate.split('/');
+                const newDate = date[0] + '-' + date[1] + '-' + date[2];
+                const newRouteData = {};
+                newRouteData.page = 'order/' + newDate;
+                this.set('routeData', newRouteData);
             }
 
             _pageChanged() {
                 if (!this.route.path) {
-                    this.set('route.path', '/menu/#/2018/03/21');
+                    this.set('route.path', '/order/2018-03-21');
                 }
             }
 
