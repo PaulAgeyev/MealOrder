@@ -4,14 +4,95 @@
 <dom-module id="purchase-order-details-by-user">
     <template>
         <style>
+            iron-list {
+                --iron-list-items-container: {
 
-
-            @media only screen and (max-width: 680px) {
-
+                };
             }
 
-        </style>
+            .item {
+                @apply --layout-horizontal;
+                height: 50px;
+                display: flex;
+                background-color: white;
+                border-bottom: 1px solid #ddd;
+                cursor: pointer;
+                justify-content: space-between;
+                align-items: center;
+            }
 
+            .non-select {
+                -webkit-touch-callout: none; /* iOS Safari */
+                -webkit-user-select: none; /* Safari */
+                -khtml-user-select: none; /* Konqueror HTML */
+                -moz-user-select: none; /* Firefox */
+                -ms-user-select: none; /* Internet Explorer/Edge */
+                user-select: none;
+                /* Non-prefixed version, currently supported by Chrome and Opera */
+            }
+
+            .header {
+                display: flex;
+                font-weight: bold;
+                background-color: #f2f2f2;
+                border: 1px solid #ddd;
+            }
+
+            #main-content {
+                margin: 0 auto;
+                width: 70%;
+            }
+
+            #upper {
+                @apply --layout-horizontal;
+                display: flex;
+                cursor: pointer;
+                justify-content: space-between;
+                align-items: center;
+                margin: 4% auto 0 auto;
+                width: 70%;
+            }
+
+            @media only screen and (max-width: 800px) {
+                paper-input {
+                    margin-top: 0;
+                }
+
+                #upper {
+                    width: 98%;
+                }
+
+                #main-content {
+                    width: 1000px;
+                }
+            }
+        </style>
+        <div id="upper">
+            <h1>Детали заказа [[purchaseOrder.vendor]] за 05.01.2018</h1>
+        </div>
+        <div id="main-content">
+            <div class="item non-select header">
+                <div class="user">Пользователь</div>
+                <div class="order">Заказ</div>
+            </div>
+            <iron-list id="list" items="[[purchaseOrder.order]]" as="order" scroll-target="document"
+                       scroll-offset="200">
+                <template>
+                    <div class="non-select">
+                        <div class="item">
+                            <div class="user">[[order.user]]</div>
+                            <div class="order">
+                                <dom-repeat items="[[order.dishes]]" as="dish">
+                                    <template>
+                                        [[dish.title]]([[dish.quantity]])
+                                    </template>
+                                </dom-repeat>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </iron-list>
+        </div>
 
     </template>
     <script>
@@ -22,7 +103,32 @@
             }
 
             static get properties() {
-                return {}
+                return {
+                    purchaseOrder: {
+                        type: Object,
+                        value: {
+                            vendor: 'Пюре', order: [{
+                                user: 'Таня Ижевская',
+                                dishes: [{title: 'Картофель', quantity: 1}, {
+                                    title: 'Жареная сельдь',
+                                    quantity: 1
+                                }, {title: 'Суп гороховый', quantity: 2}]
+                            }, {
+                                user: 'Жора Васильев',
+                                dishes: [{title: 'Борщ украинский', quantity: 1}, {title: 'Цезарь', quantity: 2}]
+                            }, {
+                                user: 'Петя Иванов',
+                                dishes: [{title: 'Картофель', quantity: 1}, {
+                                    title: 'Жареная сельдь',
+                                    quantity: 1
+                                }, {title: 'Суп гороховый', quantity: 2}]
+                            }, {
+                                user: 'Алина Рогачева',
+                                dishes: [{title: 'Картофель', quantity: 1}]
+                            }]
+                        }
+                    }
+                }
             };
 
         }
