@@ -167,7 +167,7 @@
                                         <div class$="[[_getClassForStatus(PO)]]"></div>
                                     </div>
                                     <div class="details">
-                                        <a href="#/order/[[routeData.date]]/Pure/byDishes" class="text">
+                                        <a href="#/order/[[routeData.date]]/[[PO.id]]/byDishes" class="text">
                                             Детали
                                         </a>
                                     </div>
@@ -178,7 +178,6 @@
                     </iron-list>
                 </div>
             </iron-pages>
-
 
     </template>
     <script>
@@ -194,10 +193,12 @@
                         type: Array,
                         value: [
                             {
+                                id: 'Pure',
                                 title: 'Пюре',
                                 date: "05 янв '18",
                                 status: 'correct'
                             }, {
+                                id: 'Pozitiv',
                                 title: 'Позитив',
                                 date: "05 янв '18",
                                 status: 'incorrect'
