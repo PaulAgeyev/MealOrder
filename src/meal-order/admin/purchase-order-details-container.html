@@ -86,9 +86,22 @@
                 font-weight: bold;
             }
 
+            .upper-header {
+                align-self: flex-start;
+            }
+
+            .button-back {
+                margin-top: 4%;
+                margin-left: 15%
+            }
+
             @media only screen and (max-width: 1024px) {
                 #upper {
                     width: 98%;
+                }
+
+                .button-back {
+                    margin-left: 1%
                 }
 
                 .main-content {
@@ -105,8 +118,24 @@
                     width: 98%;
                 }
 
+                .upper-header {
+                    font-size: 24px;
+                }
+
                 .main-content {
                     width: 1000px;
+                }
+
+                .button-back {
+
+                    margin-left: 1%
+                }
+            }
+
+            @media only screen and (max-width: 320px) {
+                #upper {
+                    display: flex;
+                    flex-wrap: wrap;
                 }
             }
         </style>
@@ -121,11 +150,14 @@
                 tail="{{subroute}}">
         </app-route>
 
-        <div style="margin-left: 15%; margin-top: 3%;">
-        <a style="  color: var(--google-grey-700); text-decoration: none; font-weight: bold; font-size: 20px;" href="#/order/[[routeData.date]]/"><iron-icon icon="icons:arrow-back"></iron-icon> Назад</a>
+        <div class="button-back">
+            <a style="  color: var(--google-grey-700); text-decoration: none; font-weight: bold; font-size: 20px;"
+               href="#/order/[[routeData.date]]/">
+                <iron-icon icon="icons:arrow-back"></iron-icon>
+                Назад</a>
         </div>
         <div id="upper">
-            <h1 style="align-self: flex-start;">Детали заказа [[purchaseOrder.vendor]] за 05.01.2018</h1>
+            <h1 class="upper-header">Детали заказа [[purchaseOrder.vendor]] за 05.01.2018</h1>
             <div style="display: flex;flex-direction: column;height: 150px; justify-content: space-around;">
                 <div class="status">Отправленный</div>
                 <div style="display: flex;">
@@ -133,9 +165,11 @@
                     <paper-button class="button" style="">Отметить как доставленным</paper-button>
                 </div>
                 <div style="display: flex; align-self: flex-end;">
-                    <a href="#/order/[[routeData.date]]/[[routeData.vendor]]/byDishes" style="color: var(--google-grey-700);">По блюдам</a>
+                    <a href="#/order/[[routeData.date]]/[[routeData.vendor]]/byDishes"
+                       style="color: var(--google-grey-700);">По блюдам</a>
                     <div style="white-space: pre; font-weight: bold;"> | </div>
-                    <a href="#/order/[[routeData.date]]/[[routeData.vendor]]/byOrders" style="color: var(--google-grey-700);">По заказам</a>
+                    <a href="#/order/[[routeData.date]]/[[routeData.vendor]]/byOrders"
+                       style="color: var(--google-grey-700);">По заказам</a>
                 </div>
             </div>
         </div>
@@ -155,9 +189,11 @@
             static get is() {
                 return 'purchase-order-details-container';
             }
+
             static get properties() {
             };
         }
+
         window.customElements.define(PurchaseOrderContainer.is, PurchaseOrderContainer);
     </script>
 </dom-module>
