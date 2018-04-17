@@ -6,7 +6,7 @@
 <link rel="import" href="../shell/redux-store.html">
 <link rel="import" href="../../../bower_components/polymer/lib/elements/dom-repeat.html">
 <link rel="import" href="purchase-order.html">
-<link rel="import" href="purchase-order-details-by-user.html">
+<link rel="import" href="purchase-order-details-container.html">
 
 <dom-module id="vendor-orders">
     <template>
@@ -153,7 +153,6 @@
             }
 
 
-
         </style>
 
         <app-location route="{{route}}"
@@ -161,54 +160,67 @@
 
         <app-route
                 route="{{route}}"
-                pattern="/:page/:date"
+                pattern="/:page/:date/:vendor"
                 data="{{routeData}}"
                 tail="{{subroute}}">
         </app-route>
-        <h1 class="header-title">Заказ поставщику</h1>
-        <div class="header">
-            <paper-tabs class="tabs" selected="[[routeData.date]]" attr-for-selected='data-key'>
-                <dom-repeat items="{{menuForDates}}" as="calendar">
-                    <template>
-                        <dom-if if="[[calendar.hasMenu]]">
+
+        <iron-pages
+                selected="[[routeData.vendor]]"
+                attr-for-selected="name"
+                fallback-selection="view404"
+                role="main">
+            <div name="">
+                <h1 class="header-title">Заказ поставщику</h1>
+                <div class="header">
+                    <paper-tabs class="tabs" selected="[[routeData.date]]" attr-for-selected='data-key'>
+                        <dom-repeat items="{{menuForDates}}" as="calendar">
                             <template>
-                                <paper-tab
-                                        data-key$="[[calendar.date.year]]-[[calendar.date.month]]-[[calendar.date.day]]"
-                                        link>
-                                    <a class="paper-tab-container"
-                                       href="/#/order/[[calendar.date.year]]-[[calendar.date.month]]-[[calendar.date.day]]"
-                                       on-click="_handleClick">
-                                        <div style="display: flex; flex-direction: column; align-items: center;">
-                                            <div class="day-of-the-week">{{calendar.dayOfTheWeek}}
+                                <dom-if if="[[calendar.hasMenu]]">
+                                    <template>
+                                        <paper-tab
+                                                data-key$="[[calendar.date.year]]-[[calendar.date.month]]-[[calendar.date.day]]"
+                                                link>
+                                            <a class="paper-tab-container"
+                                               href="/#/order/[[calendar.date.year]]-[[calendar.date.month]]-[[calendar.date.day]]"
+                                               on-click="_handleClick">
+                                                <div style="display: flex; flex-direction: column; align-items: center;">
+                                                    <div class="day-of-the-week">{{calendar.dayOfTheWeek}}
+                                                    </div>
+                                                    <div class="day">{{calendar.date.day}}</div>
+                                                </div>
+                                            </a>
+                                        </paper-tab>
+                                    </template>
+                                </dom-if>
+                                <dom-if if="[[!calendar.hasMenu]]">
+                                    <template>
+                                        <paper-tab
+                                                data-key$="[[calendar.date.year]]-[[calendar.date.month]]-[[calendar.date.day]]"
+                                                link disabled>
+                                            <div class="paper-tab-container disabled">
+                                                <div style="display: flex; flex-direction: column; align-items: center;">
+                                                    <div class="day-of-the-week">{{calendar.dayOfTheWeek}}
+                                                    </div>
+                                                    <div class="day">{{calendar.date.day}}</div>
+                                                </div>
                                             </div>
-                                            <div class="day">{{calendar.date.day}}</div>
-                                        </div>
-                                    </a>
-                                </paper-tab>
+                                        </paper-tab>
+                                    </template>
+                                </dom-if>
                             </template>
-                        </dom-if>
-                        <dom-if if="[[!calendar.hasMenu]]">
-                            <template>
-                                <paper-tab
-                                        data-key$="[[calendar.date.year]]-[[calendar.date.month]]-[[calendar.date.day]]"
-                                        link disabled>
-                                    <div class="paper-tab-container disabled">
-                                        <div style="display: flex; flex-direction: column; align-items: center;">
-                                            <div class="day-of-the-week">{{calendar.dayOfTheWeek}}
-                                            </div>
-                                            <div class="day">{{calendar.date.day}}</div>
-                                        </div>
-                                    </div>
-                                </paper-tab>
-                            </template>
-                        </dom-if>
-                    </template>
-                </dom-repeat>
-            </paper-tabs>
-            <paper-icon-button id="calendar" icon="today" on-click="openDatePicker"></paper-icon-button>
-            <app-datepicker id="picker" view="vertical" date="{{currentDate}}" auto-update-date="true" locale="ru-RU"></app-datepicker>
-        </div>
-        <purchase-order></purchase-order>
+                        </dom-repeat>
+                    </paper-tabs>
+                    <paper-icon-button id="calendar" icon="today" on-click="openDatePicker"></paper-icon-button>
+                    <app-datepicker id="picker" view="vertical" date="{{currentDate}}" auto-update-date="true"
+                                    locale="ru-RU"></app-datepicker>
+                </div>
+                <purchase-order></purchase-order>
+            </div>
+
+            <purchase-order-details-container name="Pure"></purchase-order-details-container>
+
+        </iron-pages>
 
     </template>
     <script>
@@ -253,15 +265,19 @@
                 const date = this.currentDate.split('/');
                 const newDate = date[0] + '-' + date[1] + '-' + date[2];
                 const newRouteData = {};
-                newRouteData.page = 'order/' + newDate;
+                newRouteData.page = 'order';
+                newRouteData.date = newDate;
                 this.set('routeData', newRouteData);
                 this.$.picker.style = 'display:none;';
                 this.$.calendar.style.backgroundColor = 'white';
             }
 
             _pageChanged() {
-                if (!this.route.path) {
-                    this.set('route.path', '/order/2018-03-21');
+                if (this.routeData.page && this.routeData.page.startsWith("order") && !this.routeData.vendor) {
+                    const date = this.currentDate.split('/');
+                    const newDate = date[0] + '-' + date[1] + '-' + date[2];
+                    this.set('route.path', '/order/' + newDate + '/');
+                    console.log("test");
                 }
             }
 

@@ -42,6 +42,8 @@
 
             .item:hover .text {
                 display: block;
+                text-decoration: none;
+                color: var(--google-grey-700);
             }
 
             .non-select {
@@ -142,7 +144,6 @@
                 tail="{{subroute}}">
         </app-route>
 
-
             <iron-pages
                     selected="[[routeData.vendor]]"
                     attr-for-selected="name"
@@ -166,7 +167,7 @@
                                         <div class$="[[_getClassForStatus(PO)]]"></div>
                                     </div>
                                     <div class="details">
-                                        <a href="#/order/[[routeData.date]]/Pure" class="text">
+                                        <a href="#/order/[[routeData.date]]/Pure/byDishes" class="text">
                                             Детали
                                         </a>
                                     </div>
@@ -176,8 +177,6 @@
                         </template>
                     </iron-list>
                 </div>
-
-                <purchase-order-details-by-dish name="Pure"></purchase-order-details-by-dish>
             </iron-pages>
 
 

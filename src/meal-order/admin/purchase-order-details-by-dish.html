@@ -31,7 +31,7 @@
                 height: 50px;
             }
 
-            #main-content {
+            .main-content {
                 margin: 0 auto;
                 width: 70%;
             }
@@ -91,7 +91,7 @@
                     width: 98%;
                 }
 
-                #main-content {
+                .main-content {
                     width: 100%;
                 }
             }
@@ -105,35 +105,22 @@
                     width: 98%;
                 }
 
-                #main-content {
+                .main-content {
                     width: 1000px;
                 }
             }
 
         </style>
-        <div id="upper">
-            <h1 style="align-self: flex-start;">Детали заказа [[purchaseOrder.vendor]] за 05.01.2018</h1>
-            <div style="display: flex;flex-direction: column;height: 150px; justify-content: space-around;">
-                <div class="status">Отправленный</div>
-                <div style="display: flex;">
-                    <paper-button class="button" style="">Печать</paper-button>
-                    <paper-button class="button" style="">Отметить как доставленным</paper-button>
-                </div>
-                <div style="display: flex; align-self: flex-end;">
-                    <a href="" style="color: var(--google-grey-700);">По блюдам</a>
-                    <div style="white-space: pre; font-weight: bold;"> | </div>
-                    <a href="" style="color: var(--google-grey-700);">По заказам</a>
-                </div>
-            </div>
-        </div>
-        <div id="main-content">
+
+
+        <div class="main-content">
             <div class="item non-select header">
                 <div class="title">Наименование</div>
                 <div class="price">Цена, ₴</div>
                 <div class="quantity"></div>
                 <div class="cost">Стоимость, ₴</div>
             </div>
-            <iron-list id="list" items="[[purchaseOrder.dishes]]" as="dish" scroll-target="document"
+            <iron-list class="list" items="[[purchaseOrder.dishes]]" as="dish" scroll-target="document"
                        scroll-offset="200">
                 <template>
                     <div class="non-select">
@@ -153,6 +140,7 @@
                 <div class="cost">[[_getTotal()]]</div>
             </div>
         </div>
+
     </template>
     <script>
 
