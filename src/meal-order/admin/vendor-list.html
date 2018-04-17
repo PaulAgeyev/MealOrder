@@ -253,7 +253,6 @@
                 inputData.deadline = this.vendors[e.model.index].deadline;
                 properties.inputData = inputData;
                 this.dispatch('vendorManage', properties);
-                console.log(properties);
             }
             _removeVendor(e) {
                 this.dispatchEvent(new CustomEvent('remove-vendor', {detail: e.model.index}));

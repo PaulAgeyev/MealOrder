@@ -51,17 +51,16 @@
                 margin-top: 13%
             }
 
-
             @media only screen and (max-width: 1024px) {
                 .add-dish-paper-dialog {
                     max-width: 400px;
                     width: 100vh;
                 }
+
                 .buttons {
                     margin-top: 20%;
                 }
             }
-
 
             @media only screen and (max-width: 660px) {
 
@@ -154,7 +153,13 @@
         </paper-dialog>
     </template>
     <script>
-
+        /**
+         * Dialog for adding menus.
+         *
+         * @customElement
+         * @polymer
+         * @appliesMixin MealOrderApp.ReduxMixin
+         */
         class AdminMenuDialog extends MealOrderApp.ReduxMixin(Polymer.Element) {
             static get is() {
                 return 'admin-menu-dialog';
@@ -183,6 +188,12 @@
                         return {
                             type: ArrayAction.CLOSE_MENU
                         }
+                    },
+                    addMenu(menu) {
+                        return {
+                            type: ArrayAction.ADD_MENU,
+                            menu: menu
+                        }
                     }
                 }
             }
@@ -195,7 +206,7 @@
                     menu.dateFrom = this.dateFrom;
                     menu.dateTill = this.dateTill;
                     console.log(menu);
-                    this.dispatchEvent(new CustomEvent('add-vendor', {detail: menu}));
+                    this.dispatch('addMenu', menu);
                     this._closeDialog();
                 }
             }

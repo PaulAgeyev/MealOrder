@@ -22,7 +22,7 @@
 <link rel="import" href="../admin/monthly-spendings.html">
 <link rel="import" href="../admin/vendor-orders.html">
 
-<dom-module id="meal-order">
+<dom-module id="meal-order-admin-app">
     <template>
         <style>
 
@@ -178,24 +178,12 @@
     </template>
 
     <script>
-        class MealOrder extends ReduxMixin(Polymer.Element) {
+        class MealOrderAdminApp extends Polymer.Element {
             static get is() {
-                return 'meal-order';
-            }
-
-            static get actions() {
-                return {}
-            }
-
-            static get properties() {
-                return {}
-            };
-
-            static get observers() {
-                return [];
+                return 'meal-order-admin-app';
             }
         }
 
-        window.customElements.define(MealOrder.is, MealOrder);
+        window.customElements.define(MealOrderAdminApp.is, MealOrderAdminApp);
     </script>
 </dom-module>

@@ -118,7 +118,7 @@
 
         </style>
 
-        <paper-dialog  class="size-position" id="dialog" with-backdrop modal>
+        <paper-dialog class="size-position" id="dialog" with-backdrop modal>
             <div id="dialog-content">
                 <iron-form id="form">
                     <form>
@@ -169,7 +169,17 @@
         </paper-dialog>
     </template>
     <script>
-
+        /**
+         * Dialog for managing vendors.
+         *
+         * Can have one of following modes:
+         * 1. `add` adds new vendor after validation
+         * 2. `update` updates existing vendor after validation
+         *
+         * @customElement
+         * @polymer
+         * @appliesMixin MealOrderApp.ReduxMixin
+         */
         class AdminVendorManageDialog extends MealOrderApp.ReduxMixin(Polymer.Element) {
             static get is() {
                 return 'admin-vendor-manage-dialog';
@@ -177,14 +187,24 @@
 
             static get properties() {
                 return {
+                    /**
+                     * Dialog working mode.
+                     *
+                     * Can be `add` mode or `update`.
+                     * Depending on this it sends different events and renders different elements.
+                     */
                     mode: {
                         type: String
                     },
-                    // newTitle: {},
-                    // newMail: {},
-                    // phone: {},
-                    // deadline: {},
 
+                    /**
+                     * Values from dialog inputs.
+                     *
+                     * @property {newTitle} vendor name
+                     * @property {newMail} vendor email
+                     * @property {phone} vendor name
+                     * @property {deadline} a time when a user can no more add dishes to their order
+                     */
                     inputData: {
                         type: Object,
                         value: {}
@@ -198,6 +218,12 @@
                         return {
                             type: ArrayAction.CLOSE_VENDOR_MANAGE
                         }
+                    },
+                    addVendor(vendor) {
+                        return {
+                            type: ArrayAction.ADD_VENDOR,
+                            vendor: vendor
+                        }
                     }
                 }
             }
@@ -209,7 +235,7 @@
                     vendor.mail = this.inputData.newMail;
                     vendor.phone = this.inputData.phone;
                     vendor.deadline = this.inputData.deadline;
-                    this.dispatchEvent(new CustomEvent('add-vendor', {detail: vendor}));
+                    this.dispatch('addVendor', vendor);
                     this._closeDialog();
                 }
             }
@@ -226,6 +252,7 @@
                     this._closeDialog();
                 }
             }
+
             _closeDialog() {
                 this.$.dialog.close();
                 this.parentNode.removeChild(this);
